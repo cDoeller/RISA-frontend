@@ -8,3 +8,28 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a,
+span,
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: black;
+}
+
+h1{
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
+}
