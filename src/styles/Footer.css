@@ -1,0 +1,24 @@
+.footer-wrapper {
+  background-color: rgb(225, 192, 255);
+  position: sticky;
+  bottom: 0;
+  gap: 2rem;
+  padding: 1rem;
+}
+.footer-project-info {
+}
+.footer-project-info-p {
+}
+.footer-socialmedia {
+    gap:0.6rem;
+}
+.footer-follow-p {
+}
+.footer-follow-button {
+}
+.footer-legal-ul {
+  gap: 1rem;
+}
+.footer-legal-li {
+  list-style: none;
+}
