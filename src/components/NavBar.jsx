@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../styles/NavBar.css";
 
 function NavBar() {
   const [showNav, setShowNav] = useState(false);
+  const {pathname} = useLocation();
 
   const handleNavButtons = () => {
     setShowNav(!showNav);
@@ -27,16 +28,16 @@ function NavBar() {
       {showNav && (
         <div className="nav-bottom-wrapper">
           <Link to="/about" onClick={handleNavButtons}>
-            <h1 className="nav-bottom-h1">About</h1>
+            <h1 className={"nav-bottom-h1 " + (pathname==="/about"?"border-bottom-white":"border-bottom-black")}>About</h1>
           </Link>
           <Link to="#" onClick={handleNavButtons}>
-            <h1 className="nav-bottom-h1">Projects</h1>
+            <h1 className={"nav-bottom-h1 " + (pathname==="/projects"?"border-bottom-white":"border-bottom-black")}>Projects</h1>
           </Link>
           <Link to="#" onClick={handleNavButtons}>
-            <h1 className="nav-bottom-h1">Contributors</h1>
+            <h1 className={"nav-bottom-h1 " + (pathname==="/contributors"?"border-bottom-white":"border-bottom-black")}>Contributors</h1>
           </Link>
           <Link to="#" onClick={handleNavButtons}>
-            <h1 className="nav-bottom-h1">Contact</h1>
+            <h1 className={"nav-bottom-h1 " + (pathname==="/contact"?"border-bottom-white":"border-bottom-black")}>Contact</h1>
           </Link>
         </div>
       )}
