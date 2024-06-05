@@ -13,9 +13,11 @@ function NavBar() {
     <nav>
       <div className="nav-top-wrapper">
         <div className="nav-ci-wrapper">
-          <div className="nav-ci-logo-wrapper">
-            <img src="/logo.png" alt="" />
-          </div>
+          <Link to="/">
+            <div className="nav-ci-logo-wrapper">
+              <img src="/logo.png" alt="" />
+            </div>
+          </Link>
           <h1>Research Institute for Speculative Atmospheres</h1>
         </div>
         <div className="nav-burger-wrapper" onClick={handleNavButtons}>
@@ -24,7 +26,7 @@ function NavBar() {
       </div>
       {showNav && (
         <div className="nav-bottom-wrapper">
-          <Link to="#" onClick={handleNavButtons}>
+          <Link to="/about" onClick={handleNavButtons}>
             <h1 className="nav-bottom-h1">About</h1>
           </Link>
           <Link to="#" onClick={handleNavButtons}>

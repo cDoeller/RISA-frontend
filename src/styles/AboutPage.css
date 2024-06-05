@@ -1,0 +1,16 @@
+.about-sections-wrapper{
+    gap:3rem;
+}
+.about-section {
+    gap:1rem;
+}
+.about-headline-left {
+    text-align: left;
+}
+.about-headline {
+    text-align: center;
+    padding: 0% 12%;
+}
+.about-text {
+    hyphens: auto;
+}

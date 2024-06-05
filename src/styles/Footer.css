@@ -1,6 +1,6 @@
 .footer-wrapper {
   background-color: rgb(225, 192, 255);
-  position: sticky;
+  position:relative;
   bottom: 0;
   gap: 1.5rem;
   padding: 1rem;
