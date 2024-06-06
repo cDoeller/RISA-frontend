@@ -7,6 +7,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --beige: rgb(255, 255, 255);
 }
 
 html,
@@ -67,12 +69,14 @@ h1 {
 }
 
 .page-wrapper {
-  padding: 1rem 1rem 3rem 1rem;
+  padding: 2rem 1rem 3rem 1rem;
+  background-color: var(--beige);
 }
 
-.border-bottom-black{
-  border-bottom: 1px solid black;
+.border-bottom-black {
+  /* border-bottom: 1px solid black; */
 }
-.border-bottom-white{
+.border-bottom-white {
   border-bottom: 1px solid rgb(255, 255, 255);
+  background-color: var(--beige);
 }

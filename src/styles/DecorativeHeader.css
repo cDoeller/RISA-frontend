@@ -1,6 +1,6 @@
 .deco-header-wrapper {
   width: 100%;
-  margin-bottom: 1rem;
+  display: flex;
 }
 .deco-header-wrapper > img {
   width: 100%;

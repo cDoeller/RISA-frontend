@@ -3,7 +3,7 @@ nav {
   flex-direction: column;
   position: sticky;
   top: 0;
-  /* border-bottom: 1px solid black; */
+  border-bottom: 1px solid black;
   background-color: white;
 }
 
@@ -41,6 +41,7 @@ nav {
     flex-flow: row wrap-reverse;
     justify-content: end;
 }
+
 .nav-bottom-h1{
     display: inline-block;
     border: 1px solid black;
@@ -50,8 +51,8 @@ nav {
     border-bottom: none;
     cursor: pointer;
     font-size: 0.8rem;
+    z-index: 100;
+    /* get rid of double borders */
+    margin: 0 -1px -1px 0; 
  }
-/*.nav-bottom-h1:last-of-type{
-    flex-grow: 0;
-    flex-shrink: 1;
-} */
+ 
