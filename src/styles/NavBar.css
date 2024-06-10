@@ -5,6 +5,7 @@ nav {
   top: 0;
   border-bottom: 1px solid black;
   background-color: white;
+  z-index: 100;
 }
 
 .nav-top-wrapper {

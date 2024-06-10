@@ -37,6 +37,24 @@ h1 {
   text-transform: uppercase;
 }
 
+h2{
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+p{
+  font-size: 1rem;
+}
+
+/* WRaPPER */
+
+.page-wrapper {
+  padding: 2rem 1rem 3rem 1rem;
+  background-color: var(--beige);
+}
+
+/* FLEX */
+
 .flex-column-center {
   display: flex;
   flex-direction: column;
@@ -56,6 +74,8 @@ h1 {
   align-items: center;
 }
 
+/* LINK / BUTTON */
+
 .pointer {
   cursor: pointer;
 }
@@ -68,15 +88,72 @@ h1 {
   box-shadow: 0px 0px 10px rgb(0, 0, 0);
 }
 
-.page-wrapper {
-  padding: 2rem 1rem 3rem 1rem;
-  background-color: var(--beige);
-}
-
 .border-bottom-black {
   /* border-bottom: 1px solid black; */
 }
+
 .border-bottom-white {
   border-bottom: 1px solid rgb(255, 255, 255);
   background-color: var(--beige);
+}
+
+/* FORM CSS */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.form-input-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+}
+.form-input-input {
+  padding: 0.4rem;
+}
+.form-input-input:focus {
+  outline: none;
+}
+.form-input-type-text {
+}
+.form-input-textarea {
+  min-height: 200px;
+  padding: 0.4rem;
+}
+.form-input-textarea:focus {
+  outline: none;
+}
+.form-button {
+  padding: 0.6rem 1.4rem;
+  width: fit-content;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  border-radius: 0px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+/* NOTIFICATIONS */
+.notification-wrapper{
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+}
+.notification{
+  gap: 1rem;
+  background-color: white;
+  padding: 2rem 1rem 2.5rem 1rem;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px rgb(0, 0, 0);
+}
+.notification-title{}
+.notification-text{}
+.notification-button{
+  margin-top:1rem;
 }
