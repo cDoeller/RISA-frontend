@@ -36,7 +36,7 @@ function NavBar() {
           <Link to="#" onClick={handleNavButtons}>
             <h1 className={"nav-bottom-h1 " + (pathname==="/contributors"?"border-bottom-white":"border-bottom-black")}>Contributors</h1>
           </Link>
-          <Link to="#" onClick={handleNavButtons}>
+          <Link to="/contact" onClick={handleNavButtons}>
             <h1 className={"nav-bottom-h1 " + (pathname==="/contact"?"border-bottom-white":"border-bottom-black")}>Contact</h1>
           </Link>
         </div>
