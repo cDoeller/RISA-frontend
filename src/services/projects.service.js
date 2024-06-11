@@ -15,3 +15,8 @@ class ProjectsService {
     return this.api.get("/api/projects");
   };
 }
+
+const projectsService = new ProjectsService();
+
+export default projectsService;
+

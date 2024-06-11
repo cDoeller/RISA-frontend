@@ -157,3 +157,12 @@ p{
 .notification-button{
   margin-top:1rem;
 }
+
+/* IMAGES */
+
+.image-wrapper > img{
+  display:flex;
+}
+.image-wrapper > img{
+  width: 100%;
+}
