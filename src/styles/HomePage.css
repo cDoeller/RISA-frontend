@@ -1,0 +1,8 @@
+.projects-page-card-wrapper {
+    border: solid black 1px;
+    gap: 1rem;
+  }
+  
+  .projects-page-card-title{
+      padding: 0.6rem;
+  }
