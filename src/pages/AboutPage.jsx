@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/AboutPage.css";
+import "../styles/styles-pages/AboutPage.css";
 import DecorativeHeader from "../components/DecorativeHeader";
 
 function AboutPage() {

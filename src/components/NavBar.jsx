@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "../styles/NavBar.css";
+import "../styles/styles-components/NavBar.css";
 
 function NavBar() {
   const [showNav, setShowNav] = useState(false);

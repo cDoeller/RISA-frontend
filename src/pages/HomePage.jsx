@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import "../styles/HomePage.css";
+import "../styles/styles-pages/HomePage.css";
 import projectsService from "../services/projects.service";
 
 function HomePage() {

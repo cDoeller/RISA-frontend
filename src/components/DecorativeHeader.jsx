@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/DecorativeHeader.css";
+import "../styles/styles-components/DecorativeHeader.css";
 
 function DecorativeHeader() {
   return (
