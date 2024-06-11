@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import "../styles/ContactPage.css";
+import "../styles/styles-pages/ContactPage.css";
 import DecorativeHeader from "../components/DecorativeHeader";
 import Notification from "../components/Notification";
 

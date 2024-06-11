@@ -30,6 +30,8 @@ li {
   text-decoration: none;
 }
 
+/* FONTS */
+
 h1 {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -43,6 +45,10 @@ h2{
 }
 
 p{
+  font-size: 1rem;
+}
+
+input {
   font-size: 1rem;
 }
 
@@ -72,6 +78,25 @@ p{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.flex-row-left {
+  display: flex;
+  align-items: center;
+}
+
+.flex-row{
+  display: flex;
+}
+
+
+/* IMAGES */
+
+.image-wrapper > img{
+  display:flex;
+}
+.image-wrapper > img{
+  width: 100%;
 }
 
 /* LINK / BUTTON */
@@ -156,13 +181,4 @@ p{
 .notification-text{}
 .notification-button{
   margin-top:1rem;
-}
-
-/* IMAGES */
-
-.image-wrapper > img{
-  display:flex;
-}
-.image-wrapper > img{
-  width: 100%;
 }
