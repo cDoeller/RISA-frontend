@@ -1,15 +1,19 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "../styles/styles-pages/AdminPage.css";
 import projectsService from "../services/projects.service";
+import { AuthContext } from "../context/auth.context";
+import authService from "../services/auth.services";
 
 function AdminPage() {
   const [projects, setProjects] = useState(null);
+
+  const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     projectsService
       .getAllProjects()
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         setProjects(result.data);
       })
       .catch((err) => console.log(err));
