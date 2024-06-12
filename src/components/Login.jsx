@@ -31,9 +31,6 @@ function Login() {
 
         // check if token correct: verify route & local storage
         authenticateUser();
-
-        // navigate to profile page
-        navigate("/");
       })
       .catch((err) => {
         setErrorMessage(err.response.data.message);

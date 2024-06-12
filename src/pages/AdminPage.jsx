@@ -7,7 +7,7 @@ import Login from "../components/Login";
 function AdminPage() {
   const [projects, setProjects] = useState(null);
 
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   useEffect(() => {
     projectsService
@@ -19,12 +19,25 @@ function AdminPage() {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleLogout = () => {
+    logOutUser();
+  };
+
   return (
     <>
       {!isLoggedIn ? (
         <Login />
       ) : (
         <div className="page-wrapper">
+          <div className="admin-login-info flex-row">
+            <p className="admin-login-info-text">
+              Logged in as <u>{user.name}</u>
+            </p>
+            <p onClick={handleLogout} className="admin-login-info-text pointer">
+              X
+            </p>
+          </div>
+
           <section className="admin-project-section flex-column-left">
             <div className="admin-search-wrapper flex-row-left">
               <label className="admin-label flex-row">
