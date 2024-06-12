@@ -1,40 +1,54 @@
-.admin-project-section{
-    gap:1.5rem;
+/* USER INFO */
+.admin-login-info {
+    background-color: black;
+    margin-bottom: 2rem;
+    justify-content: space-between;
+}
+.admin-login-info-text {
+    color: white;
+    padding: 0.4rem 0.6rem;
+}
+
+/* SECTIONS */
+.admin-project-section {
+  gap: 1.5rem;
 }
 
 /* SEARCH BAR */
-.admin-search-wrapper{
-    width: 100%;
-    justify-content: space-between;
+.admin-search-wrapper {
+  width: 100%;
+  justify-content: space-between;
 }
-.admin-label{
-    gap: 1rem;
+.admin-label {
+  gap: 1rem;
 }
-.admin-input{
-    border: none;
-    border-bottom:black 1px solid;
+.admin-input {
+  border: none;
+  border-bottom: black 1px solid;
 }
-.admin-input:focus{
-    outline: none;
+.admin-input:focus {
+  outline: none;
 }
-.admin-add-button{
-width: 1.8rem;
+.admin-add-button {
+  width: 1.8rem;
 }
 
 /* LIST CONTAINER */
-.admin-list-container{
-    width: 100%;
+.admin-list-container {
+  width: 100%;
 }
-.admin-card-wrapper{
-    width: 100%;
-    border:1px solid black;
-    padding: 1rem;
-    box-sizing: border-box;
+.admin-card-wrapper {
+  width: 100%;
+  border: 1px solid black;
+  padding: 1rem;
+  box-sizing: border-box;
 }
-.admin-card-title{}
-.admin-card-subtitle{}
+.admin-card-title {
+}
+.admin-card-subtitle {
+}
 
 /* ADD */
-.admin-add-wrapper{
-    width:100%;
+.admin-add-wrapper {
+  width: 100%;
 }
