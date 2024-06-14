@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import AdminPage from "./pages/AdminPage";
+import CreateProjectPage from "./pages/CreateProjectPage";
 
 function App() {
   return (
@@ -16,10 +17,17 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
-        <Route path="/about" element={<AboutPage/>}></Route>
-        <Route path="/contact" element={<ContactPage/>}></Route>
-        <Route path="/admin" element={<AdminPage/>}></Route>
-        {/* <Route path="/admin/create-project" element={<IsPrivate><CreateProjectPage/></IsPrivate>}></Route> */}
+        <Route path="/about" element={<AboutPage />}></Route>
+        <Route path="/contact" element={<ContactPage />}></Route>
+        <Route path="/admin" element={<AdminPage />}></Route>
+        <Route
+          path="/admin/create-project"
+          element={
+            <IsPrivate>
+              <CreateProjectPage />
+            </IsPrivate>
+          }
+        ></Route>
       </Routes>
       <Footer />
     </>

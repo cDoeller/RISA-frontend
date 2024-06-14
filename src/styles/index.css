@@ -39,12 +39,12 @@ h1 {
   text-transform: uppercase;
 }
 
-h2{
+h2 {
   font-size: 1rem;
   line-height: 1.5rem;
 }
 
-p{
+p {
   font-size: 1rem;
 }
 
@@ -85,22 +85,22 @@ input {
   align-items: center;
 }
 
-.flex-row{
+.flex-row {
   display: flex;
 }
 
 /* ERROR */
-.error-message{
+.error-message {
   background-color: rgb(255, 200, 200);
   color: red;
 }
 
 /* IMAGES */
 
-.image-wrapper > img{
-  display:flex;
+.image-wrapper > img {
+  display: flex;
 }
-.image-wrapper > img{
+.image-wrapper > img {
   width: 100%;
 }
 
@@ -143,6 +143,8 @@ input {
 }
 .form-input-input {
   padding: 0.4rem;
+  border-radius: 0px;
+  border: 1px solid black;
 }
 .form-input-input:focus {
   outline: none;
@@ -151,6 +153,7 @@ input {
 }
 .form-input-textarea {
   min-height: 200px;
+  border: 1px solid black;
   padding: 0.4rem;
 }
 .form-input-textarea:focus {
@@ -167,7 +170,7 @@ input {
 }
 
 /* NOTIFICATIONS */
-.notification-wrapper{
+.notification-wrapper {
   position: fixed;
   top: 0;
   height: 100vh;
@@ -175,15 +178,17 @@ input {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 200;
 }
-.notification{
+.notification {
   gap: 1rem;
   background-color: white;
   padding: 2rem 1rem 2.5rem 1rem;
   border-radius: 20px;
   box-shadow: 0px 0px 10px rgb(0, 0, 0);
 }
-.notification-title{}
-.notification-text{}
-.notification-button{
-  margin-top:1rem;
+.notification-title {
+}
+.notification-text {
+}
+.notification-button {
+  margin-top: 1rem;
 }

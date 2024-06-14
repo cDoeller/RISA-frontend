@@ -3,6 +3,7 @@ import "../styles/styles-pages/AdminPage.css";
 import projectsService from "../services/projects.service";
 import { AuthContext } from "../context/auth.context";
 import Login from "../components/Login";
+import { Link } from "react-router-dom";
 
 function AdminPage() {
   const [projects, setProjects] = useState(null);
@@ -44,12 +45,14 @@ function AdminPage() {
                 Projects
                 <input className="admin-input" type="text" />
               </label>
-              <div className="admin-add-button image-wrapper pointer">
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/54/54570.png"
-                  alt=""
-                />
-              </div>
+              <Link to="/admin/create-project">
+                <div className="admin-add-button image-wrapper pointer">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/54/54570.png"
+                    alt=""
+                  />
+                </div>
+              </Link>
             </div>
             <div className="admin-list-container flex-column-left">
               {projects &&

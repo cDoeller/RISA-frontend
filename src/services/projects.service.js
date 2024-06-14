@@ -14,9 +14,13 @@ class ProjectsService {
   getAllProjects = () => {
     return this.api.get("/api/projects");
   };
+
+  // CREATE
+  createProject = (requestBody) => {
+    return this.api.post("/api/projects", requestBody);
+  };
 }
 
 const projectsService = new ProjectsService();
 
 export default projectsService;
-
