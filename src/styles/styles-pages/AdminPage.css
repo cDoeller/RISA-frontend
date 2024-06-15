@@ -1,12 +1,15 @@
+.admin-page-wrapper {
+  gap: 3rem;
+}
+
 /* USER INFO */
 .admin-login-info {
-    background-color: black;
-    margin-bottom: 2rem;
-    justify-content: space-between;
+  background-color: black;
+  justify-content: space-between;
 }
 .admin-login-info-text {
-    color: white;
-    padding: 0.4rem 0.6rem;
+  color: white;
+  padding: 0.4rem 0.6rem;
 }
 
 /* SECTIONS */
@@ -42,7 +45,7 @@
   border: 1px solid black;
   padding: 1rem;
   box-sizing: border-box;
-  margin: -1px 0 0 0; 
+  margin: -1px 0 0 0;
 }
 .admin-card-title {
 }
