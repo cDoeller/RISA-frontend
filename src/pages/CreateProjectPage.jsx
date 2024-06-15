@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import projectsService from "../services/projects.service";
 import Select from "react-select";
 import selectStles from "../styles/react-select-styling";
@@ -6,12 +7,14 @@ import selectStles from "../styles/react-select-styling";
 function CreateProjectPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [contributors, setContributors] = useState("");
+  const [contributors, setContributors] = useState(null);
   const [year, setYear] = useState(0);
-  const [imagesUrl, setImagesUrl] = useState("");
-  const [researchProject, setResearchProject] = useState("");
+  const [imagesUrl, setImagesUrl] = useState([]);
+  const [researchProject, setResearchProject] = useState(null);
   const [tags, setTags] = useState("");
   const [link, setLink] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,10 +22,10 @@ function CreateProjectPage() {
     const newProject = {
       title,
       description,
-      contributors: (contributors ? contributors : []),
+      contributors: contributors ? contributors : [],
       year,
-      imagesUrl,
-      researchProject: (researchProject ? researchProject : []),
+      images_url: imagesUrl,
+      research_project: researchProject ? researchProject : null,
       tags,
       link,
     };
@@ -31,6 +34,7 @@ function CreateProjectPage() {
       .createProject(newProject)
       .then((response) => {
         console.log(response);
+        navigate("/admin");
       })
       .catch((err) => console.log(err));
   };
