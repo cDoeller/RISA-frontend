@@ -20,6 +20,7 @@ function CreateProjectPage() {
     e.preventDefault();
 
     const newProject = {
+      label: title,
       title,
       description,
       contributors: contributors ? contributors : [],
