@@ -10,6 +10,8 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import AdminPage from "./pages/AdminPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
+import CreateContributorPage from "./pages/CreateContributorPage";
+import ContributorsPage from "./pages/ContributorsPage";
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/about" element={<AboutPage />}></Route>
+        <Route path="/contributors" element={<ContributorsPage />}></Route>
         <Route path="/contact" element={<ContactPage />}></Route>
         <Route path="/admin" element={<AdminPage />}></Route>
         <Route
@@ -25,6 +28,14 @@ function App() {
           element={
             <IsPrivate>
               <CreateProjectPage />
+            </IsPrivate>
+          }
+        ></Route>
+        <Route
+          path="/admin/create-contributor"
+          element={
+            <IsPrivate>
+              <CreateContributorPage />
             </IsPrivate>
           }
         ></Route>

@@ -39,6 +39,9 @@ function NavBar() {
           <Link to="/contact" onClick={handleNavButtons}>
             <h1 className={"nav-bottom-h1 " + (pathname==="/contact"?"border-bottom-white":"border-bottom-black")}>Contact</h1>
           </Link>
+          <Link to="/admin" onClick={handleNavButtons}>
+            <h1 className={"nav-bottom-h1 " + (pathname==="/contact"?"border-bottom-white":"border-bottom-black")}>Admin</h1>
+          </Link>
         </div>
       )}
     </nav>

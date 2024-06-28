@@ -61,7 +61,7 @@ function AdminPage() {
               headline="Contributors"
               data={contributors}
               setData={setContributors}
-              createPath="/admin/create-project"
+              createPath="/admin/create-contributor"
             />
           )}
         </div>
