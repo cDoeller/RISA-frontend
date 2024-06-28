@@ -10,6 +10,7 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import AdminPage from "./pages/AdminPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
+import CreateContributorPage from "./pages/CreateContributorPage";
 
 function App() {
   return (
@@ -25,6 +26,14 @@ function App() {
           element={
             <IsPrivate>
               <CreateProjectPage />
+            </IsPrivate>
+          }
+        ></Route>
+        <Route
+          path="/admin/create-contributor"
+          element={
+            <IsPrivate>
+              <CreateContributorPage />
             </IsPrivate>
           }
         ></Route>
