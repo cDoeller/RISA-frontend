@@ -1,20 +1,34 @@
-import { useState, useEffect } from "react";
+import react, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import contributorsService from "../services/contributors.service";
 import projectsService from "../services/projects.service";
 import Select from "react-select";
 import selectStles from "../styles/react-select-styling";
 import "../styles/styles-pages/CreateContributor.css";
 
 function CreateProjectPage() {
+  const [availableProjects, setAvailableProjects] = useState(null);
   const [name, setName] = useState("");
   const [short_bio, setShort_bio] = useState("");
   const [email, setEmail] = useState("");
   const [projects, setProjects] = useState(null);
-  const [website_url, setWebsite_url] = useState("");
+  const [website_url, setWebsite_url] = useState("https://");
   const [insta, setInsta] = useState("");
   const [x, setX] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    projectsService
+      .getAllProjects()
+      .then((result) => {
+        // console.log(result.data);
+        setAvailableProjects(result.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,8 +43,8 @@ function CreateProjectPage() {
       social_media: { insta: insta, x: x },
     };
 
-    projectsService
-      .createProject(newContributor)
+    contributorsService
+      .createContributor(newContributor)
       .then((response) => {
         console.log(response);
         // navigate("/admin");
@@ -39,17 +53,12 @@ function CreateProjectPage() {
   };
 
   // REACT SELECT OPTIONS
-  let projectsOptions = [
-    // { value: "", label: "- type / select -" },
-    { value: "", label: "-" },
-    { value: "installation", label: "installation" },
-    { value: "performance", label: "performance" },
-    { value: "workshop", label: "workshop" },
-    { value: "seminar", label: "seminar" },
-    { value: "exhibition", label: "exhibition" },
-    { value: "article", label: "article" },
-    { value: "event", label: "event" },
-  ];
+  let projectsOptions = [{ value: "", label: "-" }];
+  if (availableProjects) {
+    availableProjects.forEach((element) => {
+      projectsOptions.push({ value: element._id, label: element.title });
+    });
+  }
 
   // REACT SELECT HANDLE SELECT FUNCTIONS
   function handleProjectsSelectChange(selectedOption) {
@@ -100,15 +109,18 @@ function CreateProjectPage() {
           </label>
           {/* PROJECTS */}
           {/* REACT SELECT */}
-          <label className="form-input-label" htmlFor="">
-            projects
-            <Select
-              options={projectsOptions}
-              onChange={handleProjectsSelectChange}
-              value={{ label: projects }}
-              styles={selectStles}
-            />
-          </label>
+          {availableProjects && (
+            <label className="form-input-label" htmlFor="">
+              projects
+              <Select
+                options={projectsOptions}
+                onChange={handleProjectsSelectChange}
+                value={{ label: projects }}
+                styles={selectStles}
+              />
+            </label>
+          )}
+
           {/* WEBSITE */}
           <label className="form-input-label" htmlFor="">
             webiste
