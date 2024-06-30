@@ -7,14 +7,16 @@ import { Navigate } from "react-router-dom";
 // > redirect if not logged in
 
 function IsPrivate(props) {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, isLoading } = useContext(AuthContext);
 
-  // if logged in, show the content
-  if (isLoggedIn) {
-    return props.children;
-    // if not logged in, navigate to login page
-  } else {
-    return <Navigate to="/admin" />;
+  if (!isLoading) {
+    // if logged in, show the content
+    if (isLoggedIn) {
+      return props.children;
+      // if not logged in, navigate to login page
+    } else {
+      return <Navigate to="/admin" />;
+    }
   }
 }
 

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 import projectsService from "../services/projects.service";
 import Select from "react-select";
 import selectStles from "../styles/react-select-styling";
@@ -15,6 +16,7 @@ function CreateProjectPage() {
   const [tags, setTags] = useState("");
   const [link, setLink] = useState("");
 
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -86,6 +88,15 @@ function CreateProjectPage() {
     setResearchProject(selectedOption.value);
   }
 
+  // File Upload
+  //  *************************************************************
+  const handleFiles = event => {
+    event.preventDefault()
+    const files = event.target.files;
+    console.log(files)
+    // handleFileUpload(files);
+  };
+
   return (
     <>
       <section className="contact-form-section page-wrapper">
@@ -132,13 +143,17 @@ function CreateProjectPage() {
           <label className="form-input-label" htmlFor="">
             images
             <input
-              className="form-input-input form-input-type-text"
-              type="text"
-              value={imagesUrl}
-              required
-              onChange={(e) => {
-                setImagesUrl(e.target.value);
+              // className="form-input-input form-input-type-text"
+              type="file"
+              accept=".jpg, .png"
+              multiple
+              onChange={(event) => {
+                handleFiles(event);
               }}
+              // required
+              // onChange={(e) => {
+              //   setImagesUrl(e.target.value);
+              // }}
             />
           </label>
           {/* CONTRIBUTIORS */}
