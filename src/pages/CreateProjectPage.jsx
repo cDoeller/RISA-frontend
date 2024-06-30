@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import projectsService from "../services/projects.service";
 import Select from "react-select";
 import selectStles from "../styles/react-select-styling";
+import cloudinaryService from "../services/cloudinary.services";
 
 function CreateProjectPage() {
   const [title, setTitle] = useState("");
