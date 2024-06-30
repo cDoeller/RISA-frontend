@@ -21,16 +21,8 @@ function App() {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/about" element={<AboutPage />}></Route>
         <Route path="/contributors" element={<ContributorsPage />}></Route>
+        <Route path="/contact" element={<ContactPage />}></Route>
         <Route path="/admin" element={<AdminPage />}></Route>
-
-        <Route
-          path="/contact"
-          element={
-            <IsPrivate>
-              <ContactPage />
-            </IsPrivate>
-          }
-        ></Route>
 
         <Route
           path="/admin/create-project"

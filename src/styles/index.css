@@ -98,6 +98,11 @@ input {
   display: flex;
 }
 
+.flex-row-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /* ERROR */
 .error-message {
   background-color: rgb(255, 200, 200);

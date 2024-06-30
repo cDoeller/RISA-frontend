@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import "../styles/styles-pages/CreateProjectPage.css";
 import projectsService from "../services/projects.service";
 import Select from "react-select";
 import selectStles from "../styles/react-select-styling";
@@ -15,6 +16,9 @@ function CreateProjectPage() {
   const [researchProject, setResearchProject] = useState(null);
   const [tags, setTags] = useState("");
   const [link, setLink] = useState("");
+  // image data
+  const [imageData, setImageData] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -90,12 +94,24 @@ function CreateProjectPage() {
 
   // File Upload
   //  *************************************************************
-  const handleFiles = event => {
-    event.preventDefault()
+  const handleUploadInput = (event) => {
+    event.preventDefault();
     const files = event.target.files;
-    console.log(files)
-    // handleFileUpload(files);
+    console.log(files);
+    handleImageData(files);
   };
+
+  function handleImageData(filesToUpload) {
+    // set the image data
+    const filesArray = Array.from(filesToUpload);
+    const newImageData = [...imageData, ...filesArray];
+    console.log("files array: ", newImageData);
+    setImageData(newImageData);
+    // make the previews
+    const previews = newImageData.map((files) => URL.createObjectURL(files));
+    console.log("previews: ", previews);
+    setImagePreviews(previews);
+  }
 
   return (
     <>
@@ -148,14 +164,26 @@ function CreateProjectPage() {
               accept=".jpg, .png"
               multiple
               onChange={(event) => {
-                handleFiles(event);
+                handleUploadInput(event);
               }}
-              // required
-              // onChange={(e) => {
-              //   setImagesUrl(e.target.value);
-              // }}
             />
           </label>
+          {/* image previews */}
+          {imagePreviews.length > 0 && (
+            <div className="create-project-image-previews-wrapper flex-row-wrap">
+              {imagePreviews.map((url) => {
+                return (
+                  <div
+                    key={url}
+                    className="create-project-image-previews-img-wrapper"
+                  >
+                    <img src={url} alt="" />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
           {/* CONTRIBUTIORS */}
           {/* REACT SELECT */}
           <label className="form-input-label" htmlFor="">
