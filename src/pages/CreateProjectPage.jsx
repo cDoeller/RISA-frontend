@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
+import "../styles/styles-pages/CreateProjectPage.css";
 import projectsService from "../services/projects.service";
 import Select from "react-select";
 import selectStles from "../styles/react-select-styling";
@@ -14,34 +16,61 @@ function CreateProjectPage() {
   const [researchProject, setResearchProject] = useState(null);
   const [tags, setTags] = useState("");
   const [link, setLink] = useState("");
+  // image data
+  const [imageData, setImageData] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [imageCloudinaryUrl, setImageCloudinaryUrl] = useState([]);
+  // err
+  const [errorMessage, setErrorMessage] = useState("");
 
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // * SUBMIT FORM
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
 
-    const newProject = {
-      label: title,
-      title,
-      description,
-      contributors: contributors ? contributors : [],
-      year,
-      images_url: imagesUrl,
-      research_project: researchProject ? researchProject : null,
-      tags,
-      link,
-    };
+      if (imageData.length > 0) {
+        let newProject = {
+          label: title,
+          title,
+          description,
+          contributors: contributors ? contributors : [],
+          year,
+          research_project: researchProject ? researchProject : null,
+          tags,
+          link,
+        };
 
-    projectsService
-      .createProject(newProject)
-      .then((response) => {
-        console.log(response);
+        // make body formdata for cloudinary route
+        const imageUploadData = new FormData();
+        imageData.forEach((imageFile) => {
+          imageUploadData.append("files", imageFile);
+        });
+
+        const cloudinaryResponse = await cloudinaryService.uploadMultiple(
+          imageUploadData
+        );
+        console.log("cloudi response", cloudinaryResponse);
+        newProject.images_url = cloudinaryResponse.data.fileUrls;
+
+        const createProjectResponse = await projectsService.createProject(
+          newProject
+        );
+        console.log("proj response", createProjectResponse);
+
         navigate("/admin");
-      })
-      .catch((err) => console.log(err));
-  };
+      } else {
+        setErrorMessage("please upload at least one image.");
+      }
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+    }
+  }
 
-  // REACT SELECT OPTIONS
+  // * REACT SELECT OPTIONS
   let tagOptions = [
     // { value: "", label: "- type / select -" },
     { value: "installation", label: "installation" },
@@ -75,7 +104,7 @@ function CreateProjectPage() {
     { value: "event", label: "event" },
   ];
 
-  // REACT SELECT HANDLE SELECT FUNCTIONS
+  // * REACT SELECT HANDLE SELECT FUNCTIONS
   function handleTagSelectChange(selectedOption) {
     setTags(selectedOption.value);
   }
@@ -85,6 +114,36 @@ function CreateProjectPage() {
   function handleProjectsSelectChange(selectedOption) {
     setResearchProject(selectedOption.value);
   }
+
+  // * IMAGES FILE UPLOAD
+  function handleImageDelete(index) {
+    const newImageData = [...imageData];
+    const newPreviews = [...imagePreviews];
+    newPreviews.splice(index, 1);
+    newImageData.splice(index, 1);
+    setImageData(newImageData);
+    setImagePreviews(newPreviews);
+  }
+
+  const handleImageInput = (event) => {
+    // make an array of image files from input data
+    event.preventDefault();
+    const files = event.target.files;
+    handleImageData(files);
+  };
+
+  function handleImageData(filesToUpload) {
+    // 1) set the image data for uploading
+    // 2) make the previews
+    const filesArray = Array.from(filesToUpload);
+    const newImageData = [...imageData, ...filesArray];
+    setImageData(newImageData);
+    const previews = newImageData.map((files) => URL.createObjectURL(files));
+    setImagePreviews(previews);
+  }
+
+  // ERRORS
+  const errorMessageElement = <p className="error-message">{errorMessage}</p>;
 
   return (
     <>
@@ -128,19 +187,51 @@ function CreateProjectPage() {
               }}
             />
           </label>
+
           {/* IMAGES */}
-          <label className="form-input-label" htmlFor="">
+          <label className="form-input-label">
             images
             <input
-              className="form-input-input form-input-type-text"
-              type="text"
-              value={imagesUrl}
-              required
-              onChange={(e) => {
-                setImagesUrl(e.target.value);
+              type="file"
+              accept=".jpg, .png"
+              id="create-project-file-input"
+              className="form-file-input-hide"
+              multiple
+              onChange={(event) => {
+                handleImageInput(event);
               }}
             />
+            <label
+              className="create-project-file-input-brwose-button pointer"
+              htmlFor="create-project-file-input"
+            >
+              Choose Files (6 max.)
+            </label>
           </label>
+          {/* image previews */}
+          {imagePreviews.length > 0 && (
+            <div className="create-project-image-previews-wrapper flex-column">
+              {imagePreviews.map((previewUrl, index) => {
+                return (
+                  <div
+                    key={previewUrl}
+                    className="create-project-image-previews-img-wrapper flex-row-center-start"
+                  >
+                    <img src={previewUrl} alt={`image preview ${index}`} />
+                    <button
+                      className="create-project-image-previews-delete-button"
+                      onClick={() => {
+                        handleImageDelete(index);
+                      }}
+                    >
+                      X
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
           {/* CONTRIBUTIORS */}
           {/* REACT SELECT */}
           <label className="form-input-label" htmlFor="">
@@ -185,6 +276,8 @@ function CreateProjectPage() {
               }}
             />
           </label>
+          {/* ERROR MESSAGE */}
+          {errorMessage && errorMessageElement}
           {/* BUTTON */}
           <button className="form-button pointer" type="submit">
             submit

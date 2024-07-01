@@ -53,7 +53,7 @@ input {
 }
 
 .white {
-  color:white;
+  color: white;
 }
 
 /* WRaPPER */
@@ -89,6 +89,11 @@ input {
   align-items: center;
 }
 
+.flex-row-center-start {
+  display: flex;
+  justify-content: center;
+}
+
 .flex-row-left {
   display: flex;
   align-items: center;
@@ -96,6 +101,11 @@ input {
 
 .flex-row {
   display: flex;
+}
+
+.flex-row-wrap {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* ERROR */
@@ -177,6 +187,15 @@ input {
   border: 1px solid black;
   background-color: white;
 }
+/* hide the input button */
+.form-file-input-hide {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
 
 /* NOTIFICATIONS */
 .notification-wrapper {
@@ -200,4 +219,14 @@ input {
 }
 .notification-button {
   margin-top: 1rem;
+}
+
+/* ERRORS */
+.error-message {
+  background-color: rgb(255, 191, 191);
+  color: red;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: center;
+  width: 100%;
 }

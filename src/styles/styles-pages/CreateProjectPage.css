@@ -1,0 +1,24 @@
+.create-project-image-previews-wrapper {
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.create-project-image-previews-img-wrapper {
+}
+
+.create-project-image-previews-img-wrapper > img {
+  width: 80%;
+}
+
+.create-project-image-previews-delete-button {
+    height: 30px;
+    width: 30px;
+    border: none;
+    background-color: black;
+    color:white;
+}
+
+.create-project-file-input-brwose-button{
+    border:1px solid black;
+    padding: 0.4rem;
+    text-align: center;
+}

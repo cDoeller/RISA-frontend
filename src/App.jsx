@@ -23,6 +23,7 @@ function App() {
         <Route path="/contributors" element={<ContributorsPage />}></Route>
         <Route path="/contact" element={<ContactPage />}></Route>
         <Route path="/admin" element={<AdminPage />}></Route>
+
         <Route
           path="/admin/create-project"
           element={
