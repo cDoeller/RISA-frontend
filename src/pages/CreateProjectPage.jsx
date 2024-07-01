@@ -16,7 +16,7 @@ function CreateProjectPage() {
   const [researchProjectId, setResearchProjectId] = useState(null);
   const [researchProjectTitle, setResearchProjectTitle] = useState(null);
   const [tags, setTags] = useState(null);
-  const [link, setLink] = useState("https://");
+  const [link, setLink] = useState("https://www.");
   // selectData
   const [allProjects, setAllProjects] = useState(null);
   const [allContributors, setAllContributors] = useState(null);
@@ -58,7 +58,7 @@ function CreateProjectPage() {
           year,
           research_project: researchProjectId ? researchProjectId : null,
           tags,
-          link: link === "https://" ? link : "",
+          link: link === "https://www." ? link : "",
         };
 
         // make body formdata for cloudinary route
