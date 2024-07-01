@@ -29,6 +29,11 @@ class ContributorsService {
   createContributor = (requestBody) => {
     return this.api.post("/api/contributors", requestBody);
   };
+
+  // DELETE
+  deleteContributor = (id) => {
+    return this.api.delete(`/api/contributors/${id}`);
+  }
 }
 
 const contributorsService = new ContributorsService();

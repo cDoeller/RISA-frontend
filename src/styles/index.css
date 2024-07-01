@@ -63,6 +63,15 @@ input {
   background-color: var(--beige);
 }
 
+/* IMAGES */
+
+.image-wrapper > img {
+  display: flex;
+}
+.image-wrapper > img {
+  width: 100%;
+}
+
 /* FLEX */
 
 .flex-column-center {
@@ -89,9 +98,20 @@ input {
   align-items: center;
 }
 
+.flex-row-aligncenter {
+  display: flex;
+  align-items: center;
+}
+
 .flex-row-center-start {
   display: flex;
   justify-content: center;
+}
+
+.flex-row-between-aligncenter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .flex-row-left {
@@ -112,15 +132,6 @@ input {
 .error-message {
   background-color: rgb(255, 200, 200);
   color: red;
-}
-
-/* IMAGES */
-
-.image-wrapper > img {
-  display: flex;
-}
-.image-wrapper > img {
-  width: 100%;
 }
 
 /* LINK / BUTTON */
@@ -201,6 +212,7 @@ input {
 .notification-wrapper {
   position: fixed;
   top: 0;
+  left:0;
   height: 100vh;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -212,13 +224,18 @@ input {
   padding: 2rem 1rem 2.5rem 1rem;
   border-radius: 20px;
   box-shadow: 0px 0px 10px rgb(0, 0, 0);
+  max-width:80%;
 }
 .notification-title {
 }
 .notification-text {
+  text-align: center;
 }
 .notification-button {
   margin-top: 1rem;
+}
+.notification-multi-wrapper {
+  gap: 1rem;
 }
 
 /* ERRORS */

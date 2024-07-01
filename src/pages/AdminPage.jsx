@@ -23,7 +23,7 @@ function AdminPage() {
       })
       .then((result) => {
         // console.log(result.data);
-        setContributors(result.data)
+        setContributors(result.data);
       })
       .catch((err) => console.log(err));
   }, []);
