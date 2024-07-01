@@ -12,6 +12,8 @@ import AdminPage from "./pages/AdminPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
 import CreateContributorPage from "./pages/CreateContributorPage";
 import ContributorsPage from "./pages/ContributorsPage";
+import UpdateContributorPage from "./pages/UpdateContributorPage";
+import UpdateProjectPage from "./pages/UpdateProjectPage";
 
 function App() {
   return (
@@ -37,6 +39,22 @@ function App() {
           element={
             <IsPrivate>
               <CreateContributorPage />
+            </IsPrivate>
+          }
+        ></Route>
+        <Route
+          path="/admin/update-contributor/:id"
+          element={
+            <IsPrivate>
+              <UpdateContributorPage />
+            </IsPrivate>
+          }
+        ></Route>
+        <Route
+          path="/admin/update-project/:id"
+          element={
+            <IsPrivate>
+              <UpdateProjectPage />
             </IsPrivate>
           }
         ></Route>

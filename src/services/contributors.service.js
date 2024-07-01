@@ -25,6 +25,11 @@ class ContributorsService {
     return this.api.get("/api/contributors");
   };
 
+  // GET
+  getContributor = (id) => {
+    return this.api.get(`/api/contributors/${id}`);
+  };
+
   // CREATE
   createContributor = (requestBody) => {
     return this.api.post("/api/contributors", requestBody);

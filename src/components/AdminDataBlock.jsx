@@ -17,8 +17,8 @@ function AdminDataBlock(props) {
           console.log(result);
           return projectsService.getAllProjects();
         })
-        .then ((result)=>{
-          setData(result.data)
+        .then((result) => {
+          setData(result.data);
         })
         .catch((err) => console.log(err));
     }
@@ -29,7 +29,7 @@ function AdminDataBlock(props) {
           console.log(result);
           return contributorsService.getAllContributors();
         })
-        .then((result)=>{
+        .then((result) => {
           setData(result.data);
         })
         .catch((err) => console.log(err));
@@ -63,7 +63,13 @@ function AdminDataBlock(props) {
                 >
                   <h1 className="admin-card-title">{data.label}</h1>
                   <div className="admin-update-delete-wrapper flex-row-aligncenter">
-                    <Link to="#">
+                    <Link
+                      to={
+                        headline === "Contributors"
+                          ? `/admin/update-contributor/${data._id}`
+                          : `/admin/update-project/${data._id}`
+                      }
+                    >
                       <div className="image-wrapper admin-update-delete-icons">
                         <img src="update-icon.png" alt="" />
                       </div>

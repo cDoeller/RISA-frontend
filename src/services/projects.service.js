@@ -25,6 +25,11 @@ class ProjectsService {
     return this.api.get("/api/projects");
   };
 
+  // GET
+  getProject = (id) => {
+    return this.api.get(`/api/projects/${id}`);
+  };
+
   // CREATE
   createProject = (requestBody) => {
     return this.api.post("/api/projects", requestBody);
@@ -33,6 +38,11 @@ class ProjectsService {
   // DELETE
   deleteProject = (id) => {
     return this.api.delete(`/api/projects/${id}`);
+  };
+
+  // PATCH /api/artworks/:id
+  updateProject = (id, requestBody) => {
+    return this.api.patch(`/api/projects/${id}`, requestBody);
   };
 }
 
