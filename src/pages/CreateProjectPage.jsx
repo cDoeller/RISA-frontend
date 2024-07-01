@@ -52,13 +52,11 @@ function CreateProjectPage() {
         const cloudinaryResponse = await cloudinaryService.uploadMultiple(
           imageUploadData
         );
-        console.log("cloudi response", cloudinaryResponse);
         newProject.images_url = cloudinaryResponse.data.fileUrls;
 
         const createProjectResponse = await projectsService.createProject(
           newProject
         );
-        console.log("proj response", createProjectResponse);
 
         navigate("/admin");
       } else {
