@@ -29,6 +29,11 @@ class ProjectsService {
   createProject = (requestBody) => {
     return this.api.post("/api/projects", requestBody);
   };
+
+  // DELETE
+  deleteProject = (id) => {
+    return this.api.delete(`/api/projects/${id}`);
+  };
 }
 
 const projectsService = new ProjectsService();

@@ -22,7 +22,7 @@ function ContributorCard(props) {
           <p className="white contributors-card-inofs-bio">
             {contributor.short_bio}
           </p>
-          {contributor.projects.length > 0 && (
+          {contributor.projects && (
             <p className="white contributors-card-inofs-projects">
               Related Projects:{" "}
               {contributor.projects.map((p) => {

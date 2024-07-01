@@ -12,7 +12,7 @@ function CreateProjectPage() {
   const [short_bio, setShort_bio] = useState("");
   const [email, setEmail] = useState("");
   const [projects, setProjects] = useState(null);
-  const [website_url, setWebsite_url] = useState("https://");
+  const [website_url, setWebsite_url] = useState("https://www.");
   const [insta, setInsta] = useState("");
   const [x, setX] = useState("");
 
@@ -39,7 +39,7 @@ function CreateProjectPage() {
       short_bio,
       email,
       projects,
-      website_url,
+      website_url: website_url === "https://www." ? website_url : "",
       social_media: { insta: insta, x: x },
     };
 
@@ -50,6 +50,8 @@ function CreateProjectPage() {
         // navigate("/admin");
       })
       .catch((err) => console.log(err));
+
+      navigate("/admin");
   };
 
   // REACT SELECT OPTIONS
@@ -105,6 +107,7 @@ function CreateProjectPage() {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              required
             />
           </label>
           {/* PROJECTS */}

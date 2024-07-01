@@ -56,3 +56,11 @@
 .admin-add-wrapper {
   width: 100%;
 }
+
+/* DELETE AND UPDATE */
+.admin-update-delete-wrapper{
+  gap: 0.5rem;
+}
+.admin-update-delete-icons{
+  width: 20px;
+}
