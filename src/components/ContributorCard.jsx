@@ -6,8 +6,6 @@ function ContributorCard(props) {
   const { contributor } = props;
   const [showInfos, setShowInfos] = useState(false);
 
-  console.log(contributor);
-
   const handleShowInfos = () => {
     setShowInfos(!showInfos);
   };
@@ -15,7 +13,7 @@ function ContributorCard(props) {
   return (
     <>
       <div className="contributors-card pointer" onClick={handleShowInfos}>
-        {contributor.name}{" "}
+        {contributor.name}
       </div>
       {showInfos && (
         <div className="contributors-card-inofs-wrapper flex-column">
@@ -49,7 +47,7 @@ function ContributorCard(props) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {contributor.website_url.replace("https://", "")}
+                {contributor.website_url}
               </Link>
           )}
         </div>

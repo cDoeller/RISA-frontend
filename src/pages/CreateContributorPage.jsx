@@ -12,7 +12,7 @@ function CreateContributorPage() {
   const [short_bio, setShort_bio] = useState("");
   const [email, setEmail] = useState("");
   const [projectId, setProjectId] = useState([]);
-  const [website_url, setWebsite_url] = useState("https://www.");
+  const [website_url, setWebsite_url] = useState("");
   const [insta, setInsta] = useState("");
   const [x, setX] = useState("");
 
@@ -39,7 +39,7 @@ function CreateContributorPage() {
       short_bio,
       email,
       projects: projectId,
-      website_url: website_url === "https://www." ? website_url : "",
+      website_url: website_url,
       social_media: { insta: insta, x: x },
     };
 
@@ -132,7 +132,7 @@ function CreateContributorPage() {
             website
             <input
               className="form-input-input form-input-type-text"
-              type="url"
+              type="text"
               value={website_url}
               onChange={(e) => {
                 setWebsite_url(e.target.value);

@@ -15,7 +15,7 @@ function UpdateProjectPage() {
   const [researchProjectId, setResearchProjectId] = useState(null);
   const [researchProjectTitle, setResearchProjectTitle] = useState(null);
   const [tags, setTags] = useState(null);
-  const [link, setLink] = useState("https://www.");
+  const [link, setLink] = useState("");
   // selectData
   const [allProjects, setAllProjects] = useState(null);
   const [allContributors, setAllContributors] = useState(null);
@@ -41,9 +41,7 @@ function UpdateProjectPage() {
         setTags(projectData.data.tags);
         setImageData(projectData.data.images_url);
         setImagePreviews(projectData.data.images_url);
-        setLink(
-          projectData.data.link === "" ? "https://www." : projectData.data.link
-        );
+        setLink(projectData.data.link);
         if (projectData.data.contributors) {
           setContributorsId(
             projectData.data.contributors.map((c) => {
@@ -97,7 +95,7 @@ function UpdateProjectPage() {
           year,
           research_project: researchProjectId ? researchProjectId : null,
           tags,
-          link: link === "https://www." ? link : "",
+          link: link,
         };
 
         // if something new to upload --> make new form data
@@ -360,7 +358,7 @@ function UpdateProjectPage() {
               website
               <input
                 className="form-input-input form-input-type-text"
-                type="url"
+                type="text"
                 value={link}
                 onChange={(e) => {
                   setLink(e.target.value);

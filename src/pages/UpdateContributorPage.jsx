@@ -13,7 +13,7 @@ function UpdateContributorPage() {
   const [email, setEmail] = useState("");
   const [projectId, setProjectId] = useState([]);
   const [defaultProjects, setDefaultProjects] = useState([]);
-  const [website_url, setWebsite_url] = useState("https://www.");
+  const [website_url, setWebsite_url] = useState("");
   const [insta, setInsta] = useState("");
   const [x, setX] = useState("");
 
@@ -25,14 +25,14 @@ function UpdateContributorPage() {
     const fetchData = async () => {
       try {
         const contributorData = await contributorsService.getContributor(id);
+
         setName(contributorData.data.name);
         setShort_bio(contributorData.data.short_bio);
         setEmail(contributorData.data.email);
         setInsta(contributorData.data.social_media.insta);
         setX(contributorData.data.social_media.x);
-        contributorData.data.website_url
-          ? setWebsite_url(contributorData.data.website_url)
-          : "https://www.";
+        setWebsite_url(contributorData.data.website_url);
+
         if (contributorData.data.projects.length > 0) {
           const projIdArray = contributorData.data.projects.map((proj) => {
             return proj._id;
@@ -55,7 +55,6 @@ function UpdateContributorPage() {
     fetchData();
   }, [id]);
 
-
   // SUBMIT FORM
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,7 +65,7 @@ function UpdateContributorPage() {
       short_bio,
       email,
       projects: projectId,
-      website_url: website_url === "https://www." ? website_url : "",
+      website_url: website_url,
       social_media: { insta: insta, x: x },
     };
 
@@ -153,13 +152,12 @@ function UpdateContributorPage() {
               />
             </label>
           )}
-
           {/* WEBSITE */}
           <label className="form-input-label" htmlFor="">
             website
             <input
               className="form-input-input form-input-type-text"
-              type="url"
+              type="text"
               value={website_url}
               onChange={(e) => {
                 setWebsite_url(e.target.value);
