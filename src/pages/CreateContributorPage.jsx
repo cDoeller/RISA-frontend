@@ -6,12 +6,12 @@ import Select from "react-select";
 import selectStles from "../styles/react-select-styling";
 import "../styles/styles-pages/CreateContributor.css";
 
-function CreateProjectPage() {
+function CreateContributorPage() {
   const [availableProjects, setAvailableProjects] = useState(null);
   const [name, setName] = useState("");
   const [short_bio, setShort_bio] = useState("");
   const [email, setEmail] = useState("");
-  const [projects, setProjects] = useState(null);
+  const [projectId, setProjectId] = useState([]);
   const [website_url, setWebsite_url] = useState("https://www.");
   const [insta, setInsta] = useState("");
   const [x, setX] = useState("");
@@ -38,7 +38,7 @@ function CreateProjectPage() {
       name,
       short_bio,
       email,
-      projects,
+      projects: projectId,
       website_url: website_url === "https://www." ? website_url : "",
       social_media: { insta: insta, x: x },
     };
@@ -51,11 +51,11 @@ function CreateProjectPage() {
       })
       .catch((err) => console.log(err));
 
-      navigate("/admin");
+    navigate("/admin");
   };
 
   // REACT SELECT OPTIONS
-  let projectsOptions = [{ value: "", label: "-" }];
+  let projectsOptions = [];
   if (availableProjects) {
     availableProjects.forEach((element) => {
       projectsOptions.push({ value: element._id, label: element.title });
@@ -64,7 +64,10 @@ function CreateProjectPage() {
 
   // REACT SELECT HANDLE SELECT FUNCTIONS
   function handleProjectsSelectChange(selectedOption) {
-    setProjects(selectedOption.value);
+    const projectIdArray = selectedOption.map((option) => {
+      return option.value;
+    });
+    setProjectId(projectIdArray);
   }
 
   return (
@@ -112,21 +115,21 @@ function CreateProjectPage() {
           </label>
           {/* PROJECTS */}
           {/* REACT SELECT */}
-          {availableProjects && (
+          {projectsOptions.length>0 && (
             <label className="form-input-label" htmlFor="">
               projects
               <Select
                 options={projectsOptions}
                 onChange={handleProjectsSelectChange}
-                value={{ label: projects }}
                 styles={selectStles}
+                isMulti
               />
             </label>
           )}
 
           {/* WEBSITE */}
           <label className="form-input-label" htmlFor="">
-            webiste
+            website
             <input
               className="form-input-input form-input-type-text"
               type="url"
@@ -173,4 +176,4 @@ function CreateProjectPage() {
   );
 }
 
-export default CreateProjectPage;
+export default CreateContributorPage;

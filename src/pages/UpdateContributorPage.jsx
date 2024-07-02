@@ -1,5 +1,5 @@
 import react, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import contributorsService from "../services/contributors.service";
 import projectsService from "../services/projects.service";
 import Select from "react-select";
@@ -11,51 +11,77 @@ function UpdateContributorPage() {
   const [name, setName] = useState("");
   const [short_bio, setShort_bio] = useState("");
   const [email, setEmail] = useState("");
-  const [projects, setProjects] = useState(null);
+  const [projectId, setProjectId] = useState([]);
+  const [defaultProjects, setDefaultProjects] = useState([]);
   const [website_url, setWebsite_url] = useState("https://www.");
   const [insta, setInsta] = useState("");
   const [x, setX] = useState("");
 
+  const { id } = useParams();
   const navigate = useNavigate();
 
+  //  Fetch Data
   useEffect(() => {
-    projectsService
-      .getAllProjects()
-      .then((result) => {
-        // console.log(result.data);
-        setAvailableProjects(result.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    const fetchData = async () => {
+      try {
+        const contributorData = await contributorsService.getContributor(id);
+        setName(contributorData.data.name);
+        setShort_bio(contributorData.data.short_bio);
+        setEmail(contributorData.data.email);
+        setInsta(contributorData.data.social_media.insta);
+        setX(contributorData.data.social_media.x);
+        contributorData.data.website_url
+          ? setWebsite_url(contributorData.data.website_url)
+          : "https://www.";
+        if (contributorData.data.projects.length > 0) {
+          const projIdArray = contributorData.data.projects.map((proj) => {
+            return proj._id;
+          });
+          setProjectId(projIdArray);
+          setDefaultProjects(
+            contributorData.data.projects.map((proj) => {
+              return { value: proj._id, label: proj.title };
+            })
+          );
+        }
 
+        const allProjectsData = await projectsService.getAllProjects();
+        setAvailableProjects(allProjectsData.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+
+  // SUBMIT FORM
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newContributor = {
+    const updatedContributor = {
       label: name,
       name,
       short_bio,
       email,
-      projects,
+      projects: projectId,
       website_url: website_url === "https://www." ? website_url : "",
       social_media: { insta: insta, x: x },
     };
 
     contributorsService
-      .createContributor(newContributor)
+      .updateContributor(id, updatedContributor)
       .then((response) => {
         console.log(response);
-        // navigate("/admin");
       })
       .catch((err) => console.log(err));
 
-      navigate("/admin");
+    navigate("/admin");
   };
 
   // REACT SELECT OPTIONS
-  let projectsOptions = [{ value: "", label: "-" }];
+  let projectsOptions = [];
   if (availableProjects) {
     availableProjects.forEach((element) => {
       projectsOptions.push({ value: element._id, label: element.title });
@@ -64,14 +90,17 @@ function UpdateContributorPage() {
 
   // REACT SELECT HANDLE SELECT FUNCTIONS
   function handleProjectsSelectChange(selectedOption) {
-    setProjects(selectedOption.value);
+    const projectIdArray = selectedOption.map((option) => {
+      return option.value;
+    });
+    setProjectId(projectIdArray);
   }
 
   return (
     <>
       <section className="contact-form-section page-wrapper">
         <form className="form" onSubmit={handleSubmit}>
-          {/* NAME */}
+          NAME
           <label className="form-input-label" htmlFor="">
             name
             <input
@@ -112,21 +141,22 @@ function UpdateContributorPage() {
           </label>
           {/* PROJECTS */}
           {/* REACT SELECT */}
-          {availableProjects && (
+          {projectsOptions.length > 0 && (
             <label className="form-input-label" htmlFor="">
               projects
               <Select
+                defaultValue={defaultProjects && defaultProjects}
                 options={projectsOptions}
                 onChange={handleProjectsSelectChange}
-                value={{ label: projects }}
                 styles={selectStles}
+                isMulti
               />
             </label>
           )}
 
           {/* WEBSITE */}
           <label className="form-input-label" htmlFor="">
-            webiste
+            website
             <input
               className="form-input-input form-input-type-text"
               type="url"

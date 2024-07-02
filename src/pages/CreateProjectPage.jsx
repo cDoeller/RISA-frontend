@@ -11,11 +11,11 @@ import contributorsService from "../services/contributors.service";
 function CreateProjectPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [contributorsId, setContributorsId] = useState(null);
+  const [contributorsId, setContributorsId] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
-  const [researchProjectId, setResearchProjectId] = useState(null);
-  const [researchProjectTitle, setResearchProjectTitle] = useState(null);
-  const [tags, setTags] = useState(null);
+  const [researchProjectId, setResearchProjectId] = useState("");
+  const [researchProjectTitle, setResearchProjectTitle] = useState("");
+  const [tags, setTags] = useState([]);
   const [link, setLink] = useState("https://www.");
   // selectData
   const [allProjects, setAllProjects] = useState(null);
@@ -54,7 +54,7 @@ function CreateProjectPage() {
           label: title,
           title,
           description,
-          contributors: contributorsId ? contributorsId : [],
+          contributors: contributorsId,
           year,
           research_project: researchProjectId ? researchProjectId : null,
           tags,
@@ -159,7 +159,7 @@ function CreateProjectPage() {
     const previews = newImageData.map((files) => URL.createObjectURL(files));
     setImagePreviews(previews);
   }
-  
+
   // ERRORS
   const errorMessageElement = <p className="error-message">{errorMessage}</p>;
 

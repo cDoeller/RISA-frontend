@@ -59,7 +59,7 @@ function AdminDataBlock(props) {
               return (
                 <div
                   key={data._id}
-                  className="admin-card-wrapper pointer flex-row-between-aligncenter"
+                  className="admin-card-wrapper flex-row-between-aligncenter"
                 >
                   <h1 className="admin-card-title">{data.label}</h1>
                   <div className="admin-update-delete-wrapper flex-row-aligncenter">
@@ -70,12 +70,12 @@ function AdminDataBlock(props) {
                           : `/admin/update-project/${data._id}`
                       }
                     >
-                      <div className="image-wrapper admin-update-delete-icons">
+                      <div className="image-wrapper admin-update-delete-icons pointer">
                         <img src="update-icon.png" alt="" />
                       </div>
                     </Link>
                     <div
-                      className="image-wrapper admin-update-delete-icons"
+                      className="image-wrapper admin-update-delete-icons pointer"
                       onClick={() => {
                         setDeleteItem({
                           id: data._id,
