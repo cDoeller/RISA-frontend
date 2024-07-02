@@ -38,7 +38,12 @@ class ContributorsService {
   // DELETE
   deleteContributor = (id) => {
     return this.api.delete(`/api/contributors/${id}`);
-  }
+  };
+
+  // UPDATE
+  updateContributor = (id, requestBody) => {
+    return this.api.patch(`/api/contributors/${id}`, requestBody);
+  };
 }
 
 const contributorsService = new ContributorsService();
