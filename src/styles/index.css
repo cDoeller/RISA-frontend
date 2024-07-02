@@ -208,6 +208,13 @@ input {
   z-index: -1;
 }
 
+.form-input-label-checkbox{
+  width: 100%;
+  display:flex;
+  gap: 0.5rem;
+  align-items: first baseline;
+}
+
 /* NOTIFICATIONS */
 .notification-wrapper {
   position: fixed;
