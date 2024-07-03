@@ -30,6 +30,11 @@ class ProjectsService {
     return this.api.get(`/api/projects/${id}`);
   };
 
+  // GET : SEARCH
+  searchProjects = (query) => {
+    return this.api.get(`/api/projects/search-cms?title=${query}`)
+  }
+
   // CREATE
   createProject = (requestBody) => {
     return this.api.post("/api/projects", requestBody);
