@@ -1,14 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Notification from "../components/Notification";
 import contributorsService from "../services/contributors.service";
 import projectsService from "../services/projects.service";
 
 function AdminDataBlock(props) {
-  const { data, setData, headline, createPath } = props;
+  const { headline, createPath } = props;
+  const [data, setData] = useState(null);
   const [deleteItem, setDeleteItem] = useState(null);
   const [deleteRequest, setDeleteRequest] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
+  // Fetching & Filtering
+  useEffect(() => {
+    switch (headline) {
+      case "Projects":
+        projectsService
+          .searchProjects(searchQuery)
+          .then((result) => {
+            // console.log(result.data);
+            setData(result.data);
+          })
+          .catch((err) => console.log(err));
+        break;
+      case "Contributors":
+        contributorsService
+          .searchContributor(searchQuery)
+          .then((result) => {
+            console.log(result.data);
+            setData(result.data);
+          })
+          .catch((err) => console.log(err));
+        break;
+    }
+  }, [searchQuery, headline, setData]);
+
+  // delete entries
   function handleDeleteItem() {
     if (deleteItem.type === "Projects") {
       projectsService
@@ -42,7 +69,12 @@ function AdminDataBlock(props) {
         <div className="admin-search-wrapper flex-row-left">
           <label className="admin-label flex-row">
             {headline}
-            <input className="admin-input" type="text" />
+            <input
+              className="admin-input"
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </label>
           <Link to={createPath}>
             <div className="admin-add-button image-wrapper pointer">

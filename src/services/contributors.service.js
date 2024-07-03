@@ -30,6 +30,11 @@ class ContributorsService {
     return this.api.get(`/api/contributors/${id}`);
   };
 
+  // GET : SEARCH
+  searchContributor = (query) => {
+    return this.api.get(`/api/contributors/search-cms?name=${query}`);
+  };
+
   // CREATE
   createContributor = (requestBody) => {
     return this.api.post("/api/contributors", requestBody);
