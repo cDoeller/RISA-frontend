@@ -18,7 +18,6 @@ function AdminDataBlock(props) {
         projectsService
           .searchProjects(searchQuery)
           .then((result) => {
-            // console.log(result.data);
             setData(result.data);
           })
           .catch((err) => console.log(err));
@@ -27,7 +26,6 @@ function AdminDataBlock(props) {
         contributorsService
           .searchContributor(searchQuery)
           .then((result) => {
-            console.log(result.data);
             setData(result.data);
           })
           .catch((err) => console.log(err));

@@ -298,7 +298,6 @@ function CreateProjectPage() {
             <Select
               options={contributorOptions}
               onChange={handleContributorsSelectChange}
-              // value={{ label: contributorsName }}
               styles={selectStles}
               isMulti
             />
