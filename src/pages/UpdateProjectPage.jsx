@@ -12,8 +12,10 @@ function UpdateProjectPage() {
   const [description, setDescription] = useState("");
   const [contributorsId, setContributorsId] = useState(null);
   const [year, setYear] = useState(new Date().getFullYear());
-  const [researchProjectId, setResearchProjectId] = useState(null);
-  const [researchProjectTitle, setResearchProjectTitle] = useState(null);
+  const [umbrellaProjectId, setUmbrellaProjectId] = useState("");
+  const [umbrellaProjectTitle, setUmbrellaProjectTitle] = useState("");
+  const [relatedProjects, setRelatedProjects] = useState([]);
+  const [isUmbrellaProject, setIsUmbrellaProject] = useState(false);
   const [tags, setTags] = useState(null);
   const [link, setLink] = useState("");
   // selectData
@@ -42,6 +44,8 @@ function UpdateProjectPage() {
         setImageData(projectData.data.images_url);
         setImagePreviews(projectData.data.images_url);
         setLink(projectData.data.link);
+        setRelatedProjects(projectData.data.related_projects);
+        setIsUmbrellaProject(projectData.data.is_umbrella_project);
         if (projectData.data.contributors) {
           setContributorsId(
             projectData.data.contributors.map((c) => {
@@ -55,7 +59,7 @@ function UpdateProjectPage() {
           );
         }
         if (projectData.data.research_project) {
-          setResearchProjectId(
+          setUmbrellaProjectId(
             projectData.data.research_project.map((p) => {
               return p._id;
             })
@@ -93,7 +97,9 @@ function UpdateProjectPage() {
           description,
           contributors: contributorsId ? contributorsId : [],
           year,
-          research_project: researchProjectId ? researchProjectId : null,
+          is_umbrella_project: isUmbrellaProject,
+          umbrella_project: umbrellaProjectId ? umbrellaProjectId : null,
+          related_projects: relatedProjects,
           tags,
           link: link,
         };
@@ -168,13 +174,37 @@ function UpdateProjectPage() {
     });
   }
 
-  let projectOptions = [{ value: "", label: "-" }];
+  // let projectOptions = [{ value: "", label: "-" }];
+  // if (allProjects) {
+  //   allProjects.forEach((project) => {
+  //     projectOptions.push({
+  //       value: project._id,
+  //       label: project.title,
+  //     });
+  //   });
+  // }
+
+  let umbrellaProjectOptions = [{ value: "", label: "-" }];
   if (allProjects) {
     allProjects.forEach((project) => {
-      projectOptions.push({
-        value: project._id,
-        label: project.title,
-      });
+      if (project.is_umbrella_project) {
+        umbrellaProjectOptions.push({
+          value: project._id,
+          label: project.title,
+        });
+      }
+    });
+  }
+
+  let relatedProjectsOptions = [];
+  if (allProjects) {
+    allProjects.forEach((project) => {
+      if (!project.is_umbrella_project) {
+        relatedProjectsOptions.push({
+          value: project._id,
+          label: project.title,
+        });
+      }
     });
   }
 
@@ -192,8 +222,15 @@ function UpdateProjectPage() {
     setContributorsId(contributorIdArray);
   }
   function handleProjectsSelectChange(selectedOption) {
-    setResearchProjectId(selectedOption.value);
-    setResearchProjectTitle(selectedOption.label);
+    setUmbrellaProjectId(selectedOption.value);
+    setUmbrellaProjectTitle(selectedOption.label);
+  }
+
+  function handleRelatedProjectsSelectChange(selectedOption) {
+    const relatedProjectsIdArray = selectedOption.map((option) => {
+      return option.value;
+    });
+    setRelatedProjects(relatedProjectsIdArray);
   }
 
   // * IMAGES FILE UPLOAD
@@ -221,6 +258,15 @@ function UpdateProjectPage() {
     setImageData(newImageData);
     const addedPreviews = filesArray.map((files) => URL.createObjectURL(files));
     setImagePreviews([...imagePreviews, ...addedPreviews]);
+  }
+
+  // CHECKBOX
+  function handleCheckbox(isChecked) {
+    if (isChecked) {
+      setIsUmbrellaProject(true);
+    } else {
+      setIsUmbrellaProject(false);
+    }
   }
 
   // ERRORS
@@ -329,17 +375,45 @@ function UpdateProjectPage() {
                 isMulti
               />
             </label>
-            {/* RESEARCH PROJECT */}
-            <label className="form-input-label" htmlFor="">
-              umbrella project
-              <Select
-                defaultValue={defaultProject && defaultProject}
-                options={projectOptions}
-                onChange={handleProjectsSelectChange}
-                value={{ label: researchProjectTitle }}
-                styles={selectStles}
+
+            {/* UMBRELLA CHECKBOX */}
+            <label className="form-input-label-checkbox" htmlFor="">
+              <input
+                type="checkbox"
+                checked={isUmbrellaProject}
+                onChange={(e) => {
+                  handleCheckbox(e.target.checked);
+                }}
               />
+              This is an umbrella for other projects
             </label>
+
+            {/* UMBRELLA PROJECT */}
+            {!isUmbrellaProject && (
+              <label className="form-input-label" htmlFor="">
+                umbrella project
+                <Select
+                  options={umbrellaProjectOptions}
+                  onChange={handleProjectsSelectChange}
+                  value={{ label: umbrellaProjectTitle }}
+                  styles={selectStles}
+                />
+              </label>
+            )}
+
+            {/* RELATED PROJECTS */}
+            {isUmbrellaProject && (
+              <label className="form-input-label" htmlFor="">
+                related projects
+                <Select
+                  options={relatedProjectsOptions}
+                  onChange={handleRelatedProjectsSelectChange}
+                  styles={selectStles}
+                  isMulti
+                />
+              </label>
+            )}
+
             {/* TAGS */}
             {/* REACT SELECT */}
             <label className="form-input-label" htmlFor="">

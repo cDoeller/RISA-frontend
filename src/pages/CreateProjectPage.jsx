@@ -302,17 +302,19 @@ function CreateProjectPage() {
               isMulti
             />
           </label>
+
           {/* UMBRELLA CHECKBOX */}
           <label className="form-input-label-checkbox" htmlFor="">
             <input
               type="checkbox"
-              value={isUmbrellaProject}
+              checked={isUmbrellaProject}
               onChange={(e) => {
                 handleCheckbox(e.target.checked);
               }}
             />
             This is an umbrella for other projects
           </label>
+
           {/* UMBRELLA PROJECT */}
           {!isUmbrellaProject && (
             <label className="form-input-label" htmlFor="">
@@ -325,6 +327,7 @@ function CreateProjectPage() {
               />
             </label>
           )}
+
           {/* RELATED PROJECTS */}
           {isUmbrellaProject && (
             <label className="form-input-label" htmlFor="">
