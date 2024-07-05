@@ -13,7 +13,7 @@ function UpdateProjectPage() {
   const [contributorsId, setContributorsId] = useState(null);
   const [year, setYear] = useState(new Date().getFullYear());
   const [umbrellaProjectId, setUmbrellaProjectId] = useState("");
-  const [umbrellaProjectTitle, setUmbrellaProjectTitle] = useState("");
+  // const [umbrellaProjectTitle, setUmbrellaProjectTitle] = useState("");
   const [relatedProjects, setRelatedProjects] = useState([]);
   const [isUmbrellaProject, setIsUmbrellaProject] = useState(false);
   const [tags, setTags] = useState(null);
@@ -22,7 +22,8 @@ function UpdateProjectPage() {
   const [allProjects, setAllProjects] = useState(null);
   const [allContributors, setAllContributors] = useState(null);
   const [defaultContributors, setDefaultContributors] = useState(null);
-  const [defaultProject, setDefaultProject] = useState(null);
+  const [defaultUmbrellaProject, setDefaultUmbrellaProject] = useState(null);
+  const [defaultRelatedProjects, setDefaultRelatedProjects] = useState(null);
   // image data
   const [imageData, setImageData] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -58,18 +59,26 @@ function UpdateProjectPage() {
             })
           );
         }
-        if (projectData.data.research_project) {
-          setUmbrellaProjectId(
-            projectData.data.research_project.map((p) => {
-              return p._id;
-            })
-          );
-          setDefaultProject(
-            projectData.data.research_project.map((p) => {
-              return { value: p._id, label: p.title };
+        if (projectData.data.related_projects) {
+          // setContributorsId(
+          //   projectData.data.contributors.map((c) => {
+          //     return c._id;
+          //   })
+          // );
+          setDefaultRelatedProjects(
+            projectData.data.related_projects.map((rp) => {
+              return { value: rp._id, label: rp.title };
             })
           );
         }
+        if (projectData.data.umbrella_project) {
+          setUmbrellaProjectId(projectData.data.umbrella_project._id);
+          setDefaultUmbrellaProject({
+            value: projectData.data.umbrella_project._id,
+            label: projectData.data.umbrella_project.title,
+          });
+        }
+
         // set - all - contributors and projects data for dropdown
         const projectsResult = await projectsService.getAllProjects();
         setAllProjects(projectsResult.data);
@@ -174,16 +183,6 @@ function UpdateProjectPage() {
     });
   }
 
-  // let projectOptions = [{ value: "", label: "-" }];
-  // if (allProjects) {
-  //   allProjects.forEach((project) => {
-  //     projectOptions.push({
-  //       value: project._id,
-  //       label: project.title,
-  //     });
-  //   });
-  // }
-
   let umbrellaProjectOptions = [{ value: "", label: "-" }];
   if (allProjects) {
     allProjects.forEach((project) => {
@@ -215,15 +214,17 @@ function UpdateProjectPage() {
     });
     setTags(tagsArray);
   }
+
   function handleContributorsSelectChange(selectedOption) {
     const contributorIdArray = selectedOption.map((option) => {
       return option.value;
     });
     setContributorsId(contributorIdArray);
   }
-  function handleProjectsSelectChange(selectedOption) {
+
+  function handleUmbrellaSelectChange(selectedOption) {
     setUmbrellaProjectId(selectedOption.value);
-    setUmbrellaProjectTitle(selectedOption.label);
+    // setUmbrellaProjectTitle(selectedOption.label);
   }
 
   function handleRelatedProjectsSelectChange(selectedOption) {
@@ -393,19 +394,23 @@ function UpdateProjectPage() {
               <label className="form-input-label" htmlFor="">
                 umbrella project
                 <Select
+                  defaultValue={defaultUmbrellaProject && defaultUmbrellaProject}
                   options={umbrellaProjectOptions}
-                  onChange={handleProjectsSelectChange}
-                  value={{ label: umbrellaProjectTitle }}
+                  onChange={handleUmbrellaSelectChange}
                   styles={selectStles}
                 />
               </label>
             )}
+
+            {console.log("default umbrella ", defaultUmbrellaProject)}
+            {console.log("default related ", defaultRelatedProjects)}
 
             {/* RELATED PROJECTS */}
             {isUmbrellaProject && (
               <label className="form-input-label" htmlFor="">
                 related projects
                 <Select
+                  defaultValue={defaultRelatedProjects && defaultRelatedProjects}
                   options={relatedProjectsOptions}
                   onChange={handleRelatedProjectsSelectChange}
                   styles={selectStles}
