@@ -291,18 +291,6 @@ function CreateProjectPage() {
             </div>
           )}
 
-          {/* CONTRIBUTIORS */}
-          {/* REACT SELECT */}
-          <label className="form-input-label" htmlFor="">
-            contributors
-            <Select
-              options={contributorOptions}
-              onChange={handleContributorsSelectChange}
-              styles={selectStles}
-              isMulti
-            />
-          </label>
-
           {/* UMBRELLA CHECKBOX */}
           <label className="form-input-label-checkbox" htmlFor="">
             <input
@@ -340,6 +328,21 @@ function CreateProjectPage() {
               />
             </label>
           )}
+
+          {/* CONTRIBUTIORS */}
+          {/* REACT SELECT */}
+          {!isUmbrellaProject && (
+            <label className="form-input-label" htmlFor="">
+              contributors
+              <Select
+                options={contributorOptions}
+                onChange={handleContributorsSelectChange}
+                styles={selectStles}
+                isMulti
+              />
+            </label>
+          )}
+
           {/* TAGS */}
           {/* REACT SELECT */}
           <label className="form-input-label" htmlFor="">

@@ -364,19 +364,6 @@ function UpdateProjectPage() {
               </div>
             )}
 
-            {/* CONTRIBUTIORS */}
-            {/* REACT SELECT */}
-            <label className="form-input-label" htmlFor="">
-              contributors
-              <Select
-                defaultValue={defaultContributors && defaultContributors}
-                options={contributorOptions}
-                onChange={handleContributorsSelectChange}
-                styles={selectStles}
-                isMulti
-              />
-            </label>
-
             {/* UMBRELLA CHECKBOX */}
             <label className="form-input-label-checkbox" htmlFor="">
               <input
@@ -394,7 +381,9 @@ function UpdateProjectPage() {
               <label className="form-input-label" htmlFor="">
                 umbrella project
                 <Select
-                  defaultValue={defaultUmbrellaProject && defaultUmbrellaProject}
+                  defaultValue={
+                    defaultUmbrellaProject && defaultUmbrellaProject
+                  }
                   options={umbrellaProjectOptions}
                   onChange={handleUmbrellaSelectChange}
                   styles={selectStles}
@@ -402,17 +391,31 @@ function UpdateProjectPage() {
               </label>
             )}
 
-            {console.log("default umbrella ", defaultUmbrellaProject)}
-            {console.log("default related ", defaultRelatedProjects)}
-
             {/* RELATED PROJECTS */}
             {isUmbrellaProject && (
               <label className="form-input-label" htmlFor="">
                 related projects
                 <Select
-                  defaultValue={defaultRelatedProjects && defaultRelatedProjects}
+                  defaultValue={
+                    defaultRelatedProjects && defaultRelatedProjects
+                  }
                   options={relatedProjectsOptions}
                   onChange={handleRelatedProjectsSelectChange}
+                  styles={selectStles}
+                  isMulti
+                />
+              </label>
+            )}
+
+            {/* CONTRIBUTIORS */}
+            {/* REACT SELECT */}
+            {!isUmbrellaProject && (
+              <label className="form-input-label" htmlFor="">
+                contributors
+                <Select
+                  defaultValue={defaultContributors && defaultContributors}
+                  options={contributorOptions}
+                  onChange={handleContributorsSelectChange}
                   styles={selectStles}
                   isMulti
                 />
