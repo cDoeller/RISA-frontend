@@ -99,7 +99,7 @@ function UpdateProjectPage() {
     try {
       e.preventDefault();
 
-      if (imageData.length > 0) {
+      // if (imageData.length > 0) {
         let newProject = {
           label: title,
           title,
@@ -147,9 +147,9 @@ function UpdateProjectPage() {
         console.log(updateProjectResponse);
 
         navigate("/admin");
-      } else {
-        setErrorMessage("please upload at least one image.");
-      }
+      // } else {
+      //   setErrorMessage("please upload at least one image.");
+      // }
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);

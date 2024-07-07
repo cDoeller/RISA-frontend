@@ -65,6 +65,7 @@ function CreateProjectPage() {
         link: link,
       };
 
+      //  ************************************ this if is only temporary
       if (imageData.length > 0) {
         // make body formdata for cloudinary route
         const imageUploadData = new FormData();
