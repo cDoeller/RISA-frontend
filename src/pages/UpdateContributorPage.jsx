@@ -26,12 +26,16 @@ function UpdateContributorPage() {
       try {
         const contributorData = await contributorsService.getContributor(id);
 
+        console.log(contributorData.data)
+
         setName(contributorData.data.name);
         setShort_bio(contributorData.data.short_bio);
         setEmail(contributorData.data.email);
         setInsta(contributorData.data.social_media.insta);
         setX(contributorData.data.social_media.x);
         setWebsite_url(contributorData.data.website_url);
+
+        console.log(contributorData.data.projects)
 
         if (contributorData.data.projects.length > 0) {
           const projIdArray = contributorData.data.projects.map((proj) => {
