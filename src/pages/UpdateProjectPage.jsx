@@ -377,7 +377,7 @@ function UpdateProjectPage() {
             </label> */}
 
             {/* UMBRELLA PROJECT */}
-            {!isUmbrellaProject && (
+            {/* {!isUmbrellaProject && (
               <label className="form-input-label" htmlFor="">
                 umbrella project
                 <Select
@@ -389,7 +389,7 @@ function UpdateProjectPage() {
                   styles={selectStles}
                 />
               </label>
-            )}
+            )} */}
 
             {/* RELATED PROJECTS */}
             {isUmbrellaProject && (

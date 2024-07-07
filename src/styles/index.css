@@ -215,6 +215,15 @@ input {
   align-items: first baseline;
 }
 
+.no-change-div{
+  width: 100%;
+  border: 1px black dotted;
+  gap: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  margin-top:0.5rem;
+}
+
 /* NOTIFICATIONS */
 .notification-wrapper {
   position: fixed;
