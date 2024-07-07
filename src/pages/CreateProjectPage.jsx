@@ -296,30 +296,36 @@ function CreateProjectPage() {
             </div>
           )}
 
-          {/* UMBRELLA CHECKBOX */}
-          <label className="form-input-label-checkbox" htmlFor="">
-            <input
-              type="checkbox"
-              checked={isUmbrellaProject}
-              onChange={(e) => {
-                handleCheckbox(e.target.checked);
-              }}
-            />
-            This is an umbrella for other projects
-          </label>
-
-          {/* UMBRELLA PROJECT */}
-          {!isUmbrellaProject && (
-            <label className="form-input-label" htmlFor="">
-              umbrella project
-              <Select
-                options={umbrellaProjectOptions}
-                onChange={handleProjectsSelectChange}
-                value={{ label: umbrellaProjectTitle }}
-                styles={selectStles}
+          <div className="no-change-div flex-column">
+            {/* UMBRELLA CHECKBOX */}
+            <label className="form-input-label-checkbox" htmlFor="">
+              <input
+                type="checkbox"
+                checked={isUmbrellaProject}
+                onChange={(e) => {
+                  handleCheckbox(e.target.checked);
+                }}
               />
+              This is an umbrella for other projects
             </label>
-          )}
+
+            {/* UMBRELLA PROJECT */}
+            {!isUmbrellaProject && (
+              <label className="form-input-label" htmlFor="">
+                umbrella project
+                <Select
+                  options={umbrellaProjectOptions}
+                  onChange={handleProjectsSelectChange}
+                  value={{ label: umbrellaProjectTitle }}
+                  styles={selectStles}
+                />
+              </label>
+            )}
+
+            <label className="form-input-label" htmlFor="">
+              Please Note: <br /> This can not be changed at a later time.
+            </label>
+          </div>
 
           {/* RELATED PROJECTS */}
           {isUmbrellaProject && (

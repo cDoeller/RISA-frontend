@@ -22,3 +22,12 @@
     padding: 0.4rem;
     text-align: center;
 }
+
+.no-change-div{
+  width: 100%;
+  border: 1px black dotted;
+  gap: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  margin-top:0.5rem;
+}

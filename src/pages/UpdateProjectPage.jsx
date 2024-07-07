@@ -100,53 +100,53 @@ function UpdateProjectPage() {
       e.preventDefault();
 
       // if (imageData.length > 0) {
-        let newProject = {
-          label: title,
-          title,
-          description,
-          contributors: contributorsId ? contributorsId : [],
-          year,
-          is_umbrella_project: isUmbrellaProject,
-          umbrella_project: umbrellaProjectId ? umbrellaProjectId : null,
-          related_projects: relatedProjects,
-          tags,
-          link: link,
-        };
+      let newProject = {
+        label: title,
+        title,
+        description,
+        contributors: contributorsId ? contributorsId : [],
+        year,
+        is_umbrella_project: isUmbrellaProject,
+        umbrella_project: umbrellaProjectId ? umbrellaProjectId : null,
+        related_projects: relatedProjects,
+        tags,
+        link: link,
+      };
 
-        // if something new to upload --> make new form data
-        let hasNewImages = false;
-        let imageUploadData = new FormData();
-        imageData.forEach((imageFile) => {
-          if (typeof imageFile !== "string") {
-            hasNewImages = true;
-            imageUploadData.append("files", imageFile);
-          }
-        });
-
-        if (hasNewImages) {
-          // upload only new image data to cloudinary
-          const cloudinaryResponse = await cloudinaryService.uploadMultiple(
-            imageUploadData
-          );
-          console.log("cloudinaryResponse", cloudinaryResponse);
-          // combine old and new cloudinary ulrs
-          let newImageUrls = imageData.filter((element) => {
-            return typeof element === "string";
-          });
-          newImageUrls = [...newImageUrls, ...cloudinaryResponse.data.fileUrls];
-          newProject.images_url = newImageUrls;
-          console.log("newImageUrls", newImageUrls);
-        } else {
-          newProject.images_url = imageData;
+      // if something new to upload --> make new form data
+      let hasNewImages = false;
+      let imageUploadData = new FormData();
+      imageData.forEach((imageFile) => {
+        if (typeof imageFile !== "string") {
+          hasNewImages = true;
+          imageUploadData.append("files", imageFile);
         }
+      });
 
-        const updateProjectResponse = await projectsService.updateProject(
-          id,
-          newProject
+      if (hasNewImages) {
+        // upload only new image data to cloudinary
+        const cloudinaryResponse = await cloudinaryService.uploadMultiple(
+          imageUploadData
         );
-        console.log(updateProjectResponse);
+        console.log("cloudinaryResponse", cloudinaryResponse);
+        // combine old and new cloudinary ulrs
+        let newImageUrls = imageData.filter((element) => {
+          return typeof element === "string";
+        });
+        newImageUrls = [...newImageUrls, ...cloudinaryResponse.data.fileUrls];
+        newProject.images_url = newImageUrls;
+        console.log("newImageUrls", newImageUrls);
+      } else {
+        newProject.images_url = imageData;
+      }
 
-        navigate("/admin");
+      const updateProjectResponse = await projectsService.updateProject(
+        id,
+        newProject
+      );
+      console.log(updateProjectResponse);
+
+      navigate("/admin");
       // } else {
       //   setErrorMessage("please upload at least one image.");
       // }
@@ -365,7 +365,7 @@ function UpdateProjectPage() {
             )}
 
             {/* UMBRELLA CHECKBOX */}
-            <label className="form-input-label-checkbox" htmlFor="">
+            {/* <label className="form-input-label-checkbox" htmlFor="">
               <input
                 type="checkbox"
                 checked={isUmbrellaProject}
@@ -374,7 +374,7 @@ function UpdateProjectPage() {
                 }}
               />
               This is an umbrella for other projects
-            </label>
+            </label> */}
 
             {/* UMBRELLA PROJECT */}
             {!isUmbrellaProject && (
