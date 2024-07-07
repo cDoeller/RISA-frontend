@@ -51,20 +51,21 @@ function CreateProjectPage() {
     try {
       e.preventDefault();
 
-      if (imageData.length > 0) {
-        let newProject = {
-          label: title,
-          title,
-          description,
-          contributors: contributorsId,
-          year,
-          umbrella_project: umbrellaProjectId ? umbrellaProjectId : null,
-          related_projects: relatedProjects,
-          is_umbrella_project: isUmbrellaProject,
-          tags,
-          link: link,
-        };
+      // if (imageData.length > 0) {
+      let newProject = {
+        label: title,
+        title,
+        description,
+        contributors: contributorsId,
+        year,
+        umbrella_project: umbrellaProjectId ? umbrellaProjectId : null,
+        related_projects: relatedProjects,
+        is_umbrella_project: isUmbrellaProject,
+        tags,
+        link: link,
+      };
 
+      if (imageData.length > 0) {
         // make body formdata for cloudinary route
         const imageUploadData = new FormData();
         imageData.forEach((imageFile) => {
@@ -75,15 +76,18 @@ function CreateProjectPage() {
           imageUploadData
         );
         newProject.images_url = cloudinaryResponse.data.fileUrls;
-
-        const createProjectResponse = await projectsService.createProject(
-          newProject
-        );
-
-        navigate("/admin");
       } else {
-        setErrorMessage("please upload at least one image.");
+        newProject.images_url = [];
       }
+
+      const createProjectResponse = await projectsService.createProject(
+        newProject
+      );
+
+      navigate("/admin");
+      // } else {
+      // setErrorMessage("please upload at least one image.");
+      // }
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);
