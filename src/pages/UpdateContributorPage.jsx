@@ -83,7 +83,9 @@ function UpdateContributorPage() {
   let projectsOptions = [];
   if (availableProjects) {
     availableProjects.forEach((element) => {
-      projectsOptions.push({ value: element._id, label: element.title });
+      if (!element.is_umbrella_project) {
+        projectsOptions.push({ value: element._id, label: element.title });
+      }
     });
   }
 
