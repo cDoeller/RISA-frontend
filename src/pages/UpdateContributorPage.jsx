@@ -26,7 +26,7 @@ function UpdateContributorPage() {
       try {
         const contributorData = await contributorsService.getContributor(id);
 
-        console.log(contributorData.data)
+        console.log(contributorData.data);
 
         setName(contributorData.data.name);
         setShort_bio(contributorData.data.short_bio);
@@ -35,7 +35,10 @@ function UpdateContributorPage() {
         setX(contributorData.data.social_media.x);
         setWebsite_url(contributorData.data.website_url);
 
-        console.log(contributorData.data.projects)
+        // console.log(contributorData.data.projects);
+        // contributorData.data.projects.forEach((e) => {
+        //   console.log(typeof e);
+        // });
 
         if (contributorData.data.projects.length > 0) {
           const projIdArray = contributorData.data.projects.map((proj) => {
@@ -105,7 +108,7 @@ function UpdateContributorPage() {
     <>
       <section className="contact-form-section page-wrapper">
         <form className="form" onSubmit={handleSubmit}>
-          NAME
+          {/* NAME */}
           <label className="form-input-label" htmlFor="">
             name
             <input
