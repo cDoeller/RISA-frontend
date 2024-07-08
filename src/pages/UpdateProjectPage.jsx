@@ -12,8 +12,7 @@ function UpdateProjectPage() {
   const [description, setDescription] = useState("");
   const [contributorsId, setContributorsId] = useState(null);
   const [year, setYear] = useState(new Date().getFullYear());
-  const [umbrellaProjectId, setUmbrellaProjectId] = useState("");
-  // const [umbrellaProjectTitle, setUmbrellaProjectTitle] = useState("");
+  const [umbrellaProject, setUmbrellaProject] = useState(null);
   const [relatedProjects, setRelatedProjects] = useState([]);
   const [isUmbrellaProject, setIsUmbrellaProject] = useState(false);
   const [tags, setTags] = useState(null);
@@ -22,7 +21,6 @@ function UpdateProjectPage() {
   const [allProjects, setAllProjects] = useState(null);
   const [allContributors, setAllContributors] = useState(null);
   const [defaultContributors, setDefaultContributors] = useState(null);
-  const [defaultUmbrellaProject, setDefaultUmbrellaProject] = useState(null);
   const [defaultRelatedProjects, setDefaultRelatedProjects] = useState(null);
   // image data
   const [imageData, setImageData] = useState([]);
@@ -47,6 +45,7 @@ function UpdateProjectPage() {
         setLink(projectData.data.link);
         setRelatedProjects(projectData.data.related_projects);
         setIsUmbrellaProject(projectData.data.is_umbrella_project);
+        setUmbrellaProject(projectData.data.umbrella_project);
         if (projectData.data.contributors) {
           setContributorsId(
             projectData.data.contributors.map((c) => {
@@ -60,23 +59,11 @@ function UpdateProjectPage() {
           );
         }
         if (projectData.data.related_projects) {
-          // setContributorsId(
-          //   projectData.data.contributors.map((c) => {
-          //     return c._id;
-          //   })
-          // );
           setDefaultRelatedProjects(
             projectData.data.related_projects.map((rp) => {
               return { value: rp._id, label: rp.title };
             })
           );
-        }
-        if (projectData.data.umbrella_project) {
-          setUmbrellaProjectId(projectData.data.umbrella_project._id);
-          setDefaultUmbrellaProject({
-            value: projectData.data.umbrella_project._id,
-            label: projectData.data.umbrella_project.title,
-          });
         }
 
         // set - all - contributors and projects data for dropdown
@@ -107,7 +94,6 @@ function UpdateProjectPage() {
         contributors: contributorsId ? contributorsId : [],
         year,
         is_umbrella_project: isUmbrellaProject,
-        umbrella_project: umbrellaProjectId ? umbrellaProjectId : null,
         related_projects: relatedProjects,
         tags,
         link: link,
@@ -222,11 +208,6 @@ function UpdateProjectPage() {
     setContributorsId(contributorIdArray);
   }
 
-  function handleUmbrellaSelectChange(selectedOption) {
-    setUmbrellaProjectId(selectedOption.value);
-    // setUmbrellaProjectTitle(selectedOption.label);
-  }
-
   function handleRelatedProjectsSelectChange(selectedOption) {
     const relatedProjectsIdArray = selectedOption.map((option) => {
       return option.value;
@@ -259,15 +240,6 @@ function UpdateProjectPage() {
     setImageData(newImageData);
     const addedPreviews = filesArray.map((files) => URL.createObjectURL(files));
     setImagePreviews([...imagePreviews, ...addedPreviews]);
-  }
-
-  // CHECKBOX
-  function handleCheckbox(isChecked) {
-    if (isChecked) {
-      setIsUmbrellaProject(true);
-    } else {
-      setIsUmbrellaProject(false);
-    }
   }
 
   // ERRORS
@@ -391,7 +363,7 @@ function UpdateProjectPage() {
               </label>
             )} */}
 
-            {/* RELATED PROJECTS */}
+            {/* RELATED PROJECTS UMBRELLA */}
             {isUmbrellaProject && (
               <label className="form-input-label" htmlFor="">
                 related projects
@@ -405,6 +377,32 @@ function UpdateProjectPage() {
                   isMulti
                 />
               </label>
+            )}
+
+            {/* RELATED PROJECTS RELATED */}
+            {!isUmbrellaProject && (
+              <>
+                <label className="form-input-label" htmlFor="">
+                  related projects
+                  {relatedProjects && (
+                    <div className="flex-column" style={{ gap: "0.5rem" }}>
+                      {relatedProjects.map((project) => {
+                        return (
+                          <p key={project._id} className="highlight-grey">
+                            {project.title}
+                          </p>
+                        );
+                      })}
+                    </div>
+                  )}
+                </label>
+                {umbrellaProject && (
+                  <label className="form-input-label" htmlFor="">
+                    umbrella project
+                    <p className="highlight-grey">{umbrellaProject.title}</p>
+                  </label>
+                )}
+              </>
             )}
 
             {/* CONTRIBUTIORS */}

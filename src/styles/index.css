@@ -56,6 +56,11 @@ input {
   color: white;
 }
 
+.highlight-grey{
+  background-color: rgb(238, 238, 238);
+  padding: 0.3rem;
+}
+
 /* WRaPPER */
 
 .page-wrapper {
