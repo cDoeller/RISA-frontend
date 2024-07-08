@@ -382,9 +382,9 @@ function UpdateProjectPage() {
             {/* RELATED PROJECTS RELATED */}
             {!isUmbrellaProject && (
               <>
-                <label className="form-input-label" htmlFor="">
-                  related projects
-                  {relatedProjects && (
+                {relatedProjects.length>0 && (
+                  <label className="form-input-label" htmlFor="">
+                    related projects
                     <div className="flex-column" style={{ gap: "0.5rem" }}>
                       {relatedProjects.map((project) => {
                         return (
@@ -394,8 +394,8 @@ function UpdateProjectPage() {
                         );
                       })}
                     </div>
-                  )}
-                </label>
+                  </label>
+                )}
                 {umbrellaProject && (
                   <label className="form-input-label" htmlFor="">
                     umbrella project
