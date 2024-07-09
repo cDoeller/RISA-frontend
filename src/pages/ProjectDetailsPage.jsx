@@ -1,7 +1,7 @@
 import { ExternalLink } from "react-external-link";
 import ScrollToTop from "react-scroll-to-top";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "../styles/styles-pages/ProjectDetailsPage.css";
 import projectsService from "../services/projects.service";
 
@@ -35,9 +35,9 @@ function ProjectDetailsPage() {
                 (projectData.year ? projectData.year : "")}
             </h1>
             {/* CONTRIB */}
-            <div className="project-details-info-contributors flex-row-wrap">
-              {projectData.contributors.length &&
-                projectData.contributors.map((c, index) => {
+            {projectData.contributors.length > 0 && (
+              <div className="project-details-info-contributors flex-row-wrap">
+                {projectData.contributors.map((c, index) => {
                   return (
                     <p key={c._id}>
                       {c.name}
@@ -45,7 +45,8 @@ function ProjectDetailsPage() {
                     </p>
                   );
                 })}
-            </div>
+              </div>
+            )}
             {/* DESCRIPTION */}
             <p className="project-details-info-description">
               {projectData.description}
@@ -71,16 +72,65 @@ function ProjectDetailsPage() {
                 })}
               </div>
             )}
+            {/* RELATED PROJECTS */}
+            {projectData.is_umbrella_project && (
+              <div className="flex-column project-details-info-related-container">
+                <p className="project-details-info-related-container-headline">
+                  Related Projects:
+                </p>
+                {projectData.related_projects.map((p) => {
+                  return (
+                    <Link
+                      to={`/projects/${p._id}`}
+                      key={p._id}
+                      className="project-details-info-related-card"
+                    >
+                      <div className="image-wrapper">
+                        <img src={p.images_url[0]} alt="" />
+                      </div>
+                      <h1 className="project-details-info-related-card-title">
+                        {p.title}
+                      </h1>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
             {/* IMAGES */}
             <div className="flex-column project-details-info-images-container">
-              {projectData.images_url.map((img) => {
-                return (
-                  <div key={img} className="image-wrapper">
-                    <img src={img} alt="" />
-                  </div>
-                );
-              })}
+              {projectData.images_url.length > 1 &&
+                projectData.images_url.map((img) => {
+                  return (
+                    <div key={img} className="image-wrapper">
+                      <img src={img} alt="" />
+                    </div>
+                  );
+                })}
             </div>
+            {/* UMBRELLA PROJECT */}
+            {!projectData.is_umbrella_project &&
+              projectData.umbrella_project && (
+                <div className="flex-column project-details-info-related-container">
+                  <p className="project-details-info-related-container-headline">
+                    Umbrella Project:
+                  </p>
+                  <Link
+                    to={`/projects/${projectData.umbrella_project._id}`}
+                    className="project-details-info-related-card"
+                  >
+                    <div className="image-wrapper">
+                      <img
+                        src={projectData.umbrella_project.images_url[0]}
+                        alt=""
+                      />
+                    </div>
+                    <h1 className="project-details-info-related-card-title">
+                      {projectData.umbrella_project.title}
+                    </h1>
+                  </Link>
+                </div>
+              )}
+
             {/* UP ARROW */}
             {/* https://www.npmjs.com/package/react-scroll-to-top */}
             <div className="scroll-to-top-container flex-row-center">
