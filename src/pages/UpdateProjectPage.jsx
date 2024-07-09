@@ -309,7 +309,7 @@ function UpdateProjectPage() {
                 className="create-project-file-input-brwose-button pointer"
                 htmlFor="create-project-file-input"
               >
-                Choose Files (6 max.)
+                Choose Files (10 max.)
               </label>
             </label>
             {/* image previews */}
@@ -335,33 +335,6 @@ function UpdateProjectPage() {
                 })}
               </div>
             )}
-
-            {/* UMBRELLA CHECKBOX */}
-            {/* <label className="form-input-label-checkbox" htmlFor="">
-              <input
-                type="checkbox"
-                checked={isUmbrellaProject}
-                onChange={(e) => {
-                  handleCheckbox(e.target.checked);
-                }}
-              />
-              This is an umbrella for other projects
-            </label> */}
-
-            {/* UMBRELLA PROJECT */}
-            {/* {!isUmbrellaProject && (
-              <label className="form-input-label" htmlFor="">
-                umbrella project
-                <Select
-                  defaultValue={
-                    defaultUmbrellaProject && defaultUmbrellaProject
-                  }
-                  options={umbrellaProjectOptions}
-                  onChange={handleUmbrellaSelectChange}
-                  styles={selectStles}
-                />
-              </label>
-            )} */}
 
             {/* RELATED PROJECTS UMBRELLA */}
             {isUmbrellaProject && (

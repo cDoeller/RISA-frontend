@@ -269,7 +269,7 @@ function CreateProjectPage() {
               className="create-project-file-input-brwose-button pointer"
               htmlFor="create-project-file-input"
             >
-              Choose Files (6 max.)
+              Choose Files (10 max.)
             </label>
           </label>
           {/* image previews */}
