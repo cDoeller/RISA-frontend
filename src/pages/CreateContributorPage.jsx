@@ -23,7 +23,10 @@ function CreateContributorPage() {
       .getAllProjects()
       .then((result) => {
         // console.log(result.data);
-        setAvailableProjects(result.data);
+        const nonUmbrellaProjects = result.data.filter((p) => {
+          return !p.is_umbrella_project;
+        });
+        setAvailableProjects(nonUmbrellaProjects);
       })
       .catch((err) => {
         console.log(err);
@@ -115,7 +118,7 @@ function CreateContributorPage() {
           </label>
           {/* PROJECTS */}
           {/* REACT SELECT */}
-          {projectsOptions.length>0 && (
+          {projectsOptions.length > 0 && (
             <label className="form-input-label" htmlFor="">
               projects
               <Select

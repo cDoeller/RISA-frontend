@@ -12,15 +12,16 @@ function UpdateProjectPage() {
   const [description, setDescription] = useState("");
   const [contributorsId, setContributorsId] = useState(null);
   const [year, setYear] = useState(new Date().getFullYear());
-  const [researchProjectId, setResearchProjectId] = useState(null);
-  const [researchProjectTitle, setResearchProjectTitle] = useState(null);
+  const [umbrellaProject, setUmbrellaProject] = useState(null);
+  const [relatedProjects, setRelatedProjects] = useState([]);
+  const [isUmbrellaProject, setIsUmbrellaProject] = useState(false);
   const [tags, setTags] = useState(null);
   const [link, setLink] = useState("");
   // selectData
   const [allProjects, setAllProjects] = useState(null);
   const [allContributors, setAllContributors] = useState(null);
   const [defaultContributors, setDefaultContributors] = useState(null);
-  const [defaultProject, setDefaultProject] = useState(null);
+  const [defaultRelatedProjects, setDefaultRelatedProjects] = useState(null);
   // image data
   const [imageData, setImageData] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -42,6 +43,9 @@ function UpdateProjectPage() {
         setImageData(projectData.data.images_url);
         setImagePreviews(projectData.data.images_url);
         setLink(projectData.data.link);
+        setRelatedProjects(projectData.data.related_projects);
+        setIsUmbrellaProject(projectData.data.is_umbrella_project);
+        setUmbrellaProject(projectData.data.umbrella_project);
         if (projectData.data.contributors) {
           setContributorsId(
             projectData.data.contributors.map((c) => {
@@ -54,18 +58,14 @@ function UpdateProjectPage() {
             })
           );
         }
-        if (projectData.data.research_project) {
-          setResearchProjectId(
-            projectData.data.research_project.map((p) => {
-              return p._id;
-            })
-          );
-          setDefaultProject(
-            projectData.data.research_project.map((p) => {
-              return { value: p._id, label: p.title };
+        if (projectData.data.related_projects) {
+          setDefaultRelatedProjects(
+            projectData.data.related_projects.map((rp) => {
+              return { value: rp._id, label: rp.title };
             })
           );
         }
+
         // set - all - contributors and projects data for dropdown
         const projectsResult = await projectsService.getAllProjects();
         setAllProjects(projectsResult.data);
@@ -86,55 +86,56 @@ function UpdateProjectPage() {
     try {
       e.preventDefault();
 
-      if (imageData.length > 0) {
-        let newProject = {
-          label: title,
-          title,
-          description,
-          contributors: contributorsId ? contributorsId : [],
-          year,
-          research_project: researchProjectId ? researchProjectId : null,
-          tags,
-          link: link,
-        };
+      // if (imageData.length > 0) {
+      let newProject = {
+        label: title,
+        title,
+        description,
+        contributors: contributorsId ? contributorsId : [],
+        year,
+        is_umbrella_project: isUmbrellaProject,
+        related_projects: relatedProjects,
+        tags,
+        link: link,
+      };
 
-        // if something new to upload --> make new form data
-        let hasNewImages = false;
-        let imageUploadData = new FormData();
-        imageData.forEach((imageFile) => {
-          if (typeof imageFile !== "string") {
-            hasNewImages = true;
-            imageUploadData.append("files", imageFile);
-          }
-        });
-
-        if (hasNewImages) {
-          // upload only new image data to cloudinary
-          const cloudinaryResponse = await cloudinaryService.uploadMultiple(
-            imageUploadData
-          );
-          console.log("cloudinaryResponse", cloudinaryResponse);
-          // combine old and new cloudinary ulrs
-          let newImageUrls = imageData.filter((element) => {
-            return typeof element === "string";
-          });
-          newImageUrls = [...newImageUrls, ...cloudinaryResponse.data.fileUrls];
-          newProject.images_url = newImageUrls;
-          console.log("newImageUrls", newImageUrls);
-        } else {
-          newProject.images_url = imageData;
+      // if something new to upload --> make new form data
+      let hasNewImages = false;
+      let imageUploadData = new FormData();
+      imageData.forEach((imageFile) => {
+        if (typeof imageFile !== "string") {
+          hasNewImages = true;
+          imageUploadData.append("files", imageFile);
         }
+      });
 
-        const updateProjectResponse = await projectsService.updateProject(
-          id,
-          newProject
+      if (hasNewImages) {
+        // upload only new image data to cloudinary
+        const cloudinaryResponse = await cloudinaryService.uploadMultiple(
+          imageUploadData
         );
-        console.log(updateProjectResponse);
-
-        navigate("/admin");
+        console.log("cloudinaryResponse", cloudinaryResponse);
+        // combine old and new cloudinary ulrs
+        let newImageUrls = imageData.filter((element) => {
+          return typeof element === "string";
+        });
+        newImageUrls = [...newImageUrls, ...cloudinaryResponse.data.fileUrls];
+        newProject.images_url = newImageUrls;
+        console.log("newImageUrls", newImageUrls);
       } else {
-        setErrorMessage("please upload at least one image.");
+        newProject.images_url = imageData;
       }
+
+      const updateProjectResponse = await projectsService.updateProject(
+        id,
+        newProject
+      );
+      console.log(updateProjectResponse);
+
+      navigate("/admin");
+      // } else {
+      //   setErrorMessage("please upload at least one image.");
+      // }
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);
@@ -168,13 +169,27 @@ function UpdateProjectPage() {
     });
   }
 
-  let projectOptions = [{ value: "", label: "-" }];
+  let umbrellaProjectOptions = [{ value: "", label: "-" }];
   if (allProjects) {
     allProjects.forEach((project) => {
-      projectOptions.push({
-        value: project._id,
-        label: project.title,
-      });
+      if (project.is_umbrella_project) {
+        umbrellaProjectOptions.push({
+          value: project._id,
+          label: project.title,
+        });
+      }
+    });
+  }
+
+  let relatedProjectsOptions = [];
+  if (allProjects) {
+    allProjects.forEach((project) => {
+      if (!project.is_umbrella_project) {
+        relatedProjectsOptions.push({
+          value: project._id,
+          label: project.title,
+        });
+      }
     });
   }
 
@@ -185,15 +200,19 @@ function UpdateProjectPage() {
     });
     setTags(tagsArray);
   }
+
   function handleContributorsSelectChange(selectedOption) {
     const contributorIdArray = selectedOption.map((option) => {
       return option.value;
     });
     setContributorsId(contributorIdArray);
   }
-  function handleProjectsSelectChange(selectedOption) {
-    setResearchProjectId(selectedOption.value);
-    setResearchProjectTitle(selectedOption.label);
+
+  function handleRelatedProjectsSelectChange(selectedOption) {
+    const relatedProjectsIdArray = selectedOption.map((option) => {
+      return option.value;
+    });
+    setRelatedProjects(relatedProjectsIdArray);
   }
 
   // * IMAGES FILE UPLOAD
@@ -317,29 +336,90 @@ function UpdateProjectPage() {
               </div>
             )}
 
+            {/* UMBRELLA CHECKBOX */}
+            {/* <label className="form-input-label-checkbox" htmlFor="">
+              <input
+                type="checkbox"
+                checked={isUmbrellaProject}
+                onChange={(e) => {
+                  handleCheckbox(e.target.checked);
+                }}
+              />
+              This is an umbrella for other projects
+            </label> */}
+
+            {/* UMBRELLA PROJECT */}
+            {/* {!isUmbrellaProject && (
+              <label className="form-input-label" htmlFor="">
+                umbrella project
+                <Select
+                  defaultValue={
+                    defaultUmbrellaProject && defaultUmbrellaProject
+                  }
+                  options={umbrellaProjectOptions}
+                  onChange={handleUmbrellaSelectChange}
+                  styles={selectStles}
+                />
+              </label>
+            )} */}
+
+            {/* RELATED PROJECTS UMBRELLA */}
+            {isUmbrellaProject && (
+              <label className="form-input-label" htmlFor="">
+                related projects
+                <Select
+                  defaultValue={
+                    defaultRelatedProjects && defaultRelatedProjects
+                  }
+                  options={relatedProjectsOptions}
+                  onChange={handleRelatedProjectsSelectChange}
+                  styles={selectStles}
+                  isMulti
+                />
+              </label>
+            )}
+
+            {/* RELATED PROJECTS RELATED */}
+            {!isUmbrellaProject && (
+              <>
+                {relatedProjects.length>0 && (
+                  <label className="form-input-label" htmlFor="">
+                    related projects
+                    <div className="flex-column" style={{ gap: "0.5rem" }}>
+                      {relatedProjects.map((project) => {
+                        return (
+                          <p key={project._id} className="highlight-grey">
+                            {project.title}
+                          </p>
+                        );
+                      })}
+                    </div>
+                  </label>
+                )}
+                {umbrellaProject && (
+                  <label className="form-input-label" htmlFor="">
+                    umbrella project
+                    <p className="highlight-grey">{umbrellaProject.title}</p>
+                  </label>
+                )}
+              </>
+            )}
+
             {/* CONTRIBUTIORS */}
             {/* REACT SELECT */}
-            <label className="form-input-label" htmlFor="">
-              contributors
-              <Select
-                defaultValue={defaultContributors && defaultContributors}
-                options={contributorOptions}
-                onChange={handleContributorsSelectChange}
-                styles={selectStles}
-                isMulti
-              />
-            </label>
-            {/* RESEARCH PROJECT */}
-            <label className="form-input-label" htmlFor="">
-              umbrella project
-              <Select
-                defaultValue={defaultProject && defaultProject}
-                options={projectOptions}
-                onChange={handleProjectsSelectChange}
-                value={{ label: researchProjectTitle }}
-                styles={selectStles}
-              />
-            </label>
+            {!isUmbrellaProject && (
+              <label className="form-input-label" htmlFor="">
+                contributors
+                <Select
+                  defaultValue={defaultContributors && defaultContributors}
+                  options={contributorOptions}
+                  onChange={handleContributorsSelectChange}
+                  styles={selectStles}
+                  isMulti
+                />
+              </label>
+            )}
+
             {/* TAGS */}
             {/* REACT SELECT */}
             <label className="form-input-label" htmlFor="">

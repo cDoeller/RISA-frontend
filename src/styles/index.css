@@ -56,6 +56,11 @@ input {
   color: white;
 }
 
+.highlight-grey{
+  background-color: rgb(238, 238, 238);
+  padding: 0.3rem;
+}
+
 /* WRaPPER */
 
 .page-wrapper {
@@ -213,6 +218,15 @@ input {
   display:flex;
   gap: 0.5rem;
   align-items: first baseline;
+}
+
+.no-change-div{
+  width: 100%;
+  border: 1px black dotted;
+  gap: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  margin-top:0.5rem;
 }
 
 /* NOTIFICATIONS */
