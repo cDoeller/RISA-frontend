@@ -50,11 +50,10 @@ function CreateContributorPage() {
       .createContributor(newContributor)
       .then((response) => {
         console.log(response);
-        // navigate("/admin");
+        navigate("/admin");
       })
       .catch((err) => console.log(err));
-
-    navigate("/admin");
+      
   };
 
   // REACT SELECT OPTIONS
