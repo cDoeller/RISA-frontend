@@ -27,6 +27,7 @@
 }
 
 .project-details-info-abstract {
+  hyphens: auto;
 }
 
 .project-details-info-info-buttons-container {
@@ -43,7 +44,7 @@
 
 /*  CONTRIB */
 .project-details-info-contributor-wrapper {
-  margin: 0.5rem 0 1rem 0;
+  margin: 0.5rem 0 0.5rem 0;
   gap: 0.5rem;
 }
 
