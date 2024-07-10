@@ -51,6 +51,7 @@
   margin: -1px 0 0 0;
 }
 .admin-card-title {
+  max-width: 80%;
 }
 .admin-card-subtitle {
 }
