@@ -191,6 +191,9 @@ input {
   border: 1px solid black;
   padding: 0.4rem;
 }
+.form-abstract-length{
+  min-height: 120px;
+}
 .form-input-textarea:focus {
   outline: none;
 }

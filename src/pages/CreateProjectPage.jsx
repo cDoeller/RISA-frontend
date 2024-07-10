@@ -10,6 +10,7 @@ import contributorsService from "../services/contributors.service";
 
 function CreateProjectPage() {
   const [title, setTitle] = useState("");
+  const [abstract, setAbstract] = useState("");
   const [description, setDescription] = useState("");
   const [contributorsId, setContributorsId] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
@@ -55,6 +56,7 @@ function CreateProjectPage() {
       let newProject = {
         label: title,
         title,
+        abstract: abstract,
         description,
         contributors: contributorsId,
         year,
@@ -223,18 +225,35 @@ function CreateProjectPage() {
               }}
             />
           </label>
+          {/* ABSTRACT */}
+          <label className="form-input-label" htmlFor="">
+            abstract (max. 250 characters)
+            <textarea
+              className="form-input-textarea form-abstract-length"
+              type="text"
+              value={abstract}
+              required
+              maxLength="250"
+              onChange={(e) => {
+                setAbstract(e.target.value);
+              }}
+            />
+            <p>{abstract.length}</p>
+          </label>
           {/* DESCRIPTION */}
           <label className="form-input-label" htmlFor="">
-            description
+            description (max. 1500 characters)
             <textarea
               className="form-input-textarea"
               type="text"
               value={description}
               required
+              maxLength="1500"
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
             />
+            <p>{description.length}</p>
           </label>
           {/* YEAR */}
           <label className="form-input-label" htmlFor="">
