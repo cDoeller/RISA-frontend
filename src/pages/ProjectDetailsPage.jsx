@@ -7,6 +7,7 @@ import projectsService from "../services/projects.service";
 
 function ProjectDetailsPage() {
   const [projectData, setProjectData] = useState(null);
+  const [showDescription, setShowDescription] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -19,6 +20,10 @@ function ProjectDetailsPage() {
       .catch((err) => console.log(err));
   }, [id]);
 
+  const handleDescriptionClick = () => {
+    setShowDescription(!showDescription);
+  };
+
   return (
     <>
       {projectData && (
@@ -28,50 +33,89 @@ function ProjectDetailsPage() {
             <img src={projectData.images_url[0]} alt="" />
           </div>
           <section className="project-details-info-wrapper flex-column page-wrapper">
-            {/* TITLE */}
-            <h1>
-              {projectData.title +
-                ", " +
-                (projectData.year ? projectData.year : "")}
-            </h1>
-            {/* CONTRIB */}
-            {projectData.contributors.length > 0 && (
-              <div className="project-details-info-contributors flex-row-wrap">
-                {projectData.contributors.map((c, index) => {
-                  return (
-                    <p key={c._id}>
-                      {c.name}
-                      {index !== projectData.contributors.length - 1 ? "," : ""}
-                    </p>
-                  );
-                })}
-              </div>
-            )}
-            {/* DESCRIPTION */}
-            <p className="project-details-info-description">
-              {projectData.description}
-            </p>
-            {/* WEBSITE */}
-            {projectData.link && (
-              <ExternalLink href={projectData.link}>
-                <p className="project-details-info-link">Website</p>
-              </ExternalLink>
-            )}
             {/* TAGS */}
             {projectData.tags.length && (
-              <div className="project-details-info-tags-container flex-row-wrap">
+              <div className="project-details-info-tags-container flex-row-center flex-wrap">
                 {projectData.tags.map((tag) => {
                   return (
                     <div
                       className="project-details-info-tags-tagcontainer"
                       key={tag}
                     >
-                      <p>{tag}</p>
+                      <p className="project-details-info-tags">{tag}</p>
                     </div>
                   );
                 })}
               </div>
             )}
+            {/* TITLE */}
+            <div className="flex-column-center">
+              <h1>{projectData.title}</h1>
+              {projectData.year ? <h1>{projectData.year}</h1> : ""}
+            </div>
+            {/* ABSTRACT */}
+            <div className="flex-column project-details-info-description-abstract-wrapper">
+              <p className="project-details-info-abstract">
+                {projectData.abstract}
+              </p>
+              <div className="project-details-info-info-buttons-container flex-row">
+                <p
+                  className="button-fit-content-small pointer"
+                  onClick={handleDescriptionClick}
+                >
+                  more info
+                </p>
+                {/*  WEBSITE LINK */}
+                {projectData.link && (
+                  <ExternalLink href={projectData.link}>
+                    <div className="flex-row-align-center button-fit-content-small project-details-info-link-container">
+                      <div className="image-wrapper external-link-wrapper">
+                        <img src="/external-link-icon.png" alt="" />
+                      </div>
+                      <p className="project-details-info-link">
+                        project website
+                      </p>
+                    </div>
+                  </ExternalLink>
+                )}
+              </div>
+            </div>
+            {/* DESCRIPTION */}
+            {showDescription && (
+              <p className="project-details-info-description">
+                {projectData.description}
+              </p>
+            )}
+            {/* CONTRIB */}
+            {projectData.contributors.length > 0 && (
+              <div className="project-details-info-contributor-wrapper flex-row flex-wrap">
+                Contributors:
+                {projectData.contributors.map((c, index) => {
+                  return (
+                    <Link key={c._id} to="#">
+                      <p className="pointer project-details-info-contributor">
+                        {c.name}
+                        {/* {index !== projectData.contributors.length - 1 ? "  " : ""} */}
+                      </p>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* IMAGES */}
+            {projectData.images_url.length > 1 && (
+              <div className="flex-column project-details-info-images-container">
+                {projectData.images_url.map((img) => {
+                  return (
+                    <div key={img} className="image-wrapper">
+                      <img src={img} alt="" />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
             {/* RELATED PROJECTS */}
             {projectData.is_umbrella_project && (
               <div className="flex-column project-details-info-related-container">
@@ -96,23 +140,13 @@ function ProjectDetailsPage() {
                 })}
               </div>
             )}
-            {/* IMAGES */}
-            <div className="flex-column project-details-info-images-container">
-              {projectData.images_url.length > 1 &&
-                projectData.images_url.map((img) => {
-                  return (
-                    <div key={img} className="image-wrapper">
-                      <img src={img} alt="" />
-                    </div>
-                  );
-                })}
-            </div>
+
             {/* UMBRELLA PROJECT */}
             {!projectData.is_umbrella_project &&
               projectData.umbrella_project && (
                 <div className="flex-column project-details-info-related-container">
                   <p className="project-details-info-related-container-headline">
-                    Umbrella Project:
+                    Associated Research Project:
                   </p>
                   <Link
                     to={`/projects/${projectData.umbrella_project._id}`}
@@ -130,7 +164,6 @@ function ProjectDetailsPage() {
                   </Link>
                 </div>
               )}
-
             {/* UP ARROW */}
             {/* https://www.npmjs.com/package/react-scroll-to-top */}
             <div className="scroll-to-top-container flex-row-center">
