@@ -9,11 +9,13 @@ import contributorsService from "../services/contributors.service";
 
 function UpdateProjectPage() {
   const [title, setTitle] = useState("");
+  const [abstract, setAbstract] = useState("");
   const [description, setDescription] = useState("");
   const [contributorsId, setContributorsId] = useState(null);
   const [year, setYear] = useState(new Date().getFullYear());
   const [umbrellaProject, setUmbrellaProject] = useState(null);
   const [relatedProjects, setRelatedProjects] = useState([]);
+  const [relatedProjectsId, setRelatedProjectsId] = useState([]);
   const [isUmbrellaProject, setIsUmbrellaProject] = useState(false);
   const [tags, setTags] = useState(null);
   const [link, setLink] = useState("");
@@ -37,6 +39,7 @@ function UpdateProjectPage() {
         // set initial project data
         const projectData = await projectsService.getProject(id);
         setTitle(projectData.data.title);
+        setAbstract(projectData.data.abstract);
         setDescription(projectData.data.description);
         setYear(projectData.data.year);
         setTags(projectData.data.tags);
@@ -62,6 +65,11 @@ function UpdateProjectPage() {
           setDefaultRelatedProjects(
             projectData.data.related_projects.map((rp) => {
               return { value: rp._id, label: rp.title };
+            })
+          );
+          setRelatedProjectsId(
+            projectData.data.related_projects.map((rp) => {
+              return rp._id;
             })
           );
         }
@@ -90,11 +98,12 @@ function UpdateProjectPage() {
       let newProject = {
         label: title,
         title,
+        abstract,
         description,
         contributors: contributorsId ? contributorsId : [],
         year,
         is_umbrella_project: isUmbrellaProject,
-        related_projects: relatedProjects,
+        related_projects: relatedProjectsId,
         tags,
         link: link,
       };
@@ -212,7 +221,7 @@ function UpdateProjectPage() {
     const relatedProjectsIdArray = selectedOption.map((option) => {
       return option.value;
     });
-    setRelatedProjects(relatedProjectsIdArray);
+    setRelatedProjectsId(relatedProjectsIdArray);
   }
 
   // * IMAGES FILE UPLOAD
@@ -263,19 +272,36 @@ function UpdateProjectPage() {
                 }}
               />
             </label>
-            {/* DESCRIPTION */}
-            <label className="form-input-label" htmlFor="">
-              description
-              <textarea
-                className="form-input-textarea"
-                type="text"
-                value={description}
-                required
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </label>
+  {/* ABSTRACT */}
+  <label className="form-input-label" htmlFor="">
+            abstract (max. 250 characters)
+            <textarea
+              className="form-input-textarea form-abstract-length"
+              type="text"
+              value={abstract}
+              required
+              maxLength="250"
+              onChange={(e) => {
+                setAbstract(e.target.value);
+              }}
+            />
+            <p>{abstract && abstract.length}</p>
+          </label>
+          {/* DESCRIPTION */}
+          <label className="form-input-label" htmlFor="">
+            description (max. 1500 characters)
+            <textarea
+              className="form-input-textarea"
+              type="text"
+              value={description}
+              required
+              maxLength="1500"
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+            />
+            <p>{description.length}</p>
+          </label>
             {/* YEAR */}
             <label className="form-input-label" htmlFor="">
               year

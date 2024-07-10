@@ -123,16 +123,18 @@ function UpdateContributorPage() {
           </label>
           {/* SHORT BIO */}
           <label className="form-input-label" htmlFor="">
-            short bio
+            short bio (max. 500 characters)
             <textarea
               className="form-input-textarea"
               type="text"
               value={short_bio}
               required
+              maxLength="500"
               onChange={(e) => {
                 setShort_bio(e.target.value);
               }}
             />
+          <p>{short_bio.length}</p>  
           </label>
           {/* EMAIL */}
           <label className="form-input-label" htmlFor="">

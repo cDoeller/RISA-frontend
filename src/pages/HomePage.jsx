@@ -18,19 +18,22 @@ function HomePage() {
 
   return (
     <div className="page-wrapper">
-      {projects &&
-        projects.map((project) => {
-          return (
-            <Link to={`/projects/${project._id}`} key={project._id}>
-              <div className="projects-page-card-wrapper flex-column-left pointer">
-                <h1 className="projects-page-card-title">{project.title}</h1>
-                <div className="image-wrapper">
-                  <img src={project.images_url[0]} alt="" />
+      {projects && (
+        <div className="projects-list-projects-wrapper flex-column">
+          {projects.map((project) => {
+            return (
+              <Link to={`/projects/${project._id}`} key={project._id}>
+                <div className="projects-list-card-wrapper flex-column-left pointer">
+                  <div className="image-wrapper">
+                    <img src={project.images_url[0]} alt="" />
+                  </div>
+                  <h1 className="projects-list-card-title">{project.title}</h1>
                 </div>
-              </div>
-            </Link>
-          );
-        })}
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
