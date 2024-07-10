@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "../styles/styles-pages/ProjectDetailsPage.css";
 import projectsService from "../services/projects.service";
+import PopUp from "../components/PopUp";
 
 function ProjectDetailsPage() {
   const [projectData, setProjectData] = useState(null);
@@ -20,6 +21,14 @@ function ProjectDetailsPage() {
       .catch((err) => console.log(err));
   }, [id]);
 
+  useEffect(() => {
+    if (showDescription) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "scroll";
+    }
+  }, [showDescription]);
+
   const handleDescriptionClick = () => {
     setShowDescription(!showDescription);
   };
@@ -28,6 +37,14 @@ function ProjectDetailsPage() {
     <>
       {projectData && (
         <>
+          {/* DESCRIPTION */}
+          {showDescription && (
+            <PopUp
+              title={projectData.title}
+              content={projectData.description}
+              closeSetter={setShowDescription}
+            />
+          )}
           {/* IMG 1 */}
           <div className="image-wrapper">
             <img src={projectData.images_url[0]} alt="" />
@@ -80,12 +97,6 @@ function ProjectDetailsPage() {
                 )}
               </div>
             </div>
-            {/* DESCRIPTION */}
-            {showDescription && (
-              <p className="project-details-info-description">
-                {projectData.description}
-              </p>
-            )}
             {/* CONTRIB */}
             {projectData.contributors.length > 0 && (
               <div className="project-details-info-contributor-wrapper flex-row flex-wrap">
