@@ -39,6 +39,9 @@
 /* LIST CONTAINER */
 .admin-list-container {
   width: 100%;
+  max-height: 300px;
+  overflow-y: scroll;
+  border: 1px solid black;
 }
 .admin-card-wrapper {
   width: 100%;
@@ -52,15 +55,24 @@
 .admin-card-subtitle {
 }
 
+.admin-card-higlight-umbrella {
+  /* background-color: var(--lightgrey); */
+  /* border-radius: 10px; */
+  text-shadow: 0 0 15px rgba(0,0,0,0.8);
+  padding: 0.2rem 0.5rem;
+  margin-left: -0.5rem;
+  box-sizing: border-box;
+}
+
 /* ADD */
 .admin-add-wrapper {
   width: 100%;
 }
 
 /* DELETE AND UPDATE */
-.admin-update-delete-wrapper{
+.admin-update-delete-wrapper {
   gap: 0.5rem;
 }
-.admin-update-delete-icons{
+.admin-update-delete-icons {
   width: 20px;
 }

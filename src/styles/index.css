@@ -9,6 +9,8 @@
   -moz-osx-font-smoothing: grayscale;
 
   --beige: rgb(255, 255, 255);
+  --lightgrey: rgb(240, 240, 240);
+  --markeryellow: rgb(255, 251, 175);
 }
 
 html,

@@ -83,6 +83,7 @@ function AdminDataBlock(props) {
             </div>
           </Link>
         </div>
+        {/* LIST */}
         <div className="admin-list-container flex-column-left">
           {data &&
             data.map((data) => {
@@ -91,7 +92,15 @@ function AdminDataBlock(props) {
                   key={data._id}
                   className="admin-card-wrapper flex-row-between-aligncenter"
                 >
-                  <h1 className="admin-card-title">{data.label}</h1>
+                  <h1
+                    className={
+                      !data.is_umbrella_project
+                        ? "admin-card-title"
+                        : "admin-card-title admin-card-higlight-umbrella"
+                    }
+                  >
+                    {data.label}
+                  </h1>
                   <div className="admin-update-delete-wrapper flex-row-aligncenter">
                     <Link
                       to={
