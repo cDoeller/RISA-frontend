@@ -1,9 +1,49 @@
+.project-details-header-image{
+  height: 250px;
+}
+
 .project-details-info-wrapper {
-  gap: 2rem;
+  gap: 2.5rem;
   margin-top: 0.5rem;
 }
 
+/* TAGS */
+.project-details-info-tags-container {
+  gap: 0.5rem;
+}
+
+.project-details-info-tags-tagcontainer {
+  background-color: rgb(242, 242, 242);
+  border-radius: 20px;
+  padding: 0.2rem 0.6rem;
+}
+
+.project-details-info-tags {
+}
+
+/* DETAILS - ABSTRACT / BUTTONS  */
+.project-details-info-description-abstract-wrapper {
+  gap: 1.5rem;
+}
+
+.project-details-info-abstract {
+}
+
+.project-details-info-info-buttons-container {
+  gap: 1rem;
+}
+
+.project-details-info-link-container {
+  gap: 0.4rem;
+}
+
+.project-details-info-link {
+  font-size: 0.8rem;
+}
+
+/*  CONTRIB */
 .project-details-info-contributor-wrapper {
+  margin: 0.5rem 0 1rem 0;
   gap: 0.5rem;
 }
 
@@ -11,54 +51,23 @@
   text-decoration: underline;
 }
 
-.project-details-info-description-abstract-wrapper{
-  gap:2rem;
-}
-
-.project-details-info-abstract{}
-
-.project-details-info-info-buttons-container{
-  gap:1rem;
-}
-
-.project-details-info-link-container{
-  gap:0.5rem;
-}
-
-.project-details-info-description {
-}
-
-.project-details-info-tags-container {
-  gap: 0.5rem;
-}
-
-.project-details-info-tags-tagcontainer {
-  /* border: 1px solid black; */
-  background-color: rgb(242, 242, 242);
-  border-radius: 20px;
-  padding: 0.2rem 0.6rem;
-}
-.project-details-info-tags{
-}
-
-.project-details-info-link {
-}
+/* IMAGES */
 
 .project-details-info-images-container {
   gap: 0.6rem;
 }
 
-.project-details-info-related-container{
-    /* gap:0.6rem; */
-}
-.project-details-info-related-container-headline{
-    margin-bottom: 1rem;
-    box-sizing: border-box;
-}
-.project-details-info-related-card{
-    border:1px solid black;
-}
-.project-details-info-related-card-title{
-    padding: 0.6rem;
-}
+/* RELATED - UMBRELLA */
 
+.project-details-info-related-container {
+}
+.project-details-info-related-container-headline {
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+.project-details-info-related-card {
+  border: 1px solid black;
+}
+.project-details-info-related-card-title {
+  padding: 0.6rem;
+}

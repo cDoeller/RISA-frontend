@@ -37,7 +37,7 @@ function ProjectDetailsPage() {
     <>
       {projectData && (
         <>
-          {/* DESCRIPTION */}
+          {/* DESCRIPTION POPUP */}
           {showDescription && (
             <PopUp
               title={projectData.title}
@@ -45,8 +45,8 @@ function ProjectDetailsPage() {
               closeSetter={setShowDescription}
             />
           )}
-          {/* IMG 1 */}
-          <div className="image-wrapper">
+          {/* HEADER IMAGE */}
+          <div className="fill-image project-details-header-image">
             <img src={projectData.images_url[0]} alt="" />
           </div>
           <section className="project-details-info-wrapper flex-column page-wrapper">
@@ -70,19 +70,21 @@ function ProjectDetailsPage() {
               <h1>{projectData.title}</h1>
               {projectData.year ? <h1>{projectData.year}</h1> : ""}
             </div>
-            {/* ABSTRACT */}
+
+            {/* ABSTRACT + LINKS */}
             <div className="flex-column project-details-info-description-abstract-wrapper">
               <p className="project-details-info-abstract">
                 {projectData.abstract}
               </p>
+              {/* POPUP LINKE */}
               <div className="project-details-info-info-buttons-container flex-row">
                 <p
-                  className="button-fit-content-small pointer"
+                  className="button-fit-content-small pointer project-details-info-link"
                   onClick={handleDescriptionClick}
                 >
                   more info
                 </p>
-                {/*  WEBSITE LINK */}
+                {/* LINK */}
                 {projectData.link && (
                   <ExternalLink href={projectData.link}>
                     <div className="flex-row-align-center button-fit-content-small project-details-info-link-container">

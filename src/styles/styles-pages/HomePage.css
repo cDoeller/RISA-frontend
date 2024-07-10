@@ -6,6 +6,11 @@
   border: solid black 1px;
 }
 
+.projects-list-card-image-wrapper{
+height: 220px;
+width: 100%;
+}
+
 .projects-list-card-title {
   padding: 0.6rem;
 }
