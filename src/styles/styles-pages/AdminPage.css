@@ -59,7 +59,8 @@
 .admin-card-higlight-umbrella {
   /* background-color: var(--lightgrey); */
   /* border-radius: 10px; */
-  text-shadow: 0 0 15px rgba(0,0,0,0.8);
+  text-shadow: 0 0 15px rgba(0,0,0,0.6);
+  /* text-shadow: 0 0 8px var(--markeryellow); */
   padding: 0.2rem 0.5rem;
   margin-left: -0.5rem;
   box-sizing: border-box;
