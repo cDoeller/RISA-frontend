@@ -1,0 +1,50 @@
+.project-details-info-wrapper {
+  gap: 2rem;
+}
+
+.project-details-info-contributors {
+  gap: 0.3rem;
+  max-width: 80%;
+}
+
+.project-details-info-description {
+}
+
+.project-details-info-tags-container {
+}
+
+.project-details-info-tags-tagcontainer {
+  border: 1px solid black;
+  padding: 0.3rem 0.6rem;
+}
+
+.project-details-info-link {
+}
+
+.project-details-info-images-container {
+  gap: 0.6rem;
+}
+
+.project-details-info-related-container{
+    /* gap:0.6rem; */
+}
+.project-details-info-related-container-headline{
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+.project-details-info-related-card{
+    border:1px solid black;
+}
+.project-details-info-related-card-title{
+    padding: 0.6rem;
+}
+
+.scroll-to-top {
+  position: static !important;
+  width: 50px !important;
+  height: 60px !important;
+  padding-top: 0.2rem;
+}
+
+.scroll-to-top-container {
+}

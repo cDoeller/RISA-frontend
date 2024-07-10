@@ -14,6 +14,7 @@ import CreateContributorPage from "./pages/CreateContributorPage";
 import ContributorsPage from "./pages/ContributorsPage";
 import UpdateContributorPage from "./pages/UpdateContributorPage";
 import UpdateProjectPage from "./pages/UpdateProjectPage";
+import ProjectDetailsPage from "./pages/ProjectDetailsPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/contributors" element={<ContributorsPage />}></Route>
         <Route path="/contact" element={<ContactPage />}></Route>
         <Route path="/admin" element={<AdminPage />}></Route>
+        <Route path="/projects/:id" element={<ProjectDetailsPage />}></Route>
 
         <Route
           path="/admin/create-project"
