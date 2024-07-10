@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "../styles/styles-pages/ProjectDetailsPage.css";
 import projectsService from "../services/projects.service";
+import PopUp from "../components/PopUp";
 
 function ProjectDetailsPage() {
   const [projectData, setProjectData] = useState(null);
@@ -20,6 +21,14 @@ function ProjectDetailsPage() {
       .catch((err) => console.log(err));
   }, [id]);
 
+  useEffect(() => {
+    if (showDescription) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "scroll";
+    }
+  }, [showDescription]);
+
   const handleDescriptionClick = () => {
     setShowDescription(!showDescription);
   };
@@ -28,8 +37,16 @@ function ProjectDetailsPage() {
     <>
       {projectData && (
         <>
-          {/* IMG 1 */}
-          <div className="image-wrapper">
+          {/* DESCRIPTION POPUP */}
+          {showDescription && (
+            <PopUp
+              title={projectData.title}
+              content={projectData.description}
+              closeSetter={setShowDescription}
+            />
+          )}
+          {/* HEADER IMAGE */}
+          <div className="fill-image project-details-header-image">
             <img src={projectData.images_url[0]} alt="" />
           </div>
           <section className="project-details-info-wrapper flex-column page-wrapper">
@@ -53,19 +70,21 @@ function ProjectDetailsPage() {
               <h1>{projectData.title}</h1>
               {projectData.year ? <h1>{projectData.year}</h1> : ""}
             </div>
-            {/* ABSTRACT */}
+
+            {/* ABSTRACT + LINKS */}
             <div className="flex-column project-details-info-description-abstract-wrapper">
               <p className="project-details-info-abstract">
                 {projectData.abstract}
               </p>
+              {/* POPUP LINKE */}
               <div className="project-details-info-info-buttons-container flex-row">
                 <p
-                  className="button-fit-content-small pointer"
+                  className="button-fit-content-small pointer project-details-info-link"
                   onClick={handleDescriptionClick}
                 >
                   more info
                 </p>
-                {/*  WEBSITE LINK */}
+                {/* LINK */}
                 {projectData.link && (
                   <ExternalLink href={projectData.link}>
                     <div className="flex-row-align-center button-fit-content-small project-details-info-link-container">
@@ -80,12 +99,6 @@ function ProjectDetailsPage() {
                 )}
               </div>
             </div>
-            {/* DESCRIPTION */}
-            {showDescription && (
-              <p className="project-details-info-description">
-                {projectData.description}
-              </p>
-            )}
             {/* CONTRIB */}
             {projectData.contributors.length > 0 && (
               <div className="project-details-info-contributor-wrapper flex-row flex-wrap">
