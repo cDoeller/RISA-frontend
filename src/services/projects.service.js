@@ -30,6 +30,10 @@ class ProjectsService {
     return this.api.get(`/api/projects/${id}`);
   };
 
+  getProjectsByTag = (tags) => {
+    return this.api.get(`/api/projects/search-frontend?tags=${tags}`);
+  }
+
   // GET : SEARCH
   searchProjects = (query) => {
     return this.api.get(`/api/projects/search-cms?title=${query}`)
