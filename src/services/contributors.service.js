@@ -30,6 +30,10 @@ class ContributorsService {
     return this.api.get(`/api/contributors/${id}`);
   };
 
+  getContributorsByName = (name) => {
+    return this.api.get(`/api/contributors/search-frontend?name=${name}`);
+  }
+
   // GET : SEARCH
   searchContributor = (query) => {
     return this.api.get(`/api/contributors/search-cms?name=${query}`);

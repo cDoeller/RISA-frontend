@@ -4,6 +4,7 @@
   bottom: 0;
   gap: 1.5rem;
   padding: 1rem;
+  box-sizing: border-box;
 }
 .footer-project-info {
 }

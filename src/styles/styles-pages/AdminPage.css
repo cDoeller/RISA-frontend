@@ -39,7 +39,7 @@
 /* LIST CONTAINER */
 .admin-list-container {
   width: 100%;
-  max-height: 300px;
+  max-height: 320px;
   overflow-y: scroll;
   border: 1px solid black;
 }

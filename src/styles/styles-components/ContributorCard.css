@@ -1,18 +1,53 @@
+.contributor-wrapper {
 
-.contributors-card{
-    border: 1px solid black;
-    padding: 0.8rem;
+}
+.contributor-wrapper-active {
+  animation-name: getActive;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+  margin: 1rem 0;
+}
+@keyframes getActive {
+  from {
+    margin: 0;
+  }
+  to {
+    margin: 1rem 0;
+  }
 }
 
-.contributors-card-inofs-wrapper{
-    gap:1rem;
-    background-color: black;
-    padding: 0.8rem;
+.contributors-card {
+  border: 1px solid black;
+  padding: 0.8rem;
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin: -1px 0 0 0;
 }
-.contributors-card-inofs-bio{}
-.contributors-card-inofs-projects{}
-.contributors-card-inofs-some-wrapper{
-    
+
+.contributors-card-active {
+  border: 1px solid black;
+  padding: 0.8rem;
+  border-radius: 20px 20px 0 0;
 }
-.contributors-card-inofs-some-link{}
-.contributors-card-inofs-some-website{}
+
+.contributors-card-inofs-wrapper {
+  gap: 1rem;
+  background-color: black;
+  padding: 1.5rem 1.5rem 2rem 1.5rem;
+  box-sizing: border-box;
+  border-radius: 0 0 20px 20px;
+}
+
+.contributors-card-inofs-bio {
+  hyphens: auto;
+}
+.contributors-card-inofs-projects {
+}
+.contributors-card-inofs-projects-link {
+}
+.contributors-card-inofs-some-wrapper {
+}
+.contributors-card-inofs-some-link {
+}
+.contributors-card-inofs-some-website {
+}
