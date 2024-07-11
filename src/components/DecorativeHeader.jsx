@@ -3,7 +3,7 @@ import "../styles/styles-components/DecorativeHeader.css";
 
 function DecorativeHeader() {
   return (
-    <div className="deco-header-wrapper">
+    <div className="deco-header-wrapper fill-image">
       <img src="/pcp.jpg" alt="" />
     </div>
   );

@@ -1,3 +1,26 @@
-.contributors-section{
-    /* gap:1rem; */
+.contributors-page-wrapper {
+  gap: 3rem;
+}
+
+/* SEARCH BAR */
+.contributors-search-wrapper {
+  margin-top: 1rem;
+}
+.contributors-search-label {
+  gap: 1rem;
+  padding: 0 1rem 0 0.5rem;
+}
+.contributors-search-input {
+  border: none;
+  border-bottom: black 1px solid;
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+.contributors-search-input:focus {
+  outline: none;
+}
+
+/* SECTIONS */
+.contributors-section {
+  /* gap:1.5rem; */
 }
