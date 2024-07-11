@@ -171,6 +171,30 @@ input {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
 }
 
+.button-active {
+  background-color: var(--lightgrey);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+}
+
+.button-small {
+  background-color: transparent;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  font-size: 0.8rem;
+}
+
+.button-small-active {
+  background-color: var(--lightgrey);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
 .button-fit-content {
   width: fit-content;
   background-color: transparent;

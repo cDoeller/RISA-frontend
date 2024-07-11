@@ -1,14 +1,24 @@
-.projects-list-projects-wrapper {
+.landing-page-wrapper {
+  gap: 2.5rem;
+}
+
+/* TAGS */
+.landing-page-tag-filter-wrapper {
   gap: 1rem;
+}
+
+/* PROJECT LIST */
+.projects-list-projects-wrapper {
+  /* gap: 1rem; */
 }
 
 .projects-list-card-wrapper {
   border: solid black 1px;
 }
 
-.projects-list-card-image-wrapper{
-height: 220px;
-width: 100%;
+.projects-list-card-image-wrapper {
+  height: 220px;
+  width: 100%;
 }
 
 .projects-list-card-title {
