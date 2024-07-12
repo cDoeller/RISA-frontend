@@ -15,12 +15,6 @@
 
 html,
 body,
-#root {
-  min-height: 100dvh;
-}
-
-html,
-body,
 h1,
 h2,
 h3,
@@ -38,11 +32,25 @@ li {
   text-decoration: none;
 }
 
+/* 100 DVH */
+
+#root{
+  display: flex;
+  flex-direction: column;
+}
+
+html,
+body,
+#root {
+  min-height: 100dvh;
+}
+
 /* WRaPPER */
 
 .page-wrapper {
   padding: 2rem 1rem 3rem 1rem;
   background-color: var(--beige);
+  flex-grow: 1;
 }
 
 /* FONTS */
