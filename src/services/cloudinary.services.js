@@ -20,8 +20,8 @@ class CloudinaryService {
           });
     }
 
-    uploadSingle = (files) => {
-      return this.api.post("/api/upload/single", files)
+    uploadSingle = (file) => {
+      return this.api.post("/api/upload/single", file)
     };
 
     uploadMultiple = (files) => {

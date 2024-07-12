@@ -14,7 +14,7 @@ function CreateNewsPage() {
   const [projectId, setProjectId] = useState([]);
   const [link, setLink] = useState("");
   // image data
-  const [imageData, setImageData] = useState([]);
+  const [imageData, setImageData] = useState(null);
   const [imagePreviews, setImagePreviews] = useState([]);
   // err
   const [errorMessage, setErrorMessage] = useState("");
@@ -48,23 +48,20 @@ function CreateNewsPage() {
       };
 
       // ******************************************************* ONLY ONE IMAGE
-      if (imageData.length > 0) {
+      if (imageData) {
         // make body formdata for cloudinary route
         const imageUploadData = new FormData();
-        imageData.forEach((imageFile) => {
-          imageUploadData.append("files", imageFile);
-        });
-        const cloudinaryResponse = await cloudinaryService.uploadMultiple(
+        imageUploadData.append("files", imageData);
+        const cloudinaryResponse = await cloudinaryService.uploadSingle(
           imageUploadData
         );
         newNews.image_url = cloudinaryResponse.data.fileUrls;
       } else {
-        newNews.image_url = [];
+        newNews.image_url = "";
       }
 
       const createdNews = await newsService.createNews(newNews);
       navigate("/admin");
-
     } catch (err) {
       setErrorMessage(err.response.data.message);
       console.log(err);
@@ -88,30 +85,29 @@ function CreateNewsPage() {
   }
 
   // * IMAGES FILE UPLOAD
-  function handleImageDelete(index) {
-    const newImageData = [...imageData];
-    const newPreviews = [...imagePreviews];
-    newPreviews.splice(index, 1);
-    newImageData.splice(index, 1);
-    setImageData(newImageData);
-    setImagePreviews(newPreviews);
+  function handleImageDelete() {
+    setImageData(null);
+    setImagePreviews([]);
   }
 
   const handleImageInput = (event) => {
+    // >> coming from form input
     // make an array of image files from input data
     event.preventDefault();
-    const files = event.target.files;
-    handleImageData(files);
+    const file = event.target.files[0];
+    if (file) {
+      console.log(file);
+      handleImageData(file);
+    }
   };
 
-  function handleImageData(filesToUpload) {
+  function handleImageData(fileToUpload) {
     // 1) set the image data for uploading
     // 2) make the previews
-    const filesArray = Array.from(filesToUpload);
-    const newImageData = [...imageData, ...filesArray];
-    setImageData(newImageData);
-    const previews = newImageData.map((files) => URL.createObjectURL(files));
-    setImagePreviews(previews);
+    setImageData(fileToUpload);
+    const preview = [URL.createObjectURL(fileToUpload)];
+    console.log("preview", preview);
+    setImagePreviews(preview);
   }
 
   // ERRORS
@@ -171,7 +167,6 @@ function CreateNewsPage() {
               accept=".jpg, .png"
               id="create-project-file-input"
               className="form-file-input-hide"
-              multiple
               onChange={(event) => {
                 handleImageInput(event);
               }}
@@ -186,17 +181,17 @@ function CreateNewsPage() {
           {/* image previews */}
           {imagePreviews.length > 0 && (
             <div className="create-project-image-previews-wrapper flex-column">
-              {imagePreviews.map((previewUrl, index) => {
+              {imagePreviews.map((previewUrl) => {
                 return (
                   <div
                     key={previewUrl}
                     className="create-project-image-previews-img-wrapper flex-row-center-start"
                   >
-                    <img src={previewUrl} alt={`image preview ${index}`} />
+                    <img src={previewUrl} alt={`image preview`} />
                     <button
                       className="create-project-image-previews-delete-button"
                       onClick={() => {
-                        handleImageDelete(index);
+                        handleImageDelete();
                       }}
                     >
                       X
