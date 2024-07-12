@@ -15,6 +15,7 @@ import ContributorsPage from "./pages/ContributorsPage";
 import UpdateContributorPage from "./pages/UpdateContributorPage";
 import UpdateProjectPage from "./pages/UpdateProjectPage";
 import ProjectDetailsPage from "./pages/ProjectDetailsPage";
+import CreateNewsPage from "./pages/CreateNewsPage";
 
 function App() {
   return (
@@ -57,6 +58,14 @@ function App() {
           element={
             <IsPrivate>
               <UpdateProjectPage />
+            </IsPrivate>
+          }
+        ></Route>
+                <Route
+          path="/admin/create-news"
+          element={
+            <IsPrivate>
+              <CreateNewsPage />
             </IsPrivate>
           }
         ></Route>

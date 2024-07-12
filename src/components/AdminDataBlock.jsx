@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Notification from "../components/Notification";
 import contributorsService from "../services/contributors.service";
 import projectsService from "../services/projects.service";
+import newsService from "../services/news.service";
 
 function AdminDataBlock(props) {
   const { headline, createPath } = props;
@@ -25,6 +26,14 @@ function AdminDataBlock(props) {
       case "Contributors":
         contributorsService
           .searchContributor(searchQuery)
+          .then((result) => {
+            setData(result.data);
+          })
+          .catch((err) => console.log(err));
+        break;
+      case "News":
+        newsService
+          .searchNews(searchQuery)
           .then((result) => {
             setData(result.data);
           })
@@ -53,6 +62,18 @@ function AdminDataBlock(props) {
         .then((result) => {
           console.log(result);
           return contributorsService.getAllContributors();
+        })
+        .then((result) => {
+          setData(result.data);
+        })
+        .catch((err) => console.log(err));
+    }
+    if (deleteItem.type === "News") {
+      newsService
+        .deleteNews(deleteItem.id)
+        .then((result) => {
+          console.log(result);
+          return newsService.getAllNews();
         })
         .then((result) => {
           setData(result.data);
