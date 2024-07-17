@@ -16,6 +16,7 @@ import UpdateContributorPage from "./pages/UpdateContributorPage";
 import UpdateProjectPage from "./pages/UpdateProjectPage";
 import ProjectDetailsPage from "./pages/ProjectDetailsPage";
 import CreateNewsPage from "./pages/CreateNewsPage";
+import UpdateNewsPage from "./pages/UpdateNewsPage";
 
 function App() {
   return (
@@ -61,11 +62,19 @@ function App() {
             </IsPrivate>
           }
         ></Route>
-                <Route
+        <Route
           path="/admin/create-news"
           element={
             <IsPrivate>
               <CreateNewsPage />
+            </IsPrivate>
+          }
+        ></Route>
+        <Route
+          path="/admin/update-news/:id"
+          element={
+            <IsPrivate>
+              <UpdateNewsPage />
             </IsPrivate>
           }
         ></Route>

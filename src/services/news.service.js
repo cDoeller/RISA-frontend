@@ -22,12 +22,12 @@ class NewsService {
 
   // GET
   getAllNews = () => {
-    return this.api.get("/api/contributors");
+    return this.api.get("/api/news");
   };
 
   // GET
   getNews = (id) => {
-    return this.api.get(`/api/contributors/${id}`);
+    return this.api.get(`/api/news/${id}`);
   };
 
 //   getNewsByTitle = (title) => {

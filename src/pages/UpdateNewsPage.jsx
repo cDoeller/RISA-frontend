@@ -1,16 +1,17 @@
 import react, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import newsService from "../services/news.service";
 import projectsService from "../services/projects.service";
 import cloudinaryService from "../services/cloudinary.services";
 import Select from "react-select";
 import selectStles from "../styles/react-select-styling";
 
-function CreateNewsPage() {
+function UpdateNewsPage() {
   const [availableProjects, setAvailableProjects] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(new Date().toJSON().slice(0, 10));
+  const [defaultRelatedProjects, setDefaultRelatedProjects] = useState(null);
   const [projectId, setProjectId] = useState([]);
   const [link, setLink] = useState("");
   // image data
@@ -18,22 +19,46 @@ function CreateNewsPage() {
   const [imagePreviews, setImagePreviews] = useState([]);
   // err
   const [errorMessage, setErrorMessage] = useState("");
-
+  // infra
   const todayDate = new Date().toJSON().slice(0, 10);
-
+  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    projectsService
-      .getAllProjects()
-      .then((result) => {
-        console.log("all projects", result.data);
-        setAvailableProjects(result.data);
-      })
-      .catch((err) => {
+    const fetchData = async () => {
+      try {
+        const projectsData = await projectsService.getAllProjects();
+        setAvailableProjects(projectsData.data);
+        const newsData = await newsService.getNews(id);
+        setTitle(newsData.data.title);
+        setDescription(newsData.data.description);
+        setDate(newsData.data.date);
+        setLink(newsData.data.link);
+        // images
+        if (newsData.data.image_url) {
+          setImageData(newsData.data.image_url);
+          setImagePreviews([newsData.data.image_url]);
+        }
+        // related projects
+        if (newsData.data.related_projects) {
+          const DefaultRelatedProjTemp = newsData.data.related_projects.map(
+            (rp) => {
+              return { value: rp._id, label: rp.title };
+            }
+          );
+          setDefaultRelatedProjects(DefaultRelatedProjTemp);
+          setProjectId(
+            newsData.data.related_projects.map((rp) => {
+              return rp._id;
+            })
+          );
+        }
+      } catch (err) {
         console.log(err);
-      });
-  }, []);
+      }
+    };
+    fetchData();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     try {
@@ -49,18 +74,20 @@ function CreateNewsPage() {
       };
 
       if (imageData) {
-        // make body formdata for cloudinary route
-        const imageUploadData = new FormData();
-        imageUploadData.append("files", imageData);
-        const cloudinaryResponse = await cloudinaryService.uploadSingle(
-          imageUploadData
-        );
-        newNews.image_url = cloudinaryResponse.data.fileUrl;
+        // if something new to upload --> make new form data
+        if (typeof imageData !== "string") {
+          let imageUploadData = new FormData();
+          imageUploadData.append("files", imageData);
+          const cloudinaryResponse = await cloudinaryService.uploadSingle(
+            imageUploadData
+          );
+          newNews.image_url = cloudinaryResponse.data.fileUrl;
+        }
       } else {
         newNews.image_url = "";
       }
 
-      const createdNews = await newsService.createNews(newNews);
+      const createdNews = await newsService.updateNews(id, newNews);
       navigate("/admin");
     } catch (err) {
       setErrorMessage(err.response.data.message);
@@ -179,7 +206,7 @@ function CreateNewsPage() {
             </label>
           </label>
           {/* image previews */}
-          {imagePreviews.length > 0 && (
+          {imagePreviews.length>0 && (
             <div className="create-project-image-previews-wrapper flex-column">
               {imagePreviews.map((previewUrl) => {
                 return (
@@ -203,17 +230,16 @@ function CreateNewsPage() {
           )}
           {/* PROJECTS */}
           {/* REACT SELECT */}
-          {projectsOptions.length > 0 && (
-            <label className="form-input-label" htmlFor="">
-              projects
-              <Select
-                options={projectsOptions}
-                onChange={handleProjectsSelectChange}
-                styles={selectStles}
-                isMulti
-              />
-            </label>
-          )}
+          <label className="form-input-label" htmlFor="">
+            projects
+            <Select
+              defaultValue={defaultRelatedProjects && defaultRelatedProjects}
+              options={projectsOptions.length > 0 && projectsOptions}
+              onChange={handleProjectsSelectChange}
+              styles={selectStles}
+              isMulti
+            />
+          </label>
           {/* LINK */}
           <label className="form-input-label" htmlFor="">
             link
@@ -238,4 +264,4 @@ function CreateNewsPage() {
   );
 }
 
-export default CreateNewsPage;
+export default UpdateNewsPage;
