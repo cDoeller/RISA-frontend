@@ -11,7 +11,7 @@ function UpdateNewsPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(new Date().toJSON().slice(0, 10));
-  const [defaultRelatedProjects, setDefaultRelatedProjects] = useState(null);
+  const [defaultProjects, setDefaultProjects] = useState(null);
   const [projectId, setProjectId] = useState([]);
   const [link, setLink] = useState("");
   // image data
@@ -27,9 +27,21 @@ function UpdateNewsPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const projectsData = await projectsService.getAllProjects();
-        setAvailableProjects(projectsData.data);
         const newsData = await newsService.getNews(id);
+        // related projects
+        if (newsData.data.related_projects) {
+          setDefaultProjects(
+            newsData.data.related_projects.map((proj) => {
+              return { value: proj._id, label: proj.title };
+            })
+          );
+          setProjectId(
+            newsData.data.related_projects.map((proj) => {
+              return proj._id;
+            })
+          );
+        }
+        // other stuff
         setTitle(newsData.data.title);
         setDescription(newsData.data.description);
         setDate(newsData.data.date);
@@ -39,20 +51,8 @@ function UpdateNewsPage() {
           setImageData(newsData.data.image_url);
           setImagePreviews([newsData.data.image_url]);
         }
-        // related projects
-        if (newsData.data.related_projects) {
-          const DefaultRelatedProjTemp = newsData.data.related_projects.map(
-            (rp) => {
-              return { value: rp._id, label: rp.title };
-            }
-          );
-          setDefaultRelatedProjects(DefaultRelatedProjTemp);
-          setProjectId(
-            newsData.data.related_projects.map((rp) => {
-              return rp._id;
-            })
-          );
-        }
+        const projectsData = await projectsService.getAllProjects();
+        setAvailableProjects(projectsData.data);
       } catch (err) {
         console.log(err);
       }
@@ -185,7 +185,6 @@ function UpdateNewsPage() {
               min={todayDate}
             />
           </label>
-
           {/* IMAGES */}
           <label className="form-input-label">
             images
@@ -206,7 +205,7 @@ function UpdateNewsPage() {
             </label>
           </label>
           {/* image previews */}
-          {imagePreviews.length>0 && (
+          {imagePreviews.length > 0 && (
             <div className="create-project-image-previews-wrapper flex-column">
               {imagePreviews.map((previewUrl) => {
                 return (
@@ -229,11 +228,12 @@ function UpdateNewsPage() {
             </div>
           )}
           {/* PROJECTS */}
+          {console.log(defaultProjects)}
           {/* REACT SELECT */}
           <label className="form-input-label" htmlFor="">
             projects
             <Select
-              defaultValue={defaultRelatedProjects && defaultRelatedProjects}
+              defaultValue={defaultProjects && defaultProjects}
               options={projectsOptions.length > 0 && projectsOptions}
               onChange={handleProjectsSelectChange}
               styles={selectStles}
