@@ -40,6 +40,7 @@ function CreateNewsPage() {
       e.preventDefault();
 
       const newNews = {
+        label: title,
         title,
         description,
         date,
@@ -49,13 +50,16 @@ function CreateNewsPage() {
 
       // ******************************************************* ONLY ONE IMAGE
       if (imageData) {
+        console.log(imageData)
         // make body formdata for cloudinary route
         const imageUploadData = new FormData();
+        console.log("imageUploadData FORM", imageUploadData)
         imageUploadData.append("files", imageData);
+        console.log("imageUploadData APPEND", imageUploadData)
         const cloudinaryResponse = await cloudinaryService.uploadSingle(
           imageUploadData
         );
-        newNews.image_url = cloudinaryResponse.data.fileUrls;
+        newNews.image_url = cloudinaryResponse.data.fileUrl;
       } else {
         newNews.image_url = "";
       }
