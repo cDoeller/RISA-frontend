@@ -15,7 +15,7 @@ function HomePage() {
     async function fetchData() {
       try {
         const latestNewsFetch = await newsService.getLatestNews();
-        console.log(latestNewsFetch.data)
+        console.log(latestNewsFetch.data);
         setLatestNews(latestNewsFetch.data);
       } catch (err) {
         console.log(err);
@@ -68,9 +68,11 @@ function HomePage() {
               <NewsContainer key={newsDocument._id} newsData={newsDocument} />
             );
           })}
-          <div className="button-fit-content landing-page-morenews-button">
-            more news
-          </div>
+          <Link to="/news">
+            <div className="button-fit-content landing-page-morenews-button">
+              more news
+            </div>
+          </Link>
         </section>
       )}
       {/* FILTER TAGS */}

@@ -45,11 +45,13 @@ function NewsContainer(props) {
             })}
           </div>
         )}
-        <ExternalLink href={newsData.link}>
-          <p className="newscontainer-info-element white pointer">
-            <u>{newsData.link}</u>
-          </p>
-        </ExternalLink>
+        {newsData.link && (
+          <ExternalLink href={newsData.link}>
+            <p className="newscontainer-info-element white pointer">
+              <u>{newsData.link}</u>
+            </p>
+          </ExternalLink>
+        )}
       </div>
     </div>
   );
