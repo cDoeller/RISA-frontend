@@ -229,6 +229,15 @@ function UpdateNewsPage() {
           )}
           {/* PROJECTS */}
           {console.log(defaultProjects)}
+          <label className="form-input-label" htmlFor="">
+            default projects
+            <div>
+              {defaultProjects &&
+                defaultProjects.map((p) => {
+                  return <p key={p.value}>{p.label}: {p.value}</p>;
+                })}
+            </div>
+          </label>
           {/* REACT SELECT */}
           <label className="form-input-label" htmlFor="">
             projects
