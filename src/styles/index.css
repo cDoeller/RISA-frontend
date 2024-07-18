@@ -124,6 +124,12 @@ input {
   align-items: start;
 }
 
+.flex-column-right {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -187,6 +193,7 @@ input {
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
 }
 
 .button-active {
@@ -194,6 +201,7 @@ input {
   border: none;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
+  cursor: pointer;
 }
 
 .button-small {
@@ -203,6 +211,7 @@ input {
   border-radius: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
   font-size: 0.8rem;
+  cursor: pointer;
 }
 
 .button-small-active {
@@ -211,6 +220,7 @@ input {
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
   font-size: 0.8rem;
+  cursor: pointer;
 }
 
 .button-fit-content {
@@ -220,6 +230,7 @@ input {
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
 }
 
 .button-fit-content-small {
@@ -231,7 +242,19 @@ input {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
+
+.button-inner-fit-content {
+  width: fit-content;
+  background-color: transparent;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
 .border-bottom-black {
   /* border-bottom: 1px solid black; */
 }

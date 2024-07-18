@@ -25,6 +25,11 @@ class NewsService {
     return this.api.get("/api/news");
   };
 
+    // GET
+    getLatestNews = () => {
+      return this.api.get("/api/news/latest");
+    };
+
   // GET
   getNews = (id) => {
     return this.api.get(`/api/news/${id}`);
