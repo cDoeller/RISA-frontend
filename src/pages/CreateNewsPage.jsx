@@ -11,8 +11,11 @@ function CreateNewsPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(new Date().toJSON().slice(0, 10));
+  const [endDate, setEndDate] = useState(new Date().toJSON().slice(0, 10));
   const [projectId, setProjectId] = useState([]);
   const [link, setLink] = useState("");
+  const [isEvent, setIsEvent] = useState(false);
+  const [hasEndDate, setHasEndDate] = useState(false);
   // image data
   const [imageData, setImageData] = useState(null);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -43,7 +46,10 @@ function CreateNewsPage() {
         label: title,
         title,
         description,
-        date,
+        is_event: isEvent,
+        has_end_date: hasEndDate,
+        end_date: hasEndDate ? endDate : "",
+        date: isEvent ? date : "",
         related_projects: projectId,
         link,
       };
@@ -110,6 +116,25 @@ function CreateNewsPage() {
     setImagePreviews(preview);
   }
 
+  // CHECKBOX
+  function handleCheckbox(isChecked, checkbox) {
+    if (isChecked) {
+      if (checkbox === "event") {
+        setIsEvent(true);
+      }
+      if (checkbox === "enddate") {
+        setHasEndDate(true);
+      }
+    } else {
+      if (checkbox === "event") {
+        setIsEvent(false);
+      }
+      if (checkbox === "enddate") {
+        setHasEndDate(false);
+      }
+    }
+  }
+
   // ERRORS
   const errorMessageElement = <p className="error-message">{errorMessage}</p>;
 
@@ -145,20 +170,59 @@ function CreateNewsPage() {
             />
             <p>{description.length}</p>
           </label>
-          {/* DATE */}
-          <label className="form-input-label" htmlFor="">
-            date
+          {/* CHECKBOX DATE */}
+          <label className="form-input-label-checkbox" htmlFor="">
             <input
-              className="form-input-input form-input-type-text"
-              type="date"
-              value={date}
+              type="checkbox"
+              checked={isEvent}
               onChange={(e) => {
-                setDate(e.target.value);
+                handleCheckbox(e.target.checked, "event");
               }}
-              min={todayDate}
             />
+            Assign a date
           </label>
+          {/* DATE */}
+          {isEvent && (
+            <>
+              <label className="form-input-label" htmlFor="">
+                date
+                <input
+                  className="form-input-input form-input-type-text"
+                  type="date"
+                  value={date}
+                  onChange={(e) => {
+                    setDate(e.target.value);
+                  }}
+                  min={todayDate}
+                />
+              </label>
 
+              <label className="form-input-label-checkbox" htmlFor="">
+                <input
+                  type="checkbox"
+                  checked={hasEndDate}
+                  onChange={(e) => {
+                    handleCheckbox(e.target.checked, "enddate");
+                  }}
+                />
+                assign end date
+              </label>
+              {hasEndDate && (
+                <label className="form-input-label" htmlFor="">
+                  end date
+                  <input
+                    className="form-input-input form-input-type-text"
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => {
+                      setEndDate(e.target.value);
+                    }}
+                    min={date}
+                  />
+                </label>
+              )}
+            </>
+          )}
           {/* IMAGES */}
           <label className="form-input-label">
             images

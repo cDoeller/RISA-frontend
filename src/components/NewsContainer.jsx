@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../styles/styles-components/NewsContainer.css";
+import { Link } from "react-router-dom";
+import { ExternalLink } from "react-external-link";
 
 function NewsContainer(props) {
   const { newsData } = props;
@@ -12,7 +14,43 @@ function NewsContainer(props) {
           <img src={newsData.image_url} alt="" />
         </div>
       )}
-      <p className="newscontainer-info-element">{newsData.description}</p>
+      <div className="newscontainer-info-inner-wrapper flex-column">
+        <p className="newscontainer-info-element white">
+          {newsData.description}
+        </p>
+        {newsData.is_event &&
+          (newsData.end_date ? (
+            <p className="newscontainer-info-element white">
+              Date: {newsData.date.replaceAll("-", "/")} -{" "}
+              {newsData.end_date.replaceAll("-", "/")}
+            </p>
+          ) : (
+            <p className="newscontainer-info-element white">
+              Date: {newsData.date.replaceAll("-", "/")}
+            </p>
+          ))}
+        {newsData.related_projects && (
+          <div className="newscontainer-info-related-wrapper flex-row-wrap">
+            <p className="white">Related Projects:&nbsp;</p>
+            {newsData.related_projects.map((proj, index) => {
+              return (
+                <Link to={`/projects/${proj._id}`} key={proj._id}>
+                  <p className="white pointer">
+                    <u>{proj.title}</u>
+                    {index !== newsData.related_projects.length - 1 && ","}
+                    <>&nbsp;</>
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+        <ExternalLink href={newsData.link}>
+          <p className="newscontainer-info-element white pointer">
+            <u>{newsData.link}</u>
+          </p>
+        </ExternalLink>
+      </div>
     </div>
   );
 
@@ -38,7 +76,7 @@ function NewsContainer(props) {
           <img src="" alt="" />
         </div> */}
           <p className="newscontainer-date">
-            {newsData.date.replaceAll("-", "/")}
+            {newsData.createdAt.slice(0, 10).replaceAll("-", "/")}
           </p>
         </div>
         <div className="newscontainer-title-wrapper">
