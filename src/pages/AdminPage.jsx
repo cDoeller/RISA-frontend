@@ -34,6 +34,10 @@ function AdminPage() {
             headline="Contributors"
             createPath="/admin/create-contributor"
           />
+          <AdminDataBlock
+            headline="News"
+            createPath="/admin/create-news"
+          />
         </div>
       )}
     </>

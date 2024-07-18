@@ -81,7 +81,7 @@ function UpdateProjectPage() {
           await contributorsService.getAllContributors();
         setAllContributors(contributorsResult.data);
 
-        console.log(projectData.data);
+        // console.log(projectData.data);
       } catch (err) {
         console.log(err);
       }

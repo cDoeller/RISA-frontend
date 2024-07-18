@@ -1,13 +1,30 @@
 .landing-page-wrapper {
-  gap: 2.5rem;
+  gap: 4.5rem;
 }
 
-/* TAGS */
+/* NEWS SECTION */
+
+.landing-page-news-section {
+}
+
+.landing-page-morenews-button {
+  text-transform: uppercase;
+  margin-top: 1rem;
+  /* border: 1px solid black;
+  padding: 0.6rem;
+  margin: -1px 0 0 0;
+  border-radius: 20px; */
+}
+
+/* PROJECTS SECTION */
+.landing-page-projects-section {
+  gap: 2rem;
+}
+
 .landing-page-tag-filter-wrapper {
   gap: 1rem;
 }
 
-/* PROJECT LIST */
 .projects-list-projects-wrapper {
   /* gap: 1rem; */
 }

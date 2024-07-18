@@ -26,19 +26,12 @@ function UpdateContributorPage() {
       try {
         const contributorData = await contributorsService.getContributor(id);
 
-        console.log(contributorData.data);
-
         setName(contributorData.data.name);
         setShort_bio(contributorData.data.short_bio);
         setEmail(contributorData.data.email);
         setInsta(contributorData.data.social_media.insta);
         setX(contributorData.data.social_media.x);
         setWebsite_url(contributorData.data.website_url);
-
-        // console.log(contributorData.data.projects);
-        // contributorData.data.projects.forEach((e) => {
-        //   console.log(typeof e);
-        // });
 
         if (contributorData.data.projects.length > 0) {
           const projIdArray = contributorData.data.projects.map((proj) => {
@@ -155,7 +148,7 @@ function UpdateContributorPage() {
             <label className="form-input-label" htmlFor="">
               projects
               <Select
-                defaultValue={defaultProjects && defaultProjects}
+                defaultValue={defaultProjects.length>0 && defaultProjects}
                 options={projectsOptions}
                 onChange={handleProjectsSelectChange}
                 styles={selectStles}

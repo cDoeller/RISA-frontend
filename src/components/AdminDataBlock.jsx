@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Notification from "../components/Notification";
 import contributorsService from "../services/contributors.service";
 import projectsService from "../services/projects.service";
+import newsService from "../services/news.service";
 
 function AdminDataBlock(props) {
   const { headline, createPath } = props;
@@ -30,10 +31,18 @@ function AdminDataBlock(props) {
           })
           .catch((err) => console.log(err));
         break;
+      case "News":
+        newsService
+          .searchNews(searchQuery)
+          .then((result) => {
+            setData(result.data);
+          })
+          .catch((err) => console.log(err));
+        break;
     }
   }, [searchQuery, headline, setData]);
 
-  // delete entries
+  // DELETE
   function handleDeleteItem() {
     if (deleteItem.type === "Projects") {
       projectsService
@@ -59,7 +68,33 @@ function AdminDataBlock(props) {
         })
         .catch((err) => console.log(err));
     }
+    if (deleteItem.type === "News") {
+      newsService
+        .deleteNews(deleteItem.id)
+        .then((result) => {
+          console.log(result);
+          return newsService.getAllNews();
+        })
+        .then((result) => {
+          setData(result.data);
+        })
+        .catch((err) => console.log(err));
+    }
   }
+
+  // UPDATE
+  const handleUpdateLink = (id) => {
+    if (data) {
+      switch (headline) {
+        case "Contributors":
+          return `/admin/update-contributor/${id}`;
+        case "Projects":
+          return `/admin/update-project/${id}`;
+        case "News":
+          return `/admin/update-news/${id}`;
+      }
+    }
+  };
 
   return (
     <>
@@ -102,13 +137,7 @@ function AdminDataBlock(props) {
                     {data.label}
                   </h1>
                   <div className="admin-update-delete-wrapper flex-row-aligncenter">
-                    <Link
-                      to={
-                        headline === "Contributors"
-                          ? `/admin/update-contributor/${data._id}`
-                          : `/admin/update-project/${data._id}`
-                      }
-                    >
+                    <Link to={handleUpdateLink(data._id)}>
                       <div className="image-wrapper admin-update-delete-icons pointer">
                         <img src="update-icon.png" alt="" />
                       </div>
