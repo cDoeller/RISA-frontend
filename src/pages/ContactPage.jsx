@@ -60,7 +60,7 @@ function ContactPage() {
               }}
             />
           </label>
-          <button className="form-button pointer" type="submit">
+          <button className="form-button pointer button" type="submit">
             send
           </button>
         </form>

@@ -3,6 +3,7 @@ import "../styles/styles-pages/AdminPage.css";
 import { AuthContext } from "../context/auth.context";
 import Login from "../components/Login";
 import AdminDataBlock from "../components/AdminDataBlock";
+import { Link } from "react-router-dom";
 
 function AdminPage() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
@@ -25,6 +26,14 @@ function AdminPage() {
               X
             </p>
           </div>
+          {/* GENERAL DATA */}
+          <section className="admin-general-data-section flex-column">
+            <Link to="/admin/general-data">
+              <div className="admin-general-data-wrapper">
+                <h1 className="admin-general-data-headline">general data</h1>
+              </div>
+            </Link>
+          </section>
           {/* DATA BLOCKS */}
           <AdminDataBlock
             headline="Projects"
@@ -34,10 +43,7 @@ function AdminPage() {
             headline="Contributors"
             createPath="/admin/create-contributor"
           />
-          <AdminDataBlock
-            headline="News"
-            createPath="/admin/create-news"
-          />
+          <AdminDataBlock headline="News" createPath="/admin/create-news" />
         </div>
       )}
     </>
