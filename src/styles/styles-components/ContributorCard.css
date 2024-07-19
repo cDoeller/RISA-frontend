@@ -1,12 +1,3 @@
-.contributor-wrapper {
-
-}
-.contributor-wrapper-active {
-  animation-name: getActive;
-  animation-duration: 0.2s;
-  animation-timing-function: ease-out;
-  margin: 1rem 0;
-}
 @keyframes getActive {
   from {
     margin: 0;
@@ -14,6 +5,30 @@
   to {
     margin: 1rem 0;
   }
+}
+
+@keyframes getActiveFirst {
+  from {
+    margin: 0;
+  }
+  to {
+    margin: 0 0 1rem 0;
+  }
+}
+.contributor-wrapper {
+}
+.contributor-wrapper-active {
+  animation-name: getActive;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+  margin: 1rem 0;
+}
+
+.contributor-wrapper-active-first {
+  animation-name: getActiveFirst;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+  margin: 0 0 1rem 0;
 }
 
 .contributors-card {

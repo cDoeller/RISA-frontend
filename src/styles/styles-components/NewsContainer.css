@@ -7,6 +7,15 @@
   }
 }
 
+@keyframes getActiveFirst {
+  from {
+    margin: 0;
+  }
+  to {
+    margin: 0 0 1rem 0;
+  }
+}
+
 .newscontainer-wrapper {
   width: 100%;
   margin: 0;
@@ -16,6 +25,12 @@
   animation-duration: 0.2s;
   animation-timing-function: ease-out;
   margin: 1rem 0;
+}
+.newscontainer-wrapper-active-firstchild{
+  animation-name: getActiveFirst;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+  margin: 0 0 1rem 0;
 }
 .newscontainer-header-wrapper {
   border-radius: 20px;

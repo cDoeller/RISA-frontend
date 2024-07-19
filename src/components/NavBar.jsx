@@ -30,6 +30,9 @@ function NavBar() {
           <Link to="/about" onClick={handleNavButtons}>
             <h1 className={"nav-bottom-h1 " + (pathname==="/about"?"border-bottom-white":"border-bottom-black")}>About</h1>
           </Link>
+          <Link to="/news" onClick={handleNavButtons}>
+            <h1 className={"nav-bottom-h1 " + (pathname==="/about"?"border-bottom-white":"border-bottom-black")}>News</h1>
+          </Link>
           <Link to="#" onClick={handleNavButtons}>
             <h1 className={"nav-bottom-h1 " + (pathname==="/projects"?"border-bottom-white":"border-bottom-black")}>Projects</h1>
           </Link>

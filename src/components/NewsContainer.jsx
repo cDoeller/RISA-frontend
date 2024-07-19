@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { ExternalLink } from "react-external-link";
 
 function NewsContainer(props) {
-  const { newsData } = props;
-  const [isActive, setIsActive] = useState(false);
+  const { newsData, active, index } = props;
+  const [isActive, setIsActive] = useState(active);
 
   const newsInfoElement = (
     <div className="newscontainer-info-wrapper flex-column">
@@ -63,7 +63,11 @@ function NewsContainer(props) {
   return (
     <div
       className={
-        "newscontainer-wrapper " + (isActive && "newscontainer-wrapper-active")
+        "newscontainer-wrapper " +
+        (isActive &&
+          (index === 0
+            ? "newscontainer-wrapper-active-firstchild"
+            : "newscontainer-wrapper-active"))
       }
     >
       <div

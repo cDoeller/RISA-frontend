@@ -4,7 +4,7 @@ import { ExternalLink } from "react-external-link";
 import "../styles/styles-components/ContributorCard.css";
 
 function ContributorCard(props) {
-  const { contributor } = props;
+  const { contributor, index } = props;
   const [showInfos, setShowInfos] = useState(false);
 
   const handleShowInfos = () => {
@@ -12,7 +12,15 @@ function ContributorCard(props) {
   };
 
   return (
-    <div className={(showInfos ? "contributor-wrapper-active" : "contributor-wrapper")}>
+    <div
+      className={
+        "contributor-wrapper " +
+        (showInfos &&
+          (index === 0
+            ? "contributor-wrapper-active-first"
+            : "contributor-wrapper-active"))
+      }
+    >
       <div
         className={
           "pointer " +
