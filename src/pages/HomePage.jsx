@@ -5,6 +5,7 @@ import newsService from "../services/news.service";
 import { Link } from "react-router-dom";
 import TagFilterButton from "../components/TagFilterButton";
 import NewsContainer from "../components/NewsContainer";
+import LandingSlideshow from "../components/LandingSlideshow";
 
 function HomePage() {
   const [projects, setProjects] = useState(null);
@@ -58,31 +59,28 @@ function HomePage() {
     setActiveFilterTags(tempTags);
   };
 
+  const slideshowData = [
+    {
+      image_url:
+        "https://res.cloudinary.com/diofsqoo7/image/upload/v1720530617/RISA/eptvwgnbn9yfcic34vny.jpg",
+      caption: "installation view of project Speculative Sensing",
+    },
+    {
+      image_url:
+        "https://res.cloudinary.com/diofsqoo7/image/upload/v1720530617/RISA/n6w3ztipwmkrofa0qnhs.jpg",
+      caption: "Exhibition at Kunstraum Köln",
+    },
+    {
+      image_url:
+        "https://res.cloudinary.com/diofsqoo7/image/upload/v1720530618/RISA/icvtjyxmalymrprtgotx.jpg",
+      caption: "Collaborative process at university of applied sciences Berlin",
+    },
+  ];
+
   return (
     <>
       <section className="landing-page-image-section">
-        <div className="landing-page-image-section-wrapper flex-column">
-          <div className="landing-page-image-section-image-wrapper fill-image ">
-            <img src="pcp.jpg" alt="" />
-          </div>
-          <div className="landing-page-image-gallerytools-wrapper flex-row-center">
-            <div className="image-wrapper landing-page-image-gallerytools-arrow">
-              <img
-                src="/delete-icon.png"
-                alt=""
-              />
-            </div>
-            <p className="landing-page-image-gallerytools-info">
-              some info text about the image
-            </p>
-            <div className="image-wrapper landing-page-image-gallerytools-arrow">
-              <img
-                src="/delete-icon.png"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
+        <LandingSlideshow slideshowData={slideshowData} />
       </section>
       <div className="page-wrapper flex-column landing-page-wrapper">
         {/* ABOUT ABSTRACT */}
