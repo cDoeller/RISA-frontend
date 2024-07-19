@@ -63,9 +63,14 @@ function HomePage() {
       {/* LATEST NEWS CONTAINER */}
       {latestNews && (
         <section className="flex-column-right landing-page-news-section">
-          {latestNews.map((newsDocument) => {
+          {latestNews.map((newsDocument, index) => {
             return (
-              <NewsContainer key={newsDocument._id} newsData={newsDocument} />
+              <NewsContainer
+                index={index}
+                active={false}
+                key={newsDocument._id}
+                newsData={newsDocument}
+              />
             );
           })}
           <Link to="/news">

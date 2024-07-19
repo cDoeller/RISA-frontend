@@ -17,6 +17,7 @@ import UpdateProjectPage from "./pages/UpdateProjectPage";
 import ProjectDetailsPage from "./pages/ProjectDetailsPage";
 import CreateNewsPage from "./pages/CreateNewsPage";
 import UpdateNewsPage from "./pages/UpdateNewsPage";
+import NewsPage from "./pages/NewsPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/contact" element={<ContactPage />}></Route>
         <Route path="/admin" element={<AdminPage />}></Route>
         <Route path="/projects/:id" element={<ProjectDetailsPage />}></Route>
+        <Route path="/news" element={<NewsPage />}></Route>
 
         <Route
           path="/admin/create-project"
