@@ -39,8 +39,8 @@ function ContributorsPage() {
         {/* CONTRIBUTORS */}
         <section className="contributors-section flex-column">
           {contributors &&
-            contributors.map((c) => {
-              return <ContributorCard key={c._id} contributor={c} />;
+            contributors.map((c, index) => {
+              return <ContributorCard key={c._id} contributor={c} index={index} />;
             })}
         </section>
       </div>
