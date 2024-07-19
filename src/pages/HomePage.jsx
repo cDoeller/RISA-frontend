@@ -59,61 +59,106 @@ function HomePage() {
   };
 
   return (
-    <div className="page-wrapper flex-column landing-page-wrapper">
-      {/* LATEST NEWS CONTAINER */}
-      {latestNews && (
-        <section className="flex-column-right landing-page-news-section">
-          {latestNews.map((newsDocument, index) => {
-            return (
-              <NewsContainer
-                index={index}
-                active={false}
-                key={newsDocument._id}
-                newsData={newsDocument}
+    <>
+      <section className="landing-page-image-section">
+        <div className="landing-page-image-section-wrapper flex-column">
+          <div className="landing-page-image-section-image-wrapper fill-image ">
+            <img src="pcp.jpg" alt="" />
+          </div>
+          <div className="landing-page-image-gallerytools-wrapper flex-row-center">
+            <div className="image-wrapper landing-page-image-gallerytools-arrow">
+              <img
+                src="/delete-icon.png"
+                alt=""
               />
-            );
-          })}
-          <Link to="/news">
+            </div>
+            <p className="landing-page-image-gallerytools-info">
+              some info text about the image
+            </p>
+            <div className="image-wrapper landing-page-image-gallerytools-arrow">
+              <img
+                src="/delete-icon.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className="page-wrapper flex-column landing-page-wrapper">
+        {/* ABOUT ABSTRACT */}
+        <section className="landing-page-about-section flex-column-right">
+          <div className="landing-page-about-info-wrapper flex-column">
+            <h1 className="landing-page-about-headline">
+              how can we connect with »natural« environments?
+            </h1>
+            <p className="landing-page-about-abstract">
+              RISA - Research Institute for Specualtive Atmospheres is a
+              platform for Artistic Research Projects on the question of how we
+              can (re-)connect with our environments by using speculative
+              methods of observation, analysis and transformation.
+            </p>
+          </div>
+          <Link to="/about">
             <div className="button-fit-content landing-page-morenews-button">
-              more news
+              more info
             </div>
           </Link>
         </section>
-      )}
-      {/* FILTER TAGS */}
-      <section className="landing-page-projects-section flex-column">
-        <div className="flex-row flex-wrap landing-page-tag-filter-wrapper">
-          {filterTags.map((tag) => {
-            return (
-              <TagFilterButton
-                key={tag}
-                tag={tag}
-                handleFilter={handleFilter}
-              />
-            );
-          })}
-        </div>
-        {/* PROJECTS */}
-        {projects && (
-          <div className="projects-list-projects-wrapper flex-column">
-            {projects.map((project) => {
+        {/* LATEST NEWS CONTAINER */}
+        {latestNews && (
+          <section className="flex-column-right landing-page-news-section">
+            {latestNews.map((newsDocument, index) => {
               return (
-                <Link to={`/projects/${project._id}`} key={project._id}>
-                  <div className="projects-list-card-wrapper flex-column-left pointer">
-                    <div className="projects-list-card-image-wrapper fill-image">
-                      <img src={project.images_url[0]} alt="" />
-                    </div>
-                    <h1 className="projects-list-card-title">
-                      {project.title}
-                    </h1>
-                  </div>
-                </Link>
+                <NewsContainer
+                  index={index}
+                  active={false}
+                  key={newsDocument._id}
+                  newsData={newsDocument}
+                />
+              );
+            })}
+            <Link to="/news">
+              <div className="button-fit-content landing-page-morenews-button">
+                more news
+              </div>
+            </Link>
+          </section>
+        )}
+        {/* FILTER TAGS */}
+        <section className="landing-page-projects-section flex-column">
+          <div className="flex-row flex-wrap landing-page-tag-filter-wrapper">
+            {filterTags.map((tag) => {
+              return (
+                <TagFilterButton
+                  key={tag}
+                  tag={tag}
+                  handleFilter={handleFilter}
+                />
               );
             })}
           </div>
-        )}
-      </section>
-    </div>
+          {/* PROJECTS */}
+          {projects && (
+            <div className="projects-list-projects-wrapper flex-column">
+              {projects.map((project) => {
+                return (
+                  <Link to={`/projects/${project._id}`} key={project._id}>
+                    <div className="projects-list-card-wrapper flex-column-left pointer">
+                      <div className="projects-list-card-image-wrapper fill-image">
+                        <img src={project.images_url[0]} alt="" />
+                      </div>
+                      <h1 className="projects-list-card-title">
+                        {project.title}
+                      </h1>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      </div>
+    </>
   );
 }
 

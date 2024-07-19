@@ -2,6 +2,41 @@
   gap: 4.5rem;
 }
 
+/* IMAGE SECTION  */
+
+.landing-page-image-section {
+  margin-bottom: 2.5rem;
+}
+.landing-page-image-section-wrapper {
+  gap: 0.5rem;
+}
+.landing-page-image-section-image-wrapper {
+  height: 250px;
+}
+.landing-page-image-gallerytools-wrapper {
+  justify-content: space-between !important;
+  padding: 0 1rem;
+}
+.landing-page-image-gallerytools-arrow {
+  width: 15px;
+}
+.landing-page-image-gallerytools-info {
+  text-align: center;
+  max-width: 50%;
+  font-size: 0.7rem;
+}
+
+/* ABOUT SECTION */
+.landing-page-about-section {
+}
+.landing-page-about-info-wrapper {
+  gap: 1rem;
+}
+.landing-page-about-headline {
+}
+.landing-page-about-abstract {
+  hyphens: auto;
+}
 /* NEWS SECTION */
 
 .landing-page-news-section {
