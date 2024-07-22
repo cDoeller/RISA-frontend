@@ -188,11 +188,11 @@ input {
 }
 
 .button {
-  background-color: transparent;
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0.4rem 0.8rem !important;
+  border-radius: 20px !important;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4) !important;
   cursor: pointer;
 }
 

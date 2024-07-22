@@ -12,6 +12,18 @@
   padding: 0.4rem 0.6rem;
 }
 
+/* GENERAL DATA */
+
+.admin-general-data-section {
+}
+.admin-general-data-wrapper {
+  border: 1px solid black;
+  padding: 1rem;
+  text-align: center;
+}
+.admin-general-data-headline {
+}
+
 /* SECTIONS */
 .admin-project-section {
   gap: 1.5rem;
@@ -59,7 +71,7 @@
 .admin-card-higlight-umbrella {
   /* background-color: var(--lightgrey); */
   /* border-radius: 10px; */
-  text-shadow: 0 0 15px rgba(0,0,0,0.6);
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
   /* text-shadow: 0 0 8px var(--markeryellow); */
   padding: 0.2rem 0.5rem;
   margin-left: -0.5rem;

@@ -2,6 +2,23 @@
   gap: 4.5rem;
 }
 
+/* IMAGE SECTION  */
+
+.landing-page-image-section {
+  margin-bottom: 2.5rem;
+}
+
+/* ABOUT SECTION */
+.landing-page-about-section {
+}
+.landing-page-about-info-wrapper {
+  gap: 1rem;
+}
+.landing-page-about-headline {
+}
+.landing-page-about-abstract {
+  hyphens: auto;
+}
 /* NEWS SECTION */
 
 .landing-page-news-section {

@@ -18,6 +18,7 @@ import ProjectDetailsPage from "./pages/ProjectDetailsPage";
 import CreateNewsPage from "./pages/CreateNewsPage";
 import UpdateNewsPage from "./pages/UpdateNewsPage";
 import NewsPage from "./pages/NewsPage";
+import GeneralDataPage from "./pages/GeneralDataPage";
 
 function App() {
   return (
@@ -77,6 +78,14 @@ function App() {
           element={
             <IsPrivate>
               <UpdateNewsPage />
+            </IsPrivate>
+          }
+        ></Route>
+         <Route
+          path="/admin/general-data"
+          element={
+            <IsPrivate>
+              <GeneralDataPage />
             </IsPrivate>
           }
         ></Route>
