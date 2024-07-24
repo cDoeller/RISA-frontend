@@ -8,6 +8,7 @@ import "../styles/styles-pages/GeneralDataPage.css";
 // state change error captions
 
 function GeneralDataPage() {
+  const [about_headline_landing, setAbout_headline_landing] = useState("");
   const [about_short, setAbout_short] = useState("");
   const [about_long_general, setAbout_long_general] = useState("");
   const [about_long_top, setAbout_long_top] = useState("");
@@ -30,6 +31,7 @@ function GeneralDataPage() {
     const fetchData = async () => {
       try {
         const generalData = await generalService.getGeneralData();
+        setAbout_headline_landing(generalData.data[0].about_headline_landing);
         setAbout_short(generalData.data[0].about_short);
         setAbout_long_general(generalData.data[0].about_long_general);
         setAbout_long_top(generalData.data[0].about_long_top);
@@ -49,9 +51,7 @@ function GeneralDataPage() {
         const freeSlots = maxImages - tempImageCaptionsArray.length;
         if (freeSlots) {
           for (let i = 0; i < freeSlots; i++) {
-            tempImageCaptionsArray.push(
-              `new image caption`
-            );
+            tempImageCaptionsArray.push(`new image caption`);
           }
         }
         setCaptions(tempImageCaptionsArray);
@@ -68,6 +68,7 @@ function GeneralDataPage() {
       e.preventDefault();
 
       const newGeneralData = {
+        about_headline_landing,
         about_short,
         about_long_general,
         about_long_top,
@@ -165,9 +166,23 @@ function GeneralDataPage() {
     <>
       <section className="contact-form-section page-wrapper">
         <form className="form" onSubmit={handleSubmit}>
+          {/* ABOUT HEADLINE LANDING */}
+          <label className="form-input-label" htmlFor="aboutHeadlineBottom">
+            about: headline landing page
+            <input
+              className="form-input-input"
+              id="aboutHeadlineBottom"
+              type="text"
+              value={about_headline_landing}
+              required
+              onChange={(e) => {
+                setAbout_headline_landing(e.target.value);
+              }}
+            />
+          </label>
           {/* ABOUT SHORT */}
           <label className="form-input-label" htmlFor="">
-            about short (max. 250 characters)
+            about: landing page (max. 250 characters)
             <textarea
               className="form-input-textarea"
               type="text"
@@ -182,7 +197,7 @@ function GeneralDataPage() {
           </label>
           {/* ABOUT LONG GENERAL */}
           <label className="form-input-label" htmlFor="">
-            about long general
+            about: general text
             <textarea
               className="form-input-textarea"
               type="text"
@@ -195,7 +210,7 @@ function GeneralDataPage() {
           </label>
           {/* ABOUT HEADLINE TOP */}
           <label className="form-input-label" htmlFor="">
-            about headline top
+            about: headline 1
             <input
               className="form-input-input"
               type="text"
@@ -208,7 +223,7 @@ function GeneralDataPage() {
           </label>
           {/* ABOUT LONG TOP */}
           <label className="form-input-label">
-            about long top
+            about: text 1
             <textarea
               className="form-input-textarea"
               type="text"
@@ -221,7 +236,7 @@ function GeneralDataPage() {
           </label>
           {/* ABOUT HEADLINE BOTTOM */}
           <label className="form-input-label" htmlFor="aboutHeadlineBottom">
-            about headline bottom
+            about: headline 2
             <input
               className="form-input-input"
               id="aboutHeadlineBottom"
@@ -235,7 +250,7 @@ function GeneralDataPage() {
           </label>
           {/* ABOUT LONG BOTTOM */}
           <label className="form-input-label" htmlFor="">
-            about long bottom
+            about: text 2
             <textarea
               className="form-input-textarea"
               type="text"

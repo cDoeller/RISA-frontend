@@ -292,6 +292,7 @@ input {
   min-height: 200px;
   border: 1px solid black;
   padding: 0.4rem;
+  hyphens: auto;
 }
 .form-abstract-length {
   min-height: 120px;

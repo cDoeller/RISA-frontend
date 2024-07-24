@@ -1,65 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/styles-pages/AboutPage.css";
 import DecorativeHeader from "../components/DecorativeHeader";
+import generalService from "../services/general.service";
 
 function AboutPage() {
+  const [generalData, setGeneralData] = useState(null);
+
+  useEffect(() => {
+    generalService
+      .getGeneralData()
+      .then((result) => {
+        console.log(result.data[0]);
+        setGeneralData(result.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <DecorativeHeader />
-      <div className="page-wrapper about-sections-wrapper flex-column-left">
-        <section className="about-section flex-column-left">
-          <h1 className="about-headline-left">About</h1>
-          <p className="about-text">
-            RISA - Research Institute for Specualtive Atmospheres is a platform
-            for Artistic Research Projects on the question of how we can
-            (re-)connect with our environments by using speculative methods of
-            observation, analysis and transformation. RISA - Research Institute
-            for Specualtive Atmospheres is a platform for Artistic Research
-            Projects on the question of how we can (re-)connect with our
-            environments by using speculative methods of observation, analysis
-            and transformation. RISA - Research Institute for Specualtive
-            Atmospheres is a platform for Artistic Research Projects on the
-            question of how we can (re-)connect with our environments by using
-            speculative methods of observation, analysis and transformation.
-          </p>
-        </section>
-        <section className="about-section flex-column-left">
-          <h1 className="about-headline">
-            HOW CAN WE (RE-)CONNECT WITH »NATURAL« ENVIRONMENTS?
-          </h1>
-          <p className="about-text">
-            RISA - Research Institute for Specualtive Atmospheres is a platform
-            for Artistic Research Projects on the question of how we can
-            (re-)connect with our environments by using speculative methods of
-            observation, analysis and transformation. RISA - Research Institute
-            for Specualtive Atmospheres is a platform for Artistic Research
-            Projects on the question of how we can (re-)connect with our
-            environments by using speculative methods of observation, analysis
-            and transformation. RISA - Research Institute for Specualtive
-            Atmospheres is a platform for Artistic Research Projects on the
-            question of how we can (re-)connect with our environments by using
-            speculative methods of observation, analysis and transformation.
-          </p>
-        </section>
-        <section className="about-section flex-column-left">
-          <h1 className="about-headline">
-            WHAT ARE THE MAIN GOALS OF THE PROJECT?
-          </h1>
-          <p className="about-text">
-            RISA - Research Institute for Specualtive Atmospheres is a platform
-            for Artistic Research Projects on the question of how we can
-            (re-)connect with our environments by using speculative methods of
-            observation, analysis and transformation. RISA - Research Institute
-            for Specualtive Atmospheres is a platform for Artistic Research
-            Projects on the question of how we can (re-)connect with our
-            environments by using speculative methods of observation, analysis
-            and transformation. RISA - Research Institute for Specualtive
-            Atmospheres is a platform for Artistic Research Projects on the
-            question of how we can (re-)connect with our environments by using
-            speculative methods of observation, analysis and transformation.
-          </p>
-        </section>
-      </div>
+      {generalData && (
+        <div className="page-wrapper about-sections-wrapper flex-column-left">
+          <section className="about-section flex-column-left">
+            <h1 className="about-headline-left">About</h1>
+            <p className="about-text">
+              {generalData.about_long_general}
+            </p>
+          </section>
+          <section className="about-section flex-column-left">
+            <h1 className="about-headline">
+            {generalData.about_headline_top}
+            </h1>
+            <p className="about-text">
+            {generalData.about_long_top}
+            </p>
+          </section>
+          <section className="about-section flex-column-left">
+            <h1 className="about-headline">
+            {generalData.about_headline_bottom}
+            </h1>
+            <p className="about-text">
+            {generalData.about_long_bottom}
+            </p>
+          </section>
+        </div>
+      )}
     </div>
   );
 }
