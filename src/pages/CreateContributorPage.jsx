@@ -147,7 +147,7 @@ function CreateContributorPage() {
           <div className="flex-row create-contrib-some-wrapper">
             {/* INSTA */}
             <label className="form-input-label" htmlFor="">
-              instagram
+              instagram @
               <input
                 className="form-input-input create-contrib-some-input"
                 type="text"
@@ -159,7 +159,7 @@ function CreateContributorPage() {
             </label>
             {/* X */}
             <label className=" form-input-label" htmlFor="">
-              x
+              x @
               <input
                 className="form-input-input create-contrib-some-input"
                 type="text"

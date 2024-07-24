@@ -33,7 +33,7 @@
   margin: 0 0 1rem 0;
 }
 .newscontainer-header-wrapper {
-  border-radius: 20px;
+  /* border-radius: 20px; */
   border: 1px solid black;
   margin: -1px 0 0 0;
   padding: 0.6rem 0.8rem;

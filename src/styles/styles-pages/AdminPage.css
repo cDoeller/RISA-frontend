@@ -40,6 +40,8 @@
 .admin-input {
   border: none;
   border-bottom: black 1px solid;
+  border-radius: 0;
+  max-width: 50%;
 }
 .admin-input:focus {
   outline: none;
@@ -58,6 +60,8 @@
 .admin-card-wrapper {
   width: 100%;
   border: 1px solid black;
+  border-left: 0;
+  border-right: 0;
   padding: 1rem;
   box-sizing: border-box;
   margin: -1px 0 0 0;

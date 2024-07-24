@@ -20,7 +20,6 @@ function HomePage() {
         const latestNewsFetch = await newsService.getLatestNews();
         setLatestNews(latestNewsFetch.data);
         const generalData = await generalService.getGeneralData();
-        console.log(generalData.data[0]);
         setGeneralData(generalData.data[0]);
       } catch (err) {
         console.log(err);

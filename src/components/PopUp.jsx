@@ -8,7 +8,7 @@ function Popup(props) {
     <div className="popup-wrapper flex-column">
       <section className="popup-close-button-wrapper flex-row">
         <div
-          className="popup-close-button button"
+          className="button popup-close-button"
           onClick={() => {
             closeSetter(false);
           }}
