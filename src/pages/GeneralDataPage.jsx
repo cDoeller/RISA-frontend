@@ -2,13 +2,10 @@ import react, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import generalService from "../services/general.service";
 import cloudinaryService from "../services/cloudinary.services";
-// import Select from "react-select";
-// import selectStles from "../styles/react-select-styling";
 import "../styles/styles-pages/GeneralDataPage.css";
 
 // PROBLEME
-// bilder löschen geht nicht 
-// state change error
+// state change error captions
 
 function GeneralDataPage() {
   const [about_short, setAbout_short] = useState("");
@@ -17,7 +14,6 @@ function GeneralDataPage() {
   const [about_headline_top, setAbout_headline_top] = useState("");
   const [about_long_bottom, setAbout_long_bottom] = useState("");
   const [about_headline_bottom, setAbout_headline_bottom] = useState("");
-  const [slideshow_data, setSlideshow_data] = useState("");
   const [id, setId] = useState("");
   // image data
   const [imageData, setImageData] = useState([]);
@@ -27,6 +23,7 @@ function GeneralDataPage() {
   const [errorMessage, setErrorMessage] = useState("");
   // infra
   const navigate = useNavigate();
+  const maxImages = 10;
 
   // FETCH DATA
   useEffect(() => {
@@ -39,7 +36,6 @@ function GeneralDataPage() {
         setAbout_headline_top(generalData.data[0].about_headline_top);
         setAbout_long_bottom(generalData.data[0].about_long_bottom);
         setAbout_headline_bottom(generalData.data[0].about_headline_bottom);
-        setSlideshow_data(generalData.data[0].slideshow_data);
         setId(generalData.data[0]._id);
         // fill image data
         let tempImageUrlArray = [];
@@ -50,6 +46,14 @@ function GeneralDataPage() {
         });
         setImageData(tempImageUrlArray);
         setImagePreviews(tempImageUrlArray);
+        const freeSlots = maxImages - tempImageCaptionsArray.length;
+        if (freeSlots) {
+          for (let i = 0; i < freeSlots; i++) {
+            tempImageCaptionsArray.push(
+              `new image caption`
+            );
+          }
+        }
         setCaptions(tempImageCaptionsArray);
       } catch (err) {
         console.log(err);
@@ -73,6 +77,7 @@ function GeneralDataPage() {
         slideshow_data: [],
       };
 
+      // IMAGES UPLOAD
       // if something new to upload --> make new form data
       let hasNewImages = false;
       let imageUploadData = new FormData();
@@ -82,36 +87,35 @@ function GeneralDataPage() {
           imageUploadData.append("files", imageFile);
         }
       });
-
       if (hasNewImages) {
+        // New Images
         // upload only new image data to cloudinary
         const cloudinaryResponse = await cloudinaryService.uploadMultiple(
           imageUploadData
         );
-        console.log("cloudinaryResponse", cloudinaryResponse);
         // combine old and new cloudinary ulrs
         let newImageUrls = imageData.filter((element) => {
           return typeof element === "string";
         });
         newImageUrls = [...newImageUrls, ...cloudinaryResponse.data.fileUrls];
-        console.log("newImageUrls", newImageUrls);
-
         for (let i = 0; i < newImageUrls.length; i++) {
           const tempObj = { image_url: newImageUrls[i], caption: captions[i] };
-          console.log(tempObj);
           newGeneralData.slideshow_data.push(tempObj);
         }
       } else {
-        newGeneralData.slideshow_data = slideshow_data;
+        // ! New Images
+        // collect the current images (old, less if deleted)
+        for (let i = 0; i < imageData.length; i++) {
+          const tempObj = { image_url: imageData[i], caption: captions[i] };
+          newGeneralData.slideshow_data.push(tempObj);
+        }
       }
-
-      console.log("newGeneralData", newGeneralData);
 
       const updatedGeneral = await generalService.updateGeneralData(
         id,
         newGeneralData
       );
-      //   navigate("/admin");
+      navigate("/admin");
     } catch (err) {
       setErrorMessage(err.response.data.message);
       console.log(err);
@@ -122,10 +126,13 @@ function GeneralDataPage() {
   function handleImageDelete(index) {
     const newImageData = [...imageData];
     const newPreviews = [...imagePreviews];
+    const newCaptions = [...captions];
     newPreviews.splice(index, 1);
     newImageData.splice(index, 1);
+    newCaptions[index] = `new image caption`;
     setImageData(newImageData);
     setImagePreviews(newPreviews);
+    setCaptions(newCaptions);
   }
 
   const handleImageInput = (event) => {
@@ -147,11 +154,7 @@ function GeneralDataPage() {
 
   function handleCaptions(index, value) {
     let tempCaptions = [...captions];
-    if (tempCaptions[index]) {
-      tempCaptions[index] = value;
-    } else {
-      tempCaptions.push(value);
-    }
+    tempCaptions[index] = value;
     setCaptions(tempCaptions);
   }
 
@@ -260,7 +263,7 @@ function GeneralDataPage() {
               className="create-project-file-input-brwose-button pointer"
               htmlFor="create-project-file-input"
             >
-              Choose Files (10 max.)
+              Choose Files ({`${maxImages}`} max.)
             </label>
           </label>
           {/* image previews */}
