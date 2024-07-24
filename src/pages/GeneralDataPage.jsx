@@ -2,39 +2,59 @@ import react, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import generalService from "../services/general.service";
 import cloudinaryService from "../services/cloudinary.services";
-import Select from "react-select";
-import selectStles from "../styles/react-select-styling";
+import "../styles/styles-pages/GeneralDataPage.css";
+
+// PROBLEME
+// state change error captions
 
 function GeneralDataPage() {
+  const [about_headline_landing, setAbout_headline_landing] = useState("");
   const [about_short, setAbout_short] = useState("");
   const [about_long_general, setAbout_long_general] = useState("");
   const [about_long_top, setAbout_long_top] = useState("");
   const [about_headline_top, setAbout_headline_top] = useState("");
   const [about_long_bottom, setAbout_long_bottom] = useState("");
   const [about_headline_bottom, setAbout_headline_bottom] = useState("");
-  const [slideshow_data, setSlideshow_data] = useState(null);
   const [id, setId] = useState("");
   // image data
-  const [imageData, setImageData] = useState(null);
+  const [imageData, setImageData] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
+  const [captions, setCaptions] = useState([]);
   // err
   const [errorMessage, setErrorMessage] = useState("");
   // infra
   const navigate = useNavigate();
+  const maxImages = 10;
 
   // FETCH DATA
   useEffect(() => {
     const fetchData = async () => {
       try {
         const generalData = await generalService.getGeneralData();
-        setAbout_short(generalData.data.about_short);
-        setAbout_long_general(generalData.data.about_long_general);
-        setAbout_long_top(generalData.data.about_long_top);
-        setAbout_headline_top(generalData.data.about_headline_top);
-        setAbout_long_bottom(generalData.data.about_long_bottom);
-        setAbout_headline_bottom(generalData.data.about_headline_bottom);
-        setSlideshow_data(generalData.data.slideshow_data);
-        setId(generalData.data._id);
+        setAbout_headline_landing(generalData.data[0].about_headline_landing);
+        setAbout_short(generalData.data[0].about_short);
+        setAbout_long_general(generalData.data[0].about_long_general);
+        setAbout_long_top(generalData.data[0].about_long_top);
+        setAbout_headline_top(generalData.data[0].about_headline_top);
+        setAbout_long_bottom(generalData.data[0].about_long_bottom);
+        setAbout_headline_bottom(generalData.data[0].about_headline_bottom);
+        setId(generalData.data[0]._id);
+        // fill image data
+        let tempImageUrlArray = [];
+        let tempImageCaptionsArray = [];
+        generalData.data[0].slideshow_data.forEach((e) => {
+          tempImageUrlArray.push(e.image_url);
+          tempImageCaptionsArray.push(e.caption);
+        });
+        setImageData(tempImageUrlArray);
+        setImagePreviews(tempImageUrlArray);
+        const freeSlots = maxImages - tempImageCaptionsArray.length;
+        if (freeSlots) {
+          for (let i = 0; i < freeSlots; i++) {
+            tempImageCaptionsArray.push(`new image caption`);
+          }
+        }
+        setCaptions(tempImageCaptionsArray);
       } catch (err) {
         console.log(err);
       }
@@ -48,34 +68,55 @@ function GeneralDataPage() {
       e.preventDefault();
 
       const newGeneralData = {
+        about_headline_landing,
         about_short,
         about_long_general,
         about_long_top,
         about_headline_top,
         about_long_bottom,
         about_headline_bottom,
-        slideshow_data,
+        slideshow_data: [],
       };
 
-      //   if (imageData) {
-      //     // if something new to upload --> make new form data
-      //     if (typeof imageData !== "string") {
-      //       let imageUploadData = new FormData();
-      //       imageUploadData.append("files", imageData);
-      //       const cloudinaryResponse = await cloudinaryService.uploadSingle(
-      //         imageUploadData
-      //       );
-      //       newNews.image_url = cloudinaryResponse.data.fileUrl;
-      //     }
-      //   } else {
-      //     newNews.image_url = "";
-      //   }
+      // IMAGES UPLOAD
+      // if something new to upload --> make new form data
+      let hasNewImages = false;
+      let imageUploadData = new FormData();
+      imageData.forEach((imageFile) => {
+        if (typeof imageFile !== "string") {
+          hasNewImages = true;
+          imageUploadData.append("files", imageFile);
+        }
+      });
+      if (hasNewImages) {
+        // New Images
+        // upload only new image data to cloudinary
+        const cloudinaryResponse = await cloudinaryService.uploadMultiple(
+          imageUploadData
+        );
+        // combine old and new cloudinary ulrs
+        let newImageUrls = imageData.filter((element) => {
+          return typeof element === "string";
+        });
+        newImageUrls = [...newImageUrls, ...cloudinaryResponse.data.fileUrls];
+        for (let i = 0; i < newImageUrls.length; i++) {
+          const tempObj = { image_url: newImageUrls[i], caption: captions[i] };
+          newGeneralData.slideshow_data.push(tempObj);
+        }
+      } else {
+        // ! New Images
+        // collect the current images (old, less if deleted)
+        for (let i = 0; i < imageData.length; i++) {
+          const tempObj = { image_url: imageData[i], caption: captions[i] };
+          newGeneralData.slideshow_data.push(tempObj);
+        }
+      }
 
       const updatedGeneral = await generalService.updateGeneralData(
         id,
         newGeneralData
       );
-      //   navigate("/admin");
+      navigate("/admin");
     } catch (err) {
       setErrorMessage(err.response.data.message);
       console.log(err);
@@ -86,10 +127,13 @@ function GeneralDataPage() {
   function handleImageDelete(index) {
     const newImageData = [...imageData];
     const newPreviews = [...imagePreviews];
+    const newCaptions = [...captions];
     newPreviews.splice(index, 1);
     newImageData.splice(index, 1);
+    newCaptions[index] = `new image caption`;
     setImageData(newImageData);
     setImagePreviews(newPreviews);
+    setCaptions(newCaptions);
   }
 
   const handleImageInput = (event) => {
@@ -105,8 +149,14 @@ function GeneralDataPage() {
     const filesArray = Array.from(filesToUpload);
     const newImageData = [...imageData, ...filesArray];
     setImageData(newImageData);
-    const previews = newImageData.map((files) => URL.createObjectURL(files));
-    setImagePreviews(previews);
+    const addedPreviews = filesArray.map((files) => URL.createObjectURL(files));
+    setImagePreviews([...imagePreviews, ...addedPreviews]);
+  }
+
+  function handleCaptions(index, value) {
+    let tempCaptions = [...captions];
+    tempCaptions[index] = value;
+    setCaptions(tempCaptions);
   }
 
   // ERRORS
@@ -116,9 +166,23 @@ function GeneralDataPage() {
     <>
       <section className="contact-form-section page-wrapper">
         <form className="form" onSubmit={handleSubmit}>
+          {/* ABOUT HEADLINE LANDING */}
+          <label className="form-input-label" htmlFor="aboutHeadlineBottom">
+            about: headline landing page
+            <input
+              className="form-input-input"
+              id="aboutHeadlineBottom"
+              type="text"
+              value={about_headline_landing}
+              required
+              onChange={(e) => {
+                setAbout_headline_landing(e.target.value);
+              }}
+            />
+          </label>
           {/* ABOUT SHORT */}
           <label className="form-input-label" htmlFor="">
-            about short (max. 250 characters)
+            about: landing page (max. 250 characters)
             <textarea
               className="form-input-textarea"
               type="text"
@@ -133,7 +197,7 @@ function GeneralDataPage() {
           </label>
           {/* ABOUT LONG GENERAL */}
           <label className="form-input-label" htmlFor="">
-            about long general
+            about: general text
             <textarea
               className="form-input-textarea"
               type="text"
@@ -146,7 +210,7 @@ function GeneralDataPage() {
           </label>
           {/* ABOUT HEADLINE TOP */}
           <label className="form-input-label" htmlFor="">
-            about headline top
+            about: headline 1
             <input
               className="form-input-input"
               type="text"
@@ -158,8 +222,8 @@ function GeneralDataPage() {
             />
           </label>
           {/* ABOUT LONG TOP */}
-          <label className="form-input-label" htmlFor="">
-            about long top
+          <label className="form-input-label">
+            about: text 1
             <textarea
               className="form-input-textarea"
               type="text"
@@ -171,10 +235,11 @@ function GeneralDataPage() {
             />
           </label>
           {/* ABOUT HEADLINE BOTTOM */}
-          <label className="form-input-label" htmlFor="">
-            about headline bottom
+          <label className="form-input-label" htmlFor="aboutHeadlineBottom">
+            about: headline 2
             <input
               className="form-input-input"
+              id="aboutHeadlineBottom"
               type="text"
               value={about_headline_bottom}
               required
@@ -185,7 +250,7 @@ function GeneralDataPage() {
           </label>
           {/* ABOUT LONG BOTTOM */}
           <label className="form-input-label" htmlFor="">
-            about long bottom
+            about: text 2
             <textarea
               className="form-input-textarea"
               type="text"
@@ -213,27 +278,40 @@ function GeneralDataPage() {
               className="create-project-file-input-brwose-button pointer"
               htmlFor="create-project-file-input"
             >
-              Choose Files (10 max.)
+              Choose Files ({`${maxImages}`} max.)
             </label>
           </label>
           {/* image previews */}
           {imagePreviews.length > 0 && (
-            <div className="create-project-image-previews-wrapper flex-column">
+            <div className="create-project-image-previews-wrapper general-data-images-wrapper flex-column">
               {imagePreviews.map((previewUrl, index) => {
                 return (
                   <div
                     key={previewUrl}
-                    className="create-project-image-previews-img-wrapper flex-row-center-start"
+                    className="general-data-img-caption-wrapper flex-column"
                   >
-                    <img src={previewUrl} alt={`image preview ${index}`} />
-                    <button
-                      className="create-project-image-previews-delete-button"
-                      onClick={() => {
-                        handleImageDelete(index);
-                      }}
-                    >
-                      X
-                    </button>
+                    <div className="create-project-image-previews-img-wrapper flex-row-center-start">
+                      <img src={previewUrl} alt={`image preview ${index}`} />
+                      <button
+                        className="create-project-image-previews-delete-button"
+                        onClick={() => {
+                          handleImageDelete(index);
+                        }}
+                      >
+                        X
+                      </button>
+                    </div>
+                    <label htmlFor="" className="form-input-label">
+                      Caption
+                      <input
+                        className="form-input-input"
+                        type="text"
+                        value={captions[index]}
+                        onChange={(e) => {
+                          handleCaptions(index, e.target.value);
+                        }}
+                      />
+                    </label>
                   </div>
                 );
               })}
