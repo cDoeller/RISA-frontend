@@ -42,12 +42,17 @@
   gap: 1rem;
 }
 
+.landing-page-list-thumb-wrapper {
+  width: 20px;
+}
+
 .projects-list-projects-wrapper {
   /* gap: 1rem; */
 }
 
 .projects-list-card-wrapper {
   border: solid black 1px;
+  margin: -1px 0 0 0;
 }
 
 .projects-list-card-image-wrapper {

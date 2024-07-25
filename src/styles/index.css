@@ -162,6 +162,12 @@ input {
   align-items: center;
 }
 
+.flex-row-right {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
 .flex-row {
   display: flex;
 }

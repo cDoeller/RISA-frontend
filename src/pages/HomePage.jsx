@@ -7,12 +7,15 @@ import { Link } from "react-router-dom";
 import TagFilterButton from "../components/TagFilterButton";
 import NewsContainer from "../components/NewsContainer";
 import LandingSlideshow from "../components/LandingSlideshow";
+import ProjectsThumbList from "../components/ProjectsThumbList";
+import ProjectsListList from "../components/ProjectsListList";
 
 function HomePage() {
   const [projects, setProjects] = useState(null);
   const [activeFilterTags, setActiveFilterTags] = useState([]);
   const [latestNews, setLatestNews] = useState(null);
   const [generalData, setGeneralData] = useState(null);
+  const [showList, setShowList] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -49,7 +52,7 @@ function HomePage() {
     "exhibition",
     "article",
     "event",
-    "research projects"
+    "research projects",
   ];
 
   const handleFilter = (tagClicked) => {
@@ -62,6 +65,11 @@ function HomePage() {
     console.log(tempTags);
     setActiveFilterTags(tempTags);
   };
+
+  // SHOW LIST / THMB
+  function handleShowList() {
+    setShowList(!showList);
+  }
 
   return (
     <>
@@ -122,23 +130,25 @@ function HomePage() {
               );
             })}
           </div>
+          <div className="flex-row-right">
+            <div
+              onClick={handleShowList}
+              className="image-wrapper button landing-page-list-thumb-wrapper"
+            >
+              <img
+                src={showList ? "/thumb-icon.png" : "/list-icon.png"}
+                alt=""
+              />
+            </div>
+          </div>
           {/* PROJECTS */}
           {projects && (
             <div className="projects-list-projects-wrapper flex-column">
-              {projects.map((project) => {
-                return (
-                  <Link to={`/projects/${project._id}`} key={project._id}>
-                    <div className="projects-list-card-wrapper flex-column-left pointer">
-                      <div className="projects-list-card-image-wrapper fill-image">
-                        <img src={project.images_url[0]} alt="" />
-                      </div>
-                      <h1 className="projects-list-card-title">
-                        {project.title}
-                      </h1>
-                    </div>
-                  </Link>
-                );
-              })}
+              {showList ? (
+                <ProjectsListList projects={projects} />
+              ) : (
+                <ProjectsThumbList projects={projects} />
+              )}
             </div>
           )}
         </section>
