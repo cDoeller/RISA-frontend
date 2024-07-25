@@ -62,24 +62,6 @@ function HomePage() {
     setActiveFilterTags(tempTags);
   };
 
-  const slideshowData = [
-    {
-      image_url:
-        "https://res.cloudinary.com/diofsqoo7/image/upload/v1720530617/RISA/eptvwgnbn9yfcic34vny.jpg",
-      caption: "installation view of project Speculative Sensing",
-    },
-    {
-      image_url:
-        "https://res.cloudinary.com/diofsqoo7/image/upload/v1720530617/RISA/n6w3ztipwmkrofa0qnhs.jpg",
-      caption: "Exhibition at Kunstraum Köln",
-    },
-    {
-      image_url:
-        "https://res.cloudinary.com/diofsqoo7/image/upload/v1720530618/RISA/icvtjyxmalymrprtgotx.jpg",
-      caption: "Collaborative process at university of applied sciences Berlin",
-    },
-  ];
-
   return (
     <>
       {generalData && (
