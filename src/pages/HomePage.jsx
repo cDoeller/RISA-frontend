@@ -49,6 +49,7 @@ function HomePage() {
     "exhibition",
     "article",
     "event",
+    "research projects"
   ];
 
   const handleFilter = (tagClicked) => {
